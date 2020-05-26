@@ -1,0 +1,4 @@
+*.class
+*.ps1
+*.py
+trash/*
