@@ -11,12 +11,11 @@ import javax.swing.JFrame;
 import java.awt.*;
 import java.io.*;
 
-public final class CovidCashier {	
+public final class CovidCashier  {	
 	/**
 	  * The program frame
 	  */
 	public static JFrame frame;
-
 
 	/**
 	  * Initializes the main frame of the program an Image object from a file
@@ -36,7 +35,9 @@ public final class CovidCashier {
 		initializeFrame();
 
 		// SplashScreen.drive();
-		MainMenu.drive();
+		PlayerSelect.drive();
+		// MainMenu.drive();
+		
 		frame.setVisible(true);
 	}
 

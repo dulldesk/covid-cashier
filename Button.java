@@ -12,51 +12,51 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 
-public class Button extends JComponent implements MouseListener, MouseMotionListener {
+public class Button implements MouseListener, MouseMotionListener {
 	/** 
 	  * The button label
 	  */
-	private String label;
+	protected String label;
 
 	/**
-	  * The button's x-coordinate
+	  * The button's x-coordinate (top left corner)
 	  */
-	private int x_coord;
+	protected int x_coord;
 
 	/**
-	  * The button's y-coordinate
+	  * The button's y-coordinate (top left corner)
 	  */
-	private int y_coord;
+	protected int y_coord;
 
 	/**
 	  * The Font of the button's label
 	  */
-	private Font text_font;
+	protected Font text_font;
 
 	/**
 	  * Whether the user just clicked the button
 	  */
-	private boolean isClicked;
+	protected boolean isClicked;
 
 	/**
 	  * Whether the user is hovering over the button
 	  */
-	private boolean isHovered;
+	protected boolean isHovered;
 
 	/**
 	  * The button's text colour 
 	  */
-	private final Color LABEL_COLOUR;
+	protected final Color LABEL_COLOUR;
 
 	/**
 	  * The button's text colour upon hovering
 	  */
-	private final Color HOVER_COLOUR;
+	protected final Color HOVER_COLOUR;
 
 	/**
 	  * The button's text colour upon hovering
 	  */
-	private final Color CLICK_COLOUR;
+	protected final Color CLICK_COLOUR;
 
 	/**
 	  * Constructs a Button object and activates its listeners
@@ -67,14 +67,15 @@ public class Button extends JComponent implements MouseListener, MouseMotionList
 	  * @param lbl_c	the Button's label (text) colour
 	  * @param hvr_c	the Button's label (text) colour upon hovering
 	  */
-	public Button(String lbl, int x, int y, Font fnt, Color lbl_c, Color hvr_c) {
+	public Button(String lbl, int x, int y, Font fnt, Color lbl_c, Color hvr_c, Color clk_c) {
 		label = lbl;
 		x_coord = x;
 		y_coord = y;
 		text_font = fnt;
 		LABEL_COLOUR = lbl_c;
 		HOVER_COLOUR = hvr_c;
-		activateButton();
+		CLICK_COLOUR = clk_c;
+		activate();
 	}
 
 	/**
@@ -85,17 +86,16 @@ public class Button extends JComponent implements MouseListener, MouseMotionList
 	  * @param fnt 		the Button's font`
 	  */
 	public Button(String lbl, int x, int y, Font fnt) {
-		this(lbl,x,y,fnt,Color.black,Color.blue,Color.red)
+		this(lbl,x,y,fnt,Color.black,Color.blue,Color.red);
 	}
 
 	/**
 	  * Draws the Button, changing the text colour if hovered over
 	  * @param g 		the Graphics object to draw on
 	  */
-	public void paint(Graphics g) {
+	public void draw(Graphics g) {
 	    try { 
 		   	g.setFont(text_font);
-
 		   	g.setColor(isHovered ? HOVER_COLOUR : (isClicked ? CLICK_COLOUR : LABEL_COLOUR));
 	   		g.drawString(label,x_coord,y_coord);
 		} catch (Exception e) {}
@@ -120,7 +120,7 @@ public class Button extends JComponent implements MouseListener, MouseMotionList
 	/**
 	  * Activates the button's listeners. It will listen for click and hover events.
 	  */
-	public void activateButton() {
+	public void activate() {
     	CovidCashier.frame.addMouseListener(this);
     	CovidCashier.frame.addMouseMotionListener(this);
 	}
@@ -128,7 +128,7 @@ public class Button extends JComponent implements MouseListener, MouseMotionList
 	/**
 	  * Deativates the button's listeners. It will cease to listen for click and hover events.
 	  */
-	public void deactivateButton() {
+	public void deactivate() {
 		// Catch nonexistent listener exceptions
 		try {
 	    	CovidCashier.frame.removeMouseListener(this);
@@ -142,6 +142,7 @@ public class Button extends JComponent implements MouseListener, MouseMotionList
 	  */
 	public void mouseClicked(MouseEvent e) {
 		isClicked = withinCoordinates();
+		CovidCashier.frame.repaint();
 	}
 
 	/**
@@ -150,13 +151,14 @@ public class Button extends JComponent implements MouseListener, MouseMotionList
 	  */
 	public void mouseMoved(MouseEvent e) {
 		isHovered = withinCoordinates();
+		CovidCashier.frame.repaint();
 	}
 
 	/**
 	  * Check whether the user's mouse is within the boundaries of this Button
 	  * @return whether the mouse is within the boundaries of this Button
 	  */
-	private boolean withinCoordinates() {
+	protected boolean withinCoordinates() {
 		try {
 			Point pnt = CovidCashier.frame.getMousePosition();
 			return pnt.x > x_coord && pnt.y > y_coord && pnt.x < x_coord + label.length()*text_font.getSize()/2 && pnt.y < y_coord + text_font.getSize();

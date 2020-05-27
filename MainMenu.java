@@ -29,14 +29,18 @@ public class MainMenu extends Menu {
 	private static ArrayList<Button> buttons;
 
 	/**
+	  *	The x-coordinate of the buttons
+	  */
+	private static final int LEFTALIGN = 365;
+
+	/**
 	  * Initializes static fields. Fills the buttons ArrayList with Button objects
 	  */
 	static {
 		buttons = new ArrayList<Button>(OPTIONS.length);
 
 		for (int i=0;i<OPTIONS.length;i++) {
-			int fontSize = Style.LABEL_FONT.getSize();
-			buttons.add(new Button(OPTIONS[i],Style.FRAME_WIDTH/2-fontSize*OPTIONS[i].length()/4, (int)((i+3)*1.55*fontSize), Style.LABEL_FONT));
+			buttons.add(new Button(OPTIONS[i],LEFTALIGN, (int)(193+(i*1.5)*Style.LABEL_FONT.getSize()), Style.LABEL_FONT));
 		}
 	}
 
@@ -45,7 +49,7 @@ public class MainMenu extends Menu {
 	  */
 	private MainMenu() {
 		drawing = new MainMenuDrawing();
-		CovidCashier.frame.add(drawing);
+		Style.changeDrawing(drawing);
 	}
 
 	/**
@@ -70,7 +74,7 @@ public class MainMenu extends Menu {
 		/**
 		  * The y-coordinate of the title
 		  */
-		private final int titleY = 90;
+		private final int titleY = 140;
 
 		/**
 		  * Object constructor. Uses the superclass's constructor
@@ -85,13 +89,19 @@ public class MainMenu extends Menu {
 		  */
 		@Override
 		public void display(Graphics g) {
-			drawTitle(g,"COVID CASHIER");
+			// System.out.println("main menu");
+			g.setFont(Style.TITLE_FONT_SMALL);
+			g.setColor(Color.black);
+			g.drawString("COVID CASHIER",LEFTALIGN,titleY);
 
 			for (Button btn : buttons) {
-				btn.paint(g);
+				btn.draw(g);
 				if (btn.isClicked()) {
 					// do something
-					System.out.println("here "+btn.getName());
+					switch (btn.getName()) {
+
+					}
+					// System.out.println("here "+btn.getName());
 				} 
 			}
 		}

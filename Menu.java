@@ -32,7 +32,9 @@ public abstract class Menu {
 		  * @param g 	the Graphics object to draw on
 		  */
 		@Override
-		public void paint(Graphics g) {
+		public void paintComponent(Graphics g) {
+			super.paintComponent(g);
+			// System.out.println("a "+CovidCashier.frame.getContentPane());
 			try { 
 		   		// Background monitor
 				Monitor.draw(g);
@@ -41,18 +43,30 @@ public abstract class Menu {
 				display(g);
 
 				// Repaint the display after 50 ms
-				Thread.sleep(50);
-				repaint();
+				// Thread.sleep(50);
+				// CovidCashier.frame.repaint();
 			} catch (Exception e) {}
 		}
 
 		/**
 		  * Draw the title / main heading
-		  * @param g 	the Graphics object to draw on
+		  * @param g 			the Graphics object to draw on
+		  * @param title		the phrase to be drawn
 		  */
 		public void drawTitle(Graphics g, String title) {
 			g.setFont(Style.TITLE_FONT);
-			centerAlignStr(g,title,-0.2,g.getFont().getSize()+25);			
+			centerAlignStr(g,title,-0.2);			
+		}
+
+		/**
+		  * Draw the title / main heading
+		  * @param g 			the Graphics object to draw on
+		  * @param title		the phrase to be drawn
+		  * @param centerAlign	whether to center align the text
+		  */
+		public void drawTitle(Graphics g, String title, int x, int y) {
+			g.setFont(Style.TITLE_FONT);
+			g.drawString(title,x,y);
 		}
 
 		/**
@@ -60,10 +74,9 @@ public abstract class Menu {
 		  * @param g 			the Graphics object for the drawing
 		  * @param phrase 		the String to be drawn
 		  * @param row 			the row of the option
-		  * @param fontSize 	the font size (or relative font size)
 		  */
-		public void centerAlignStr(Graphics g, String phrase, double row, int fontSize) {
-			g.drawString(phrase,Style.FRAME_WIDTH/2-fontSize*phrase.length()/4,getTitleY() + (int)((row*1.55+0.5)*fontSize));
+		public void centerAlignStr(Graphics g, String phrase, double row) {
+			g.drawString(phrase,Style.FRAME_WIDTH/2-g.getFontMetrics().charsWidth(phrase.toCharArray(),0,phrase.length())/2,getTitleY() + (int)((row*1.55+0.5)*g.getFontMetrics().getHeight()));
 		}
 	}
 }

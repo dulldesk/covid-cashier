@@ -7,7 +7,7 @@
   * @since 		1.0
   */
 
-import javax.swing.JFrame;
+import javax.swing.*;
 import java.awt.*;
 import java.io.*;
 import javax.imageio.*;
@@ -29,9 +29,14 @@ public final class Style {
 	public static final Font TITLE_FONT = loadFont("8-BIT_WONDER.ttf",42);
 
 	/**
+	  * Smaller font for titles
+	  */
+	public static final Font TITLE_FONT_SMALL = loadFont("8-BIT_WONDER.ttf",32);
+
+	/**
 	  * Font for labels, headings, and the like
 	  */
-	public static final Font LABEL_FONT = loadFont("DTM-Sans.otf",42);
+	public static final Font LABEL_FONT = loadFont("DTM-Sans.otf",35);
 
 	/**
 	  * Font for descriptions, captions, and the like
@@ -64,5 +69,15 @@ public final class Style {
 			return ImageIO.read(Style.class.getResourceAsStream("src/img/"+name)).getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH);
 		} catch (IOException e) {}
 		return null;
+	}
+
+	/**
+	  * Changes and updates the frame
+	  * @param drawing 		the component to be updated to
+	  */
+	public static void changeDrawing(JComponent drawing) {
+		CovidCashier.frame.setContentPane(drawing);
+		CovidCashier.frame.repaint();
+		CovidCashier.frame.revalidate();
 	}
 }
