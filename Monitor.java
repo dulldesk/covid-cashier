@@ -1,7 +1,7 @@
 /**
   * Stores data of and draws a monitor
   * 
-  * Last edit: 5/25/2020
+  * Last edit: 5/26/2020
   * @author 	Celeste
   * @version 	1.0
   * @since 		1.0
@@ -13,22 +13,22 @@ public class Monitor {
 	/**
 	  * The width of the monitor image, in pixels
 	  */
-	private static final int WIDTH = 400;
+	private static final int WIDTH = Style.FRAME_WIDTH;
 
 	/**
 	  * The height of the monitor image, in pixels
 	  */
-	private static final int HEIGHT = 300;
+	private static final int HEIGHT = Style.FRAME_HEIGHT;
 
 	/**
 	  * The x-coordinate of the monitor image (top-left corner)
 	  */
-	private static final int X_COORD = 100;
+	private static final int X_COORD = 0;
 
 	/**
 	  * The y-coordinate of the monitor image (top-left corner)
 	  */
-	private static final int Y_COORD = 100;
+	private static final int Y_COORD = 0;
 
 	/**
 	  * The monitor image
@@ -40,7 +40,7 @@ public class Monitor {
 	  *   <li> https://docs.oracle.com/javase/tutorial/java/javaOO/initial.html
 	  * </ul>
 	  */
-	private final static Image MONITOR = Style.loadImage("monitor.png",WIDTH,HEIGHT);
+	private final static Image MONITOR = Style.loadImage("cash_register.png",WIDTH,HEIGHT);
 
 	/**
 	  * Draws a Monitor to the window
