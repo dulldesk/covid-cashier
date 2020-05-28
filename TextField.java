@@ -37,7 +37,6 @@ public class TextField extends GraphicComponent implements KeyListener {
 		text_font = fnt;
 		height = fnt.getSize()+10;
 		text = "";
-		activate();
 	}
 
 	/**

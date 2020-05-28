@@ -16,43 +16,32 @@ public class PlayerSelect extends Menu {
 	/**
 	  * Contains the main menu graphics / GUI
 	  */
-	private static MenuDrawing drawing;
+	private MenuDrawing drawing;
 
 	/**
 	  * Holds the icons displayed on the screen
 	  */
-	private static ArrayList<ImageButton> icons;
+	private ArrayList<ImageButton> icons;
 
 	/**
-	  * Initializes static fields. Fills the icons ArrayList with ImageButton objects
+	  * Initializes and displays the drawing to the frame
 	  */
-	static {
+	public PlayerSelect() {
 		int alignY = 220;
 		icons = new ArrayList<ImageButton>(2);
 
 		icons.add(new ImageButton("male",200,alignY,Style.LABEL_FONT,Style.loadImage("male_player.png",100,100)));
 		icons.add(new ImageButton("female",Style.FRAME_WIDTH-300,alignY,Style.LABEL_FONT,Style.loadImage("female_player.png",100,100)));
-	}
+		for (Button btn : icons) btn.activate();
 
-	/**
-	  * Initializes and displays the drawing to the frame
-	  */
-	private PlayerSelect() {
 		drawing = new SelectionDrawing();
 		Style.changeDrawing(drawing);
 	}
 
 	/**
-	  * Runs the graphics
-	  */
-	public static void drive() {
-		new PlayerSelect();
-	}
-
-	/**
 	  * Removes the drawing and removes listeners
 	  */
-	public static void halt() {
+	public void halt() {
 		drawing.setEnabled(false);
 		CovidCashier.frame.remove(drawing);
 		for (Button btn : icons) btn.deactivate();

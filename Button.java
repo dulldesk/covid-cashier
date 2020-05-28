@@ -59,7 +59,6 @@ public class Button extends GraphicComponent implements MouseListener, MouseMoti
 		LABEL_COLOUR = lbl_c;
 		HOVER_COLOUR = hvr_c;
 		CLICK_COLOUR = clk_c;
-		activate();
 	}
 
 	/**

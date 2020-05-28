@@ -1,7 +1,7 @@
 /**
   * The main menu screen
   * 
-  * Last edit: 5/26/2020
+  * Last edit: 5/8/2020
   * @author 	Celeste
   * @version 	1.0
   * @since 		1.0
@@ -16,53 +16,42 @@ public class MainMenu extends Menu {
 	/**
 	  * Contains the main menu graphics / GUI
 	  */
-	private static MenuDrawing drawing;
+	private MenuDrawing drawing;
 
 	/**
 	  * Holds the available options on the main menu
 	  */
-	private static final String [] OPTIONS = {"Instructions", "Play", "Quit"};
+	private final String [] OPTIONS = {"Instructions", "Play", "Quit"};
 
 	/**
 	  * Holds the buttons displayed on the screen
 	  */
-	private static ArrayList<Button> buttons;
+	private ArrayList<Button> buttons;
 
 	/**
 	  *	The x-coordinate of the buttons
 	  */
-	private static final int LEFTALIGN = 365;
+	private final int LEFTALIGN = 365;
 
 	/**
-	  * Initializes static fields. Fills the buttons ArrayList with Button objects
+	  * Initializes and displays the drawing to the frame
 	  */
-	static {
+	public MainMenu() {
 		buttons = new ArrayList<Button>(OPTIONS.length);
 
 		for (int i=0;i<OPTIONS.length;i++) {
 			buttons.add(new Button(OPTIONS[i],LEFTALIGN, (int)(193+(i*1.5)*Style.LABEL_FONT.getSize()), Style.LABEL_FONT));
 		}
-	}
+		for (Button btn : buttons) btn.activate();
 
-	/**
-	  * Initializes and displays the drawing to the frame
-	  */
-	private MainMenu() {
 		drawing = new MainMenuDrawing();
 		Style.changeDrawing(drawing);
 	}
 
 	/**
-	  * Runs the graphics
-	  */
-	public static void drive() {
-		new MainMenu();
-	}
-
-	/**
 	  * Removes the drawing and removes listeners
 	  */
-	public static void halt() {
+	public void halt() {
 		CovidCashier.frame.remove(drawing);
 		for (Button btn : buttons) btn.deactivate();
 	}
