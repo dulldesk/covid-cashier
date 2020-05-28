@@ -34,9 +34,8 @@ public final class CovidCashier  {
 	public CovidCashier() {
 		initializeFrame();
 
-		// SplashScreen.drive();
-		PlayerSelect.drive();
-		// MainMenu.drive();
+		// new SplashScreen();
+		new PlayerSelect();
 		
 		frame.setVisible(true);
 	}

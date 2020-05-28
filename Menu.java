@@ -12,9 +12,20 @@ import javax.swing.*;
 
 public abstract class Menu {
 	/**
+	  *	The x-coordinate of the buttons
+	  */
+	protected final int LEFTALIGN = 365;
+
+	/**
+	  * The y-coordinate of the title
+	  */
+	protected int titleY = 140;
+		
+	/**
 	  * GUI of a menu
 	  */
 	public abstract class MenuDrawing extends JComponent {
+
 		/**
 		  * Draw the actual display
 		  * @param g 	the Graphics object to draw on

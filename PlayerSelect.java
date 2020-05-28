@@ -24,6 +24,11 @@ public class PlayerSelect extends Menu {
 	private ArrayList<ImageButton> icons;
 
 	/**
+	  * A text field for name input
+	  */
+	private TextField field;
+
+	/**
 	  * Initializes and displays the drawing to the frame
 	  */
 	public PlayerSelect() {
@@ -32,7 +37,8 @@ public class PlayerSelect extends Menu {
 
 		icons.add(new ImageButton("male",200,alignY,Style.LABEL_FONT,Style.loadImage("male_player.png",100,100)));
 		icons.add(new ImageButton("female",Style.FRAME_WIDTH-300,alignY,Style.LABEL_FONT,Style.loadImage("female_player.png",100,100)));
-		for (Button btn : icons) btn.activate();
+
+		field = new TextField(Style.FRAME_WIDTH/5,Style.FRAME_HEIGHT/2-25,3*Style.FRAME_WIDTH/5,Style.LABEL_FONT);
 
 		drawing = new SelectionDrawing();
 		Style.changeDrawing(drawing);
@@ -72,16 +78,11 @@ public class PlayerSelect extends Menu {
 		private String stage;
 
 		/**
-		  * A text field for name input
-		  */
-		private TextField field;
-
-		/**
 		  * Object constructor. Uses the superclass's constructor and initializes fields.
 		  */
 		public SelectionDrawing() {
 			super();
-			field = new TextField(Style.FRAME_WIDTH/5,Style.FRAME_HEIGHT/2-25,3*Style.FRAME_WIDTH/5,Style.LABEL_FONT);
+			field.activate();
 
 			// The first stage is name selection
 			stage = "name";
@@ -121,7 +122,7 @@ public class PlayerSelect extends Menu {
 					User.selected = new Player(User.name,btn.getName().charAt(0));
 
 					halt();
-					MainMenu.drive();
+					new MainMenu();
 					return;
 				} 
 			}
@@ -140,12 +141,14 @@ public class PlayerSelect extends Menu {
 			if (field.getText().length() > 0 && field.hasEntered()) {
 				stage = "character";
 				User.name = field.getText();
+				
 
+				for (Button btn : icons) btn.activate();
 				field.deactivate();
-
-				// refresh
-				repaint();
 			}
+
+			// force refresh
+			repaint();
 		}
 
 		/**

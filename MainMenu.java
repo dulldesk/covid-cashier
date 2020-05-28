@@ -29,20 +29,14 @@ public class MainMenu extends Menu {
 	private ArrayList<Button> buttons;
 
 	/**
-	  *	The x-coordinate of the buttons
-	  */
-	private final int LEFTALIGN = 365;
-
-	/**
 	  * Initializes and displays the drawing to the frame
 	  */
 	public MainMenu() {
 		buttons = new ArrayList<Button>(OPTIONS.length);
 
 		for (int i=0;i<OPTIONS.length;i++) {
-			buttons.add(new Button(OPTIONS[i],LEFTALIGN, (int)(193+(i*1.5)*Style.LABEL_FONT.getSize()), Style.LABEL_FONT));
+			buttons.add(new Button(OPTIONS[i],LEFTALIGN, titleY + (int)((i+1)*1.5*Style.LABEL_FONT.getSize()), Style.LABEL_FONT));
 		}
-		for (Button btn : buttons) btn.activate();
 
 		drawing = new MainMenuDrawing();
 		Style.changeDrawing(drawing);
@@ -61,15 +55,12 @@ public class MainMenu extends Menu {
 	  */
 	public class MainMenuDrawing extends MenuDrawing {
 		/**
-		  * The y-coordinate of the title
-		  */
-		private final int titleY = 140;
-
-		/**
 		  * Object constructor. Uses the superclass's constructor
 		  */
 		public MainMenuDrawing() {
 			super();
+
+			for (Button btn : buttons) btn.activate();
 		}
 
 		/**
