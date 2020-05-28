@@ -77,7 +77,7 @@ public final class Style {
 	  */
 	public static void changeDrawing(JComponent drawing) {
 		CovidCashier.frame.setContentPane(drawing);
-		CovidCashier.frame.repaint();
 		CovidCashier.frame.revalidate();
+		CovidCashier.frame.repaint();
 	}
 }

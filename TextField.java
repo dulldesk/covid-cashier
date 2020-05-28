@@ -18,7 +18,6 @@ public class TextField extends GraphicComponent implements KeyListener {
 	  */
 	protected boolean hasEntered;
 
-
 	/**
 	  * The actual text of the textfield
 	  */
@@ -125,12 +124,4 @@ public class TextField extends GraphicComponent implements KeyListener {
 	  */
 	@Override
 	public void keyReleased(KeyEvent e) {}
-
-	/**
-	  * toString() method
-	  * @return String representation of the text field object
-	  */
-	public String toString() {
-		return name;
-	}
 }
