@@ -1,5 +1,5 @@
 /**
-  * Creates a Button object that extends the JComponent class to draw it onto a window via a Graphics object. The Button listens for hover and click events. 
+  * Clickable button for Swing Graphics.
   * 
   * Last edit: 5/25/2020
   * @author 	Celeste
@@ -10,28 +10,12 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.*;
 
-public class Button implements MouseListener, MouseMotionListener {
+public class Button extends GraphicComponent implements MouseListener, MouseMotionListener {
 	/** 
 	  * The button label
 	  */
 	protected String label;
-
-	/**
-	  * The button's x-coordinate (top left corner)
-	  */
-	protected int x_coord;
-
-	/**
-	  * The button's y-coordinate (top left corner)
-	  */
-	protected int y_coord;
-
-	/**
-	  * The Font of the button's label
-	  */
-	protected Font text_font;
 
 	/**
 	  * Whether the user just clicked the button
