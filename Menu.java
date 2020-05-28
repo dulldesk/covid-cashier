@@ -41,10 +41,6 @@ public abstract class Menu {
 
 				// Draw the display
 				display(g);
-
-				// Repaint the display after 50 ms
-				// Thread.sleep(50);
-				// CovidCashier.frame.repaint();
 			} catch (Exception e) {}
 		}
 

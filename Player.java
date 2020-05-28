@@ -34,6 +34,7 @@ public class Player extends Character {
 	  * Loads the image files into the steps HashMap for each character subclass
 	  * @param player 	the type of player
 	  */
+	@Override
 	protected void loadSprites(String player) {
 		
 	}

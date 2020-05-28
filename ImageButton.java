@@ -71,6 +71,7 @@ public class ImageButton extends Button {
 	  * Draws the Button, changing the text colour if hovered over
 	  * @param g 		the Graphics object to draw on
 	  */
+	@Override
 	public void draw(Graphics g) {
 	    try { 
 	    	if (isHovered) {
@@ -92,6 +93,7 @@ public class ImageButton extends Button {
 	  * Check whether the user's mouse is within the boundaries of this Button
 	  * @return whether the mouse is within the boundaries of this Button
 	  */
+	@Override
 	protected boolean withinCoordinates() {
 		try {
 			Point pnt = CovidCashier.frame.getMousePosition();

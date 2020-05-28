@@ -77,6 +77,7 @@ public class Button extends GraphicComponent implements MouseListener, MouseMoti
 	  * Draws the Button, changing the text colour if hovered over
 	  * @param g 		the Graphics object to draw on
 	  */
+	@Override
 	public void draw(Graphics g) {
 	    try { 
 		   	g.setFont(text_font);
@@ -104,6 +105,7 @@ public class Button extends GraphicComponent implements MouseListener, MouseMoti
 	/**
 	  * Activates the button's listeners. It will listen for click and hover events.
 	  */
+	@Override
 	public void activate() {
     	CovidCashier.frame.addMouseListener(this);
     	CovidCashier.frame.addMouseMotionListener(this);
@@ -112,6 +114,7 @@ public class Button extends GraphicComponent implements MouseListener, MouseMoti
 	/**
 	  * Deativates the button's listeners. It will cease to listen for click and hover events.
 	  */
+	@Override
 	public void deactivate() {
 		// Catch nonexistent listener exceptions
 		try {
@@ -124,6 +127,7 @@ public class Button extends GraphicComponent implements MouseListener, MouseMoti
 	  * Handles the mouse click event
 	  * @param e 	the event object and data
 	  */
+	@Override
 	public void mouseClicked(MouseEvent e) {
 		isClicked = withinCoordinates();
 		CovidCashier.frame.repaint();
@@ -133,6 +137,7 @@ public class Button extends GraphicComponent implements MouseListener, MouseMoti
 	  * Handles the mouse move event
 	  * @param e 	the event object and data
 	  */
+	@Override
 	public void mouseMoved(MouseEvent e) {
 		isHovered = withinCoordinates();
 		CovidCashier.frame.repaint();
@@ -154,18 +159,21 @@ public class Button extends GraphicComponent implements MouseListener, MouseMoti
 	  * Handles the mouse exit event. Nothing is to occur
 	  * @param e 	the event object and data
 	  */
+	@Override
 	public void mouseExited(MouseEvent e) {}
 
 	/**
 	  * Handles the mouse enter event. Nothing is to occur
 	  * @param e 	the event object and data
 	  */
+	@Override
 	public void mouseEntered(MouseEvent e) {}
 
 	/**
 	  * Handles the mouse press event. Nothing is to occur
 	  * @param e 	the event object and data
 	  */
+	@Override
 	public void mousePressed(MouseEvent e) {}
 
 	/**
@@ -178,5 +186,6 @@ public class Button extends GraphicComponent implements MouseListener, MouseMoti
 	  * Handles the mouse drag event. Nothing is to occur
 	  * @param e 	the event object and data
 	  */
+	@Override
 	public void mouseDragged(MouseEvent e) {}
 }

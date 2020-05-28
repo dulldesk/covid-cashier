@@ -45,6 +45,7 @@ public class TextField extends GraphicComponent implements KeyListener {
 	  * Draws the TextField, changing the text colour if hovered over
 	  * @param g 		the Graphics object to draw on
 	  */
+	@Override
 	public void draw(Graphics g) {
    		g.setColor(Color.white);
 		g.fillRoundRect(x_coord,y_coord,width,height,10,10);
@@ -74,6 +75,7 @@ public class TextField extends GraphicComponent implements KeyListener {
 	/**
 	  * Activates the button's listeners. It will listen for keyboard events.
 	  */
+	@Override
 	public void activate() {
     	CovidCashier.frame.addKeyListener(this);
 	}
@@ -81,6 +83,7 @@ public class TextField extends GraphicComponent implements KeyListener {
 	/**
 	  * Deativates the button's listeners. It will cease to listen for click and hover events.
 	  */
+	@Override
 	public void deactivate() {
 		// Catch nonexistent listener exceptions
 		try {
@@ -92,6 +95,7 @@ public class TextField extends GraphicComponent implements KeyListener {
 	  * Handles the key press event. Enters text into the text field
 	  * @param e 	the event object and data
 	  */
+	@Override
 	public void keyPressed(KeyEvent e) {
 	    int keyCode = e.getKeyCode();
 
@@ -112,12 +116,14 @@ public class TextField extends GraphicComponent implements KeyListener {
 	  * Handles the key type event. Nothing is to occur
 	  * @param e 	the event object and data
 	  */
+	@Override
 	public void keyTyped(KeyEvent e) {}
 
 	/**
 	  * Handles the key release event. Nothing is to occur
 	  * @param e 	the event object and data
 	  */
+	@Override
 	public void keyReleased(KeyEvent e) {}
 
 	/**
