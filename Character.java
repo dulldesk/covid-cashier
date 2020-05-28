@@ -1,7 +1,7 @@
 /**
-  * A player, or character, in the game
+  * A character, in the game
   * 
-  * Last edit: 5/26/2020
+  * Last edit: 5/27/2020
   * @author 	Celeste
   * @version 	1.0
   * @since 		1.0
@@ -12,7 +12,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
 
-public abstract class Character implements KeyListener {
+public abstract class Character {
 	/**
 	  * The chosen name of the character
 	  */
@@ -117,40 +117,6 @@ public abstract class Character implements KeyListener {
 	public void draw(Graphics g, int step) {
 		g.drawImage(getSprite(step%TOTAL_STEPS),x_coord,y_coord,null);
 	}
-
-	/**
-	  * Handles the key press event; moves the character around
-	  * <p> With reference to: https://stackoverflow.com/questions/616924/how-to-check-if-the-key-pressed-was-an-arrow-key-in-java-keylistener
-	  * @param e 	the event object and data
-	  */
-	public void keyPressed(KeyEvent e) {
-	    int keyCode = e.getKeyCode();
-	    if (keyCode == KeyEvent.VK_UP) {
-	    	direction = 'N';
-	    	y_coord++;
-	    } else if (keyCode == KeyEvent.VK_DOWN) {
-	    	direction = 'S';
-	    	y_coord--;
-	    } else if (keyCode == KeyEvent.VK_LEFT) {
-	    	direction = 'W';
-	    	x_coord--;
-	    } else if (keyCode == KeyEvent.VK_RIGHT) {
-	    	direction = 'E';
-	    	x_coord++;
-	    }
-	} 
-
-	/**
-	  * Handles the key type event. Nothing is to occur
-	  * @param e 	the event object and data
-	  */
-	public void keyTyped(KeyEvent e) {}
-
-	/**
-	  * Handles the key release event. Nothing is to occur
-	  * @param e 	the event object and data
-	  */
-	public void keyReleased(KeyEvent e) {}
 
 	/**
 	  * Provides the character's name
