@@ -1,7 +1,7 @@
 /**
   * The character selection screen
   * 
-  * Last edit: 5/26/2020
+  * Last edit: 5/28/2020
   * @author 	Celeste
   * @version 	1.0
   * @since 		1.0
@@ -39,9 +39,6 @@ public class PlayerSelect extends Menu {
 	  */
 	private PlayerSelect() {
 		drawing = new SelectionDrawing();
-		// drawing.setEnabled(true);
-		// CovidCashier.frame.add(drawing);
-		// CovidCashier.frame.setContentPane(drawing);
 		Style.changeDrawing(drawing);
 	}
 
@@ -70,17 +67,35 @@ public class PlayerSelect extends Menu {
 		  */
 		private final int titleY = 90;
 
+		/**
+		  * Light blue colour of drawing
+		  */
 		private final Color LIGHT_BLUE = new Color(233, 255, 251);
 
+		/**
+		  * Red colour of drawing
+		  */
 		private final Color RED = new Color(214, 0, 0);
 
-		private String stage = "character";
+		/**
+		  * The stage of selection
+		  */
+		private String stage;
 
 		/**
-		  * Object constructor. Uses the superclass's constructor
+		  * A text field for name input
+		  */
+		private TextField field;
+
+		/**
+		  * Object constructor. Uses the superclass's constructor and initializes fields.
 		  */
 		public SelectionDrawing() {
 			super();
+			field = new TextField(Style.FRAME_WIDTH/5,Style.FRAME_HEIGHT/2-25,3*Style.FRAME_WIDTH/5,Style.LABEL_FONT);
+
+			// The first stage is name selection
+			stage = "name";
 		}
 
 		/**
@@ -97,22 +112,25 @@ public class PlayerSelect extends Menu {
 
 			g.setColor(Color.black);
 
-			if (stage.equals("name")) nameInput();
-			else if (stage.equals("character")) charInput();
+			if (stage.equals("name")) nameInput(g);
+			else if (stage.equals("character")) charInput(g);
 		}
 
-		private void charInput() {
+		/**
+		  * Get character selection input
+		  * @param g 	the Graphics object to draw on
+		  */
+		private void charInput(Graphics g) {
 			drawTitle(g,"Select your player");
 
+			// draw each player's icon
 			for (Button btn : icons) {
 				btn.draw(g);
+
+				// if the icon has been clicked, get data and move on
 				if (btn.isClicked()) {
-	// System.out.println(CovidCashier.frame.getContentPane());
-					if (btn.getName().equals("male")) {
-						User.selected = new Player(User.name,'m');
-					} else {
-						User.selected = new Player(User.name,'f');
-					}
+					User.selected = new Player(User.name,btn.getName().charAt(0));
+
 					halt();
 					MainMenu.drive();
 					return;
@@ -120,8 +138,25 @@ public class PlayerSelect extends Menu {
 			}
 		}
 
-		private void nameInput() {
+		/**
+		  * Get the user's desired name
+		  * @param g 	the Graphics object to draw on
+		  */
+		private void nameInput(Graphics g) {
+			g.setColor(Color.black);
+			drawTitle(g,"Enter your name");
+			field.draw(g);
 
+			// move on if the input is valid and the user has entered the text
+			if (field.getText().length() > 0 && field.hasEntered()) {
+				stage = "character";
+				User.name = field.getText();
+
+				field.deactivate();
+
+				// refresh
+				repaint();
+			}
 		}
 
 		/**

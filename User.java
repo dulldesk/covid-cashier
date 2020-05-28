@@ -7,7 +7,7 @@
   * @since 		1.0
   */
 
-public abstract class User {
+public final class User {
 	/**
 	  * The user's selected character
 	  */
