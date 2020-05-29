@@ -2,7 +2,7 @@
   * Clickable button for Swing Graphics.
   * 
   * Last edit: 5/25/2020
-  * @author 	Celeste
+  * @author 	Celeste, Eric
   * @version 	1.0
   * @since 		1.0
   */
@@ -38,11 +38,6 @@ public class Button extends GraphicComponent implements MouseListener, MouseMoti
 	protected final Color HOVER_COLOUR;
 
 	/**
-	  * The button's text colour upon hovering
-	  */
-	protected final Color CLICK_COLOUR;
-
-	/**
 	  * Constructs a Button object and activates its listeners
 	  * @param lbl 		the Button's label
 	  * @param x 		the Button's x-coordinate
@@ -51,14 +46,13 @@ public class Button extends GraphicComponent implements MouseListener, MouseMoti
 	  * @param lbl_c	the Button's label (text) colour
 	  * @param hvr_c	the Button's label (text) colour upon hovering
 	  */
-	public Button(String lbl, int x, int y, Font fnt, Color lbl_c, Color hvr_c, Color clk_c) {
+	public Button(String lbl, int x, int y, Font fnt, Color lbl_c, Color hvr_c) {
 		label = lbl;
 		x_coord = x;
 		y_coord = y;
 		text_font = fnt;
 		LABEL_COLOUR = lbl_c;
 		HOVER_COLOUR = hvr_c;
-		CLICK_COLOUR = clk_c;
 	}
 
 	/**
@@ -69,7 +63,7 @@ public class Button extends GraphicComponent implements MouseListener, MouseMoti
 	  * @param fnt 		the Button's font`
 	  */
 	public Button(String lbl, int x, int y, Font fnt) {
-		this(lbl,x,y,fnt,Color.black,Color.blue,Color.red);
+		this(lbl,x,y,fnt,Color.black,Color.blue);
 	}
 
 	/**
@@ -80,7 +74,7 @@ public class Button extends GraphicComponent implements MouseListener, MouseMoti
 	public void draw(Graphics g) {
 	    try { 
 		   	g.setFont(text_font);
-		   	g.setColor(isClicked ? CLICK_COLOUR : (isHovered ? HOVER_COLOUR : LABEL_COLOUR));
+		   	g.setColor(isHovered ? HOVER_COLOUR : LABEL_COLOUR);
 	   		g.drawString(label,x_coord,y_coord);
 		} catch (Exception e) {}
 	}

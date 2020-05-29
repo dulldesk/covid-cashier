@@ -2,7 +2,7 @@
   * Button with an image
   * 
   * Last edit: 5/26/2020
-  * @author 	Celeste
+  * @author 	Celeste, Eric
   * @version 	1.0
   * @since 		1.0
   */
@@ -38,8 +38,8 @@ public class ImageButton extends Button {
 	  * @param lbl_c	the Button's label (text) colour
 	  * @param hvr_c	the Button's label (text) colour upon hovering
 	  */
-	public ImageButton(String lbl, int x, int y, Font fnt, Color lbl_c, Color hvr_c, Color clk_c, Image img) {
-		super(lbl,x,y,fnt,lbl_c,hvr_c,clk_c);
+	public ImageButton(String lbl, int x, int y, Font fnt, Color lbl_c, Color hvr_c, Image img) {
+		super(lbl,x,y,fnt,lbl_c,hvr_c);
 		icon = img;
 		icon_enlarged = img.getScaledInstance(img.getWidth(null)+enlargeDiff, img.getHeight(null)+enlargeDiff, java.awt.Image.SCALE_SMOOTH);
 	}
@@ -73,19 +73,19 @@ public class ImageButton extends Button {
 	  */
 	@Override
 	public void draw(Graphics g) {
-	    try { 
+	    try {
+			g.setFont(text_font);
+			g.setColor(LABEL_COLOUR);
 	    	if (isHovered) {
 				g.drawImage(icon_enlarged,x_coord-enlargeDiff/2,y_coord-enlargeDiff/2,null);
+				g.setFont(text_font.deriveFont(text_font.getSize()*1.1F));
+				if (!label.trim().equals(""))
+					g.drawString(label,x_coord+icon.getWidth(null)/2-g.getFontMetrics().charsWidth(label.toCharArray(),0,label.length())/2,y_coord+icon.getHeight(null)+60);
 	    	} else {
 				g.drawImage(icon,x_coord,y_coord,null);
+				if (!label.trim().equals(""))
+					g.drawString(label,x_coord+icon.getWidth(null)/2-g.getFontMetrics().charsWidth(label.toCharArray(),0,label.length())/2,y_coord+icon.getHeight(null)+60);
 	    	}
-
-			if (!label.trim().equals("")) {
-			   	g.setFont(text_font);
-			   	g.setColor(isHovered ? HOVER_COLOUR : (isClicked ? CLICK_COLOUR : LABEL_COLOUR));
-		   		g.drawString(label,x_coord+icon.getWidth(null)/2-g.getFontMetrics().charsWidth(label.toCharArray(),0,label.length())/2,y_coord+icon.getHeight(null)+40);
-			}
-
 		} catch (Exception e) {}
 	}
 
