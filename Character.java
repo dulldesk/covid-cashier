@@ -44,6 +44,11 @@ public abstract class Character {
 	protected char clothingType;
 
 	/**
+	  * The type of personal protective equipment the character currently wearing, denotated by the first character of said type. 
+	  */
+	protected char protectiveEquipment;
+
+	/**
 	  * The image sprites to be used for a character's movement.
 	  * <p> The key is a String, formatted as: "d-s[-c-p]", where: 
 	  * <ul>
@@ -83,22 +88,23 @@ public abstract class Character {
 		this.gender = gender;
 
 		// Default values
-		this.direction = 'E'; 
-		this.clothingType = 'c'; 
+		this.direction = 's'; 
+		this.clothingType = 'c';
+		this.protectiveEquipment = 'n';
 
 		// Starting position on the Restaurant map
 		this.x_coord = 0;
 		this.y_coord = 0;
 
 		steps = new HashMap<String,Image>();
-		loadSprites(type);
+		loadSprites();
 	}
 
 	/**
 	  * Loads the image files into the steps HashMap for each character subclass
 	  * @param player 	the type of player
 	  */
-	protected abstract void loadSprites(String player);
+	protected abstract void loadSprites();
 
 	/**
 	  * Get the sprite for the current step, given the character's other data as stored in the member variables
@@ -106,7 +112,7 @@ public abstract class Character {
 	  * @return the corresponding sprite for the current character's step movement
 	  */
 	protected Image getSprite(int step) {
-		return null;
+		return steps.get(direction+"-"+step+"-"+clothingType+"-"+protectiveEquipment);
 	}
 
 	/**

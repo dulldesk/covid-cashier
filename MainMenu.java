@@ -2,7 +2,7 @@
   * The main menu screen
   * 
   * Last edit: 5/8/2020
-  * @author 	Celeste
+  * @author 	Celeste, Eric
   * @version 	1.0
   * @since 		1.0
   */
@@ -35,7 +35,7 @@ public class MainMenu extends Menu {
 		buttons = new ArrayList<Button>(OPTIONS.length);
 
 		for (int i=0;i<OPTIONS.length;i++) {
-			buttons.add(new Button(OPTIONS[i],leftAlign, titleY + (int)((i+1)*1.5*Style.LABEL_FONT.getSize()), Style.LABEL_FONT));
+			buttons.add(new Button(OPTIONS[i], leftAlign, titleY + 20 + (int)((i+1)*1.5*Style.LABEL_FONT.getSize()), Style.LABEL_FONT));
 		}
 
 		drawing = new MainMenuDrawing();
@@ -72,7 +72,7 @@ public class MainMenu extends Menu {
 			// System.out.println("main menu");
 			g.setFont(Style.TITLE_FONT_SMALL);
 			g.setColor(Color.black);
-			g.drawString("COVID CASHIER",leftAlign,titleY);
+			centerAlignStr(g, "COVID Cashier", 545, titleY);
 
 			for (Button btn : buttons) {
 				btn.draw(g);

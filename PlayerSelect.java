@@ -2,7 +2,7 @@
   * The character selection screen
   * 
   * Last edit: 5/28/2020
-  * @author 	Celeste
+  * @author 	Celeste, Eric
   * @version 	1.0
   * @since 		1.0
   */
@@ -32,11 +32,11 @@ public class PlayerSelect extends Menu {
 	  * Initializes and displays the drawing to the frame
 	  */
 	public PlayerSelect() {
-		int alignY = 220;
+		int alignY = 180;
 		icons = new ArrayList<ImageButton>(2);
 
-		icons.add(new ImageButton("male",200,alignY,Style.LABEL_FONT,Style.loadImage("male_player.png",100,100)));
-		icons.add(new ImageButton("female",Style.FRAME_WIDTH-300,alignY,Style.LABEL_FONT,Style.loadImage("female_player.png",100,100)));
+		icons.add(new ImageButton("male",200,alignY,Style.LABEL_FONT,Style.loadImage("PlayerM_Face.png",100,125)));
+		icons.add(new ImageButton("female",Style.FRAME_WIDTH-300,alignY,Style.LABEL_FONT,Style.loadImage("PlayerF_Face.png",100,125)));
 
 		field = new TextField(Style.FRAME_WIDTH/5,Style.FRAME_HEIGHT/2-25,3*Style.FRAME_WIDTH/5,Style.LABEL_FONT);
 
@@ -54,8 +54,9 @@ public class PlayerSelect extends Menu {
 	}
 
 	/**
-	  * GUI for the instructions
-	  */
+	  * GUI for the player selection
+      * While not technically a part of the main menu, certain methods from MenuDrawing are required
+      */
 	public class SelectionDrawing extends MenuDrawing {
 		/**
 		  * The y-coordinate of the title
@@ -63,19 +64,14 @@ public class PlayerSelect extends Menu {
 		private final int titleY = 90;
 
 		/**
-		  * Light blue colour of drawing
-		  */
-		private final Color LIGHT_BLUE = new Color(233, 255, 251);
-
-		/**
-		  * Red colour of drawing
-		  */
-		private final Color RED = new Color(214, 0, 0);
-
-		/**
 		  * The stage of selection
 		  */
 		private String stage;
+
+		/**
+	  	  * The menu image
+		  */
+		private final Image MENU = Style.loadImage("Menu_BG.png",Style.FRAME_WIDTH,Style.FRAME_HEIGHT);
 
 		/**
 		  * Object constructor. Uses the superclass's constructor and initializes fields.
@@ -95,15 +91,15 @@ public class PlayerSelect extends Menu {
 		@Override
 		public void display(Graphics g) {
 			// background
-			g.setColor(LIGHT_BLUE);
-			g.fillRect(0,0,Style.FRAME_WIDTH,300);
-			g.setColor(RED);
-			g.fillRect(0,300,Style.FRAME_WIDTH,Style.FRAME_HEIGHT-300);
+			
+			g.drawImage(MENU,0,0,null);
 
 			g.setColor(Color.black);
 
 			if (stage.equals("name")) nameInput(g);
 			else if (stage.equals("character")) charInput(g);
+
+			new Player("A", 'M').draw(g,1);
 		}
 
 		/**
@@ -119,7 +115,7 @@ public class PlayerSelect extends Menu {
 
 				// if the icon has been clicked, get data and move on
 				if (btn.isClicked()) {
-					User.selected = new Player(User.name,btn.getName().charAt(0));
+					User.gender = btn.getName().charAt(0);
 
 					halt();
 					new MainMenu();

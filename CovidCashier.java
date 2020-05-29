@@ -2,7 +2,7 @@
   * The driver class. Runs the game
   * 
   * Last edit: 5/25/2020
-  * @author 	Celeste
+  * @author 	Celeste, Eric
   * @version 	1.0
   * @since 		1.0
   */
@@ -22,7 +22,7 @@ public final class CovidCashier  {
 	  */
 	private void initializeFrame() {
 		frame = new JFrame("Covid Cashier");
-		frame.setSize(Style.FRAME_WIDTH,Style.FRAME_HEIGHT);
+		frame.setSize(Style.FRAME_WIDTH+6, Style.FRAME_HEIGHT+29);
 		frame.setResizable(false);
 		frame.setFocusable(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
