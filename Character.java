@@ -1,7 +1,7 @@
 /**
   * A character, in the game
   * 
-  * Last edit: 5/27/2020
+  * Last edit: 5/29/2020
   * @author 	Celeste
   * @version 	1.0
   * @since 		1.0
@@ -63,6 +63,11 @@ public abstract class Character {
 	protected Map<String,Image> steps;
 
 	/**
+	  * The number of types of steps for a sprite's direction of movement
+	  */
+	protected int stepNo;
+
+	/**
 	  * The width of a sprite image, in pixels
 	  */
 	public static final int WIDTH = 100;
@@ -92,9 +97,10 @@ public abstract class Character {
 		this.clothingType = 'c';
 		this.protectiveEquipment = 'n';
 
-		// Starting position on the Restaurant map
 		this.x_coord = 0;
 		this.y_coord = 0;
+
+		stepNo = 0;
 
 		steps = new HashMap<String,Image>();
 		loadSprites();
@@ -115,13 +121,27 @@ public abstract class Character {
 		return steps.get(direction+"-"+step+"-"+clothingType+"-"+protectiveEquipment);
 	}
 
+
+	/**
+	  * Set player coordinates
+	  * @param x 	the x coordinate
+	  * @param y 	the y coordinate
+	  */
+	public void setCoordinates(int x, int y) {
+		x_coord = x;
+		y_coord = y;		
+	}
+
 	/**
 	  * Draws the character to the window
 	  * @param g 	The Graphics object to draw on
 	  * @param step	The type of step that the character is taking
 	  */
-	public void draw(Graphics g, int step) {
-		g.drawImage(getSprite(step%TOTAL_STEPS),x_coord,y_coord,null);
+	public void draw(Graphics g) {
+		g.drawImage(getSprite(stepNo),x_coord,y_coord,null);
+
+		stepNo++;
+		stepNo %= TOTAL_STEPS;
 	}
 
 	/**
