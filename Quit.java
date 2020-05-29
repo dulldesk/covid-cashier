@@ -30,8 +30,8 @@ public class Quit extends Menu {
 	public Quit() {
 		buttons = new ArrayList<Button>(2);
 
-		buttons.add(new Button("yes",LEFTALIGN,titleY+(int)(1.5*Style.LABEL_FONT.getSize()),Style.LABEL_FONT));
-		buttons.add(new Button("no",LEFTALIGN,titleY+(int)(2*1.5*Style.LABEL_FONT.getSize()),Style.LABEL_FONT));
+		buttons.add(new Button("yes",leftAlign,titleY+(int)(1.5*Style.LABEL_FONT.getSize()),Style.LABEL_FONT));
+		buttons.add(new Button("no",leftAlign,titleY+(int)(2*1.5*Style.LABEL_FONT.getSize()),Style.LABEL_FONT));
 
 		drawing = new QuitDrawing();
 		Style.changeDrawing(drawing);
@@ -65,7 +65,7 @@ public class Quit extends Menu {
 		public void display(Graphics g) {
 			g.setColor(Color.black);
 			g.setFont(Style.TITLE_FONT_SMALL);
-			g.drawString("Sure to leave",LEFTALIGN,titleY);
+			g.drawString("Sure to leave",leftAlign,titleY);
 
 			for (Button btn : buttons) {
 				btn.draw(g);
