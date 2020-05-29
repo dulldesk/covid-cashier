@@ -109,8 +109,9 @@ public abstract class GraphicComponent implements MouseMotionListener, MouseList
 	  * @param e 	the event object and data
 	  */
 	public void mouseMoved(MouseEvent e) {
+		boolean before = isHovered;
 		isHovered = withinCoordinates();
-		if (isHovered) CovidCashier.frame.repaint();
+		if (isHovered != before) CovidCashier.frame.repaint();
 	}
 
 	/**
