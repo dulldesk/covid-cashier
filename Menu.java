@@ -2,7 +2,7 @@
   * A menu screen
   * 
   * Last edit: 5/26/2020
-  * @author 	Celeste
+  * @author 	Celeste, Eric
   * @version 	1.0
   * @since 		1.0
   */
@@ -19,7 +19,7 @@ public abstract class Menu {
 	/**
 	  * The y-coordinate of the title
 	  */
-	protected int titleY = 140;
+	protected int titleY = 120;
 		
 	/**
 	  * GUI of a menu
@@ -84,6 +84,9 @@ public abstract class Menu {
 		  */
 		public void centerAlignStr(Graphics g, String phrase, double row) {
 			g.drawString(phrase,Style.FRAME_WIDTH/2-g.getFontMetrics().charsWidth(phrase.toCharArray(),0,phrase.length())/2,getTitleY() + (int)((row*1.55+0.5)*g.getFontMetrics().getHeight()));
+		}
+		public void centerAlignStr(Graphics g, String phrase, int x, int y) {
+			g.drawString(phrase,x-g.getFontMetrics().charsWidth(phrase.toCharArray(),0,phrase.length())/2,y+g.getFontMetrics().getHeight()/2);
 		}
 	}
 }

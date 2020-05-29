@@ -33,7 +33,7 @@ public class Monitor {
 	/**
 	  * The monitor image
 	  */
-	private final static Image MONITOR = Style.loadImage("cash_register.png",WIDTH,HEIGHT);
+	private final static Image MONITOR = Style.loadImage("Cash_Register.png",WIDTH,HEIGHT);
 
 	/**
 	  * Draws a Monitor to the window

@@ -9,6 +9,7 @@
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import javax.imageio.*;
 
@@ -16,12 +17,12 @@ public final class Style {
 	/**
 	  * The width of the frame, in pixels
 	  */
-	public static final int FRAME_WIDTH = 816;
+	public static final int FRAME_WIDTH = 800;
 
 	/**
 	  * The height of the frame, in pixels
 	  */
-	public static final int FRAME_HEIGHT = 539;
+	public static final int FRAME_HEIGHT = 500;
 
 	/**
 	  * Font for titles
@@ -79,5 +80,19 @@ public final class Style {
 		CovidCashier.frame.setContentPane(drawing);
 		CovidCashier.frame.revalidate();
 		CovidCashier.frame.repaint();
+	}
+
+	/**
+	  * Changes and updates the frame
+	  * @param drawing 		the component to be updated to
+	  */
+	public static BufferedImage toBufferedImage(Image img) {
+		if (img instanceof BufferedImage)
+        	return (BufferedImage) img;
+    	BufferedImage bImage = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+		Graphics2D bGr = bImage.createGraphics();
+		bGr.drawImage(img, 0, 0, null);
+		bGr.dispose();
+    	return bImage;
 	}
 }
