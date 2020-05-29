@@ -80,7 +80,7 @@ public class Button extends GraphicComponent implements MouseListener, MouseMoti
 	public void draw(Graphics g) {
 	    try { 
 		   	g.setFont(text_font);
-		   	g.setColor(isHovered ? HOVER_COLOUR : (isClicked ? CLICK_COLOUR : LABEL_COLOUR));
+		   	g.setColor(isClicked ? CLICK_COLOUR : (isHovered ? HOVER_COLOUR : LABEL_COLOUR));
 	   		g.drawString(label,x_coord,y_coord);
 		} catch (Exception e) {}
 	}
