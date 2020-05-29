@@ -101,7 +101,7 @@ public abstract class GraphicComponent implements MouseMotionListener, MouseList
 	  */
 	public void mouseClicked(MouseEvent e) {
 		isClicked = withinCoordinates();
-		CovidCashier.frame.repaint();
+		if (isClicked) CovidCashier.frame.repaint();
 	}
 
 	/**
@@ -110,7 +110,7 @@ public abstract class GraphicComponent implements MouseMotionListener, MouseList
 	  */
 	public void mouseMoved(MouseEvent e) {
 		isHovered = withinCoordinates();
-		CovidCashier.frame.repaint();
+		if (isHovered) CovidCashier.frame.repaint();
 	}
 
 	/**
