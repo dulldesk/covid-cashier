@@ -35,7 +35,7 @@ public class MainMenu extends Menu {
 		buttons = new ArrayList<Button>(OPTIONS.length);
 
 		for (int i=0;i<OPTIONS.length;i++) {
-			buttons.add(new Button(OPTIONS[i],LEFTALIGN, titleY + (int)((i+1)*1.5*Style.LABEL_FONT.getSize()), Style.LABEL_FONT));
+			buttons.add(new Button(OPTIONS[i],leftAlign, titleY + (int)((i+1)*1.5*Style.LABEL_FONT.getSize()), Style.LABEL_FONT));
 		}
 
 		drawing = new MainMenuDrawing();
@@ -72,14 +72,22 @@ public class MainMenu extends Menu {
 			// System.out.println("main menu");
 			g.setFont(Style.TITLE_FONT_SMALL);
 			g.setColor(Color.black);
-			g.drawString("COVID CASHIER",LEFTALIGN,titleY);
+			g.drawString("COVID CASHIER",leftAlign,titleY);
 
 			for (Button btn : buttons) {
 				btn.draw(g);
 				if (btn.isClicked()) {
 					// do something
-					switch (btn.getName()) {
-
+					halt();
+					switch (btn.getName().toUpperCase()) {
+						case "INSTRUCTIONS": 
+							new Instructions();
+							break;
+						case "PLAY": 
+							break;
+						case "QUIT": 
+							new Quit();
+							break;
 					}
 					// System.out.println("here "+btn.getName());
 				} 

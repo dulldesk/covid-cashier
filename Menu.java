@@ -14,7 +14,7 @@ public abstract class Menu {
 	/**
 	  *	The x-coordinate of the buttons
 	  */
-	protected final int LEFTALIGN = 365;
+	protected int leftAlign = 365;
 
 	/**
 	  * The y-coordinate of the title
