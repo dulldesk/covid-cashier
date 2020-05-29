@@ -96,12 +96,13 @@ public class TextField extends GraphicComponent implements KeyListener {
 	@Override
 	public void keyPressed(KeyEvent e) {
 	    int keyCode = e.getKeyCode();
+	    char key = (char)keyCode;
 
 	    if (keyCode == KeyEvent.VK_ENTER) {
 	    	hasEntered = true;
 	    } else if (keyCode == KeyEvent.VK_BACK_SPACE) {
 	    	text = text.substring(0,text.length()-1);
-	    } else if (CovidCashier.frame.getFontMetrics(text_font).charsWidth((text+(char)keyCode).toCharArray(),0,text.length()+1) > width-20) {
+	    } else if (key < ' ' || key > '~' || CovidCashier.frame.getFontMetrics(text_font).charsWidth((text+(char)keyCode).toCharArray(),0,text.length()+1) > width-20) {
 	    	// prevent repaint as it is redundant
 	    	return;
 	    } else {
