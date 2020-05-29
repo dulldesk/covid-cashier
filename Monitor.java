@@ -32,13 +32,6 @@ public class Monitor {
 
 	/**
 	  * The monitor image
-	  * <p> With reference to:
-	  * <ul>
-	  *   <li> https://docs.oracle.com/javase/tutorial/2d/images/drawimage.html
-	  *   <li> https://docs.oracle.com/javase/7/docs/api/java/awt/Image.html#getScaledInstance(int,%20int,%20int)
-	  *   <li> https://stackoverflow.com/questions/31127/java-swing-monitoring-images-from-within-a-jar
-	  *   <li> https://docs.oracle.com/javase/tutorial/java/javaOO/initial.html
-	  * </ul>
 	  */
 	private final static Image MONITOR = Style.loadImage("cash_register.png",WIDTH,HEIGHT);
 
