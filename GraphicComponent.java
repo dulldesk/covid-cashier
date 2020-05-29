@@ -8,8 +8,9 @@
   */
 
 import java.awt.*;
+import java.awt.event.*;
 
-public abstract class GraphicComponent {
+public abstract class GraphicComponent implements MouseMotionListener, MouseListener, KeyListener {
 	/**
 	  * The field's x-coordinate (top left corner)
 	  */
@@ -31,9 +32,36 @@ public abstract class GraphicComponent {
 	protected int height;
 
 	/**
-	  * The Font of the button's label
+	  * The Font of the name, if drawn
 	  */
 	protected Font text_font;
+	
+	/**
+	  * Whether the user just clicked the component
+	  */
+	protected boolean isClicked;
+
+	/**
+	  * Whether the user is hovering over the component
+	  */
+	protected boolean isHovered;
+
+	/** 
+	  * The name of the component
+	  */
+	protected String name;
+
+	/**
+	  * Returns whether the component has just been clicked by the user
+	  * @return whether the component has just been clicked by the user
+	  */
+	public boolean isClicked() {
+		return isClicked;
+	}
+
+	public String getName() {
+		return name;
+	}
 
 	/**
 	  * Draws the component
@@ -44,10 +72,66 @@ public abstract class GraphicComponent {
 	/**
 	  * Activates the component's listeners and the like
 	  */
-	public abstract void activate();
+	public void activate(boolean mouse, boolean key) {
+		if (mouse) {
+	    	CovidCashier.frame.addMouseListener(this);
+	    	CovidCashier.frame.addMouseMotionListener(this);
+		}
+		if (key) {
+	    	CovidCashier.frame.addKeyListener(this);
+		}
+	}
 
 	/**
 	  * Deativates the components's listeners and the like
 	  */
-	public abstract void deactivate();
+	public void deactivate(boolean mouse, boolean key) {
+		if (mouse) {
+	    	CovidCashier.frame.removeMouseListener(this);
+	    	CovidCashier.frame.removeMouseMotionListener(this);
+		}
+		if (key) {
+	    	CovidCashier.frame.removeKeyListener(this);
+		}
+	}
+
+	/**
+	  * Handles the mouse click event
+	  * @param e 	the event object and data
+	  */
+	public void mouseClicked(MouseEvent e) {
+		isClicked = withinCoordinates();
+		CovidCashier.frame.repaint();
+	}
+
+	/**
+	  * Handles the mouse move event
+	  * @param e 	the event object and data
+	  */
+	public void mouseMoved(MouseEvent e) {
+		isHovered = withinCoordinates();
+		CovidCashier.frame.repaint();
+	}
+
+	/**
+	  * Check whether the user's mouse is within the boundaries of this Button
+	  * @return whether the mouse is within the boundaries of this Button
+	  */
+	protected abstract boolean withinCoordinates();
+
+	public void mouseExited(MouseEvent e) {}
+
+	public void mouseEntered(MouseEvent e) {}
+
+	public void mousePressed(MouseEvent e) {}
+
+	public void mouseReleased(MouseEvent e) {}
+
+	public void mouseDragged(MouseEvent e) {}
+
+	public void keyPressed(KeyEvent e) {}
+
+	public void keyTyped(KeyEvent e) {}
+
+	public void keyReleased(KeyEvent e) {}
 }
