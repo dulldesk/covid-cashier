@@ -42,7 +42,7 @@ public final class Style {
 	  * Font for descriptions, captions, and the like
 	  * [to change]
 	  */
-	public static final Font TEXT_FONT = new Font("Calibri",Font.PLAIN,35);
+	public static final Font TEXT_FONT = loadFont("Inconsolata-Medium.ttf",25);
 
 	/**
 	  * Loads a final static Font object
