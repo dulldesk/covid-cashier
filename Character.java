@@ -118,7 +118,7 @@ public abstract class Character {
 	  * @return the corresponding sprite for the current character's step movement
 	  */
 	protected Image getSprite(int step) {
-		return steps.get(direction+"-"+step+"-"+clothingType+"-"+protectiveEquipment);
+		return steps.get(direction+"-"+(step+1)+"-"+clothingType+"-"+protectiveEquipment);
 	}
 
 
@@ -138,7 +138,7 @@ public abstract class Character {
 	  * @param step	The type of step that the character is taking
 	  */
 	public void draw(Graphics g) {
-		g.drawImage(getSprite(stepNo),x_coord,y_coord,null);
+		g.drawImage(getSprite(stepNo+1),x_coord,y_coord,null);
 
 		stepNo++;
 		stepNo %= TOTAL_STEPS;

@@ -10,7 +10,6 @@
 import java.util.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import sun.awt.image.ToolkitImage;
 import java.awt.event.*;
 import java.io.*;
 import javax.swing.*;
@@ -29,7 +28,6 @@ public class Player extends Character {
 	public Player(String name, char gender) {
 		super(name,"player",gender);
  		movement = new HashMap<String, Movement>();
-		steps = new HashMap<String, Image>();
 		loadMovement();
 	}
 
@@ -45,11 +43,11 @@ public class Player extends Character {
 						{"n", "m", "g", "mg"}};
 		String[] imgs = {"C", "W", "W_M", "W_G", "W_MG"};
 		for(int s = 0; s < 5; s++) {
-			Image spritesheet = Style.loadImage("Player"+gender+"_"+imgs[s]+".png",1536,2048);
+			Image spritesheet = Style.loadImage("Player"+gender+"_"+imgs[s]+".png",(int)(1536/4.8),(int)(2048/4.8));
 			for(int y = 0; y < 4; y++) {
 				for(int x = 0; x < 3; x++) {
 					String key = keys[0][y]+"-"+keys[1][x]+"-"+(s==0?keys[2][0]:keys[2][1])+"-"+(s>1?keys[3][s-1]:keys[3][0]);
-					BufferedImage sprite = Style.toBufferedImage(spritesheet).getSubimage(x*512, y*512, 512, 512);
+					BufferedImage sprite = Style.toBufferedImage(spritesheet).getSubimage((int)(x*512/4.8), (int)(y*512/4.8), (int)(512/4.8), (int)(512/4.8));
 					steps.put(key, sprite);
 				}
 			}

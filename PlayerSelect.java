@@ -74,12 +74,17 @@ public class PlayerSelect extends Menu {
 		private final Image MENU = Style.loadImage("Menu_BG.png",Style.FRAME_WIDTH,Style.FRAME_HEIGHT);
 
 		/**
+	  	  * ---
+		  */
+		private Player player;
+
+		/**
 		  * Object constructor. Uses the superclass's constructor and initializes fields.
 		  */
 		public SelectionDrawing() {
 			super();
 			field.activate();
-
+			player = new Player("A", 'M');
 			// The first stage is name selection
 			stage = "name";
 		}
@@ -99,7 +104,7 @@ public class PlayerSelect extends Menu {
 			if (stage.equals("name")) nameInput(g);
 			else if (stage.equals("character")) charInput(g);
 
-			new Player("A", 'M').draw(g,1);
+			player.draw(g);
 		}
 
 		/**
