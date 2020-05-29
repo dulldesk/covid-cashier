@@ -1,7 +1,7 @@
 /**
   * Text field input box for Swing Graphics.
   * 
-  * Last edit: 5/28/2020
+  * Last edit: 5/29/2020
   * @author 	Celeste
   * @version 	1.0
   * @since 		1.0
@@ -12,7 +12,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 
-public class TextField extends GraphicComponent implements KeyListener {
+public class TextField extends GraphicComponent {
 	/**
 	  * Whether the user has entered their text
 	  */
@@ -56,10 +56,10 @@ public class TextField extends GraphicComponent implements KeyListener {
 
 	/**
 	  * Get the text in the textfield
-	  * @return the textfield's text
+	  * @return the textfield's text, trimmed of whitespace
 	  */
 	public String getText() {
-		return text;
+		return text.trim();
 	}
 
 	/**
@@ -73,20 +73,15 @@ public class TextField extends GraphicComponent implements KeyListener {
 	/**
 	  * Activates the button's listeners. It will listen for keyboard events.
 	  */
-	@Override
 	public void activate() {
-    	CovidCashier.frame.addKeyListener(this);
+		super.activate(false, true);
 	}
 
 	/**
 	  * Deativates the button's listeners. It will cease to listen for click and hover events.
 	  */
-	@Override
 	public void deactivate() {
-		// Catch nonexistent listener exceptions
-		try {
-	    	CovidCashier.frame.addKeyListener(this);
-		} catch (Exception e) {}
+		super.deactivate(false, true);
 	}
 
 	/**
@@ -111,17 +106,6 @@ public class TextField extends GraphicComponent implements KeyListener {
 		CovidCashier.frame.repaint();
 	} 
 
-	/**
-	  * Handles the key type event. Nothing is to occur
-	  * @param e 	the event object and data
-	  */
 	@Override
-	public void keyTyped(KeyEvent e) {}
-
-	/**
-	  * Handles the key release event. Nothing is to occur
-	  * @param e 	the event object and data
-	  */
-	@Override
-	public void keyReleased(KeyEvent e) {}
+	protected boolean withinCoordinates() {return false;}
 }
