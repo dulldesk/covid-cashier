@@ -21,7 +21,7 @@ public class Customer extends Character {
 	  * @param gender 	the gender of the Character chosen
 	  */
 	public Customer(String name, char gender, String equipment) {
-		super(name,"customer",gender,'w',equipment);
+		super(name,"customer",gender,'c',equipment);
     }
     /**
 	  * Loads the image files into the steps HashMap for each character subclass
