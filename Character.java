@@ -1,7 +1,7 @@
 /**
   * A character, in the game
   * 
-  * Last edit: 5/29/2020
+  * Last edit: 5/30/2020
   * @author 	Celeste
   * @version 	1.0
   * @since 		1.0
@@ -83,27 +83,19 @@ public abstract class Character {
 	protected static final int TOTAL_STEPS = 2;
 
 	/**
+	  * Holds the last time that the character's drawing was repainted. "Slows down" the movement of the character. 
+	  * <p> For more information, see the declaration of LastTrigger
+	  */
+	protected LastTrigger lastMvTime;
+
+	/**
 	  * Constructs a Character object and loads the appropriate sprites into the steps map
 	  * @param name 	the Character's name, as chosen by the user
 	  * @param type 	the name of the player sprite that was chosen
 	  * @param gender 	the gender of the Character chosen
 	  */
 	public Character(String name, String type, char gender) {
-		this.name = name;
-		this.gender = gender;
-
-		// Default values
-		this.direction = 's'; 
-		this.clothingType = 'c';
-		this.protectiveEquipment = "n";
-
-		this.x_coord = 100;
-		this.y_coord = 100;
-
-		stepNo = 0;
-
-		steps = new HashMap<String,Image>();
-		loadSprites();
+		this(name,type,gender,'c',"n");
 	}
 
 	/**
@@ -122,13 +114,14 @@ public abstract class Character {
 
 		// Default values
 		this.direction = 's';
-
 		this.x_coord = 100;
 		this.y_coord = 100;
 
 		stepNo = 0;
 
 		steps = new HashMap<String,Image>();
+ 		lastMvTime = new LastTrigger(0,direction);
+
 		loadSprites();
 	}
 
@@ -172,9 +165,8 @@ public abstract class Character {
 	  * @param step	The type of step that the character is taking
 	  */
 	public void draw(Graphics g) {
-		g.drawImage(getSprite(stepNo+1),x_coord,y_coord,null);
-		stepNo++;
 		stepNo %= TOTAL_STEPS;
+		g.drawImage(getSprite(stepNo+1),x_coord,y_coord,null);
 	}
 
 	/**
@@ -183,5 +175,58 @@ public abstract class Character {
 	  */
 	public String toString() {
 		return name;
+	}
+
+	/**
+	  * Holds data of the character's last movement. Used to determine whether to repaint the character.
+	  * 
+	  * <p> 
+	  * If the character's last movement was in a different direction or greater than the refresh rate, 
+	  * then a character should be repainted. 
+	  */
+	protected class LastTrigger {
+		/**
+		  * The last time, in nanoseconds, that the frame was repainted by a movement key binding
+		  */
+		private long time;
+		
+		/**
+		  * The player's direction of movement in the last time they moved
+		  */
+		private char direction;
+		
+		/**
+		  * The refresh rate of the player's walking, in nanoseconds
+		  * <p> After this number of nanoseconds, the frame can repaint.
+		  */
+		private final long REFRESH_RATE = (long)8e7; 
+
+		public LastTrigger (long t, char d) {
+			time = t;
+			direction = d;
+		}
+
+		public long getTime() {
+			return time;
+		}
+
+		public char getDirection() {
+			return direction;
+		}
+
+		/**
+		  * @param currDir 	the player's current direction
+		  * @return whether the panel should be repainted
+		  */
+		public boolean compareNow(char currDir) {
+			boolean shouldRefresh = direction != currDir || System.nanoTime() - time > REFRESH_RATE;
+			if (shouldRefresh) {
+				// admittedly the values will be different but this is okay
+				time = System.nanoTime();
+				direction = currDir;
+			}
+			return shouldRefresh;
+		}
+
 	}
 }

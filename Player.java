@@ -18,7 +18,7 @@ public class Player extends Character {
 	/**
 	  * Contains key bindings for moving the player around
 	  */
-	Map<String,Movement> movement;
+	private Map<String,Movement> movement;
 
 	/**
 	  * Constructs a Character object and loads the appropriate sprites into the steps map
@@ -91,35 +91,44 @@ public class Player extends Character {
 	  * Loads movements into the map of key bindings and into the main frame's input map
 	  */
 	private void loadMovement() {
+		final int DELTA_DIST = 8;
 		movement.put("player-up", new Movement(KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0), new AbstractAction() {
 		    public void actionPerformed(ActionEvent e) {
-		    	direction = 'n';
-		    	y_coord--;
-		    	CovidCashier.frame.repaint();
+		    	if (lastMvTime.compareNow('n')) {
+			    	direction = 'n';
+			    	y_coord -= DELTA_DIST;
+			    	refresh();
+		    	}
 		    }
 		}));
 
 		movement.put("player-down", new Movement(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0),new AbstractAction() {
 		    public void actionPerformed(ActionEvent e) {
-		    	direction = 's';
-		    	y_coord++;
-		    	CovidCashier.frame.repaint();
+		    	if (lastMvTime.compareNow('s')) {
+			    	direction = 's';
+			    	y_coord += DELTA_DIST;
+			    	refresh();
+		    	}
 		    }
 		}));
 
 		movement.put("player-left", new Movement(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0), new AbstractAction() {
 		    public void actionPerformed(ActionEvent e) {
-		    	direction = 'w';
-		    	x_coord--;
-		    	CovidCashier.frame.repaint();
+		    	if (lastMvTime.compareNow('w')) {
+			    	direction = 'w';
+			    	x_coord -= DELTA_DIST;
+			    	refresh();
+		    	}
 		    }
 		}));
 
 		movement.put("player-right", new Movement(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0), new AbstractAction() {
 		    public void actionPerformed(ActionEvent e) {
-		    	direction = 'e';
-		    	x_coord++;
-		    	CovidCashier.frame.repaint();
+		    	if (lastMvTime.compareNow('e')) {
+			    	direction = 'e';
+			    	x_coord += DELTA_DIST;
+			    	refresh();
+			    }
 		    }
 		}));
 
@@ -127,6 +136,11 @@ public class Player extends Character {
 		for (String key : movement.keySet()) {
 			CovidCashier.frame.getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(movement.get(key).getKeyStroke(),key);
 		}
+	}
+
+	private void refresh() {
+		stepNo++;
+    	CovidCashier.frame.repaint();
 	}
 
 	/**
