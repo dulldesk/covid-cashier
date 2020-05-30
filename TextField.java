@@ -21,7 +21,9 @@ public class TextField extends GraphicComponent {
 	/**
 	  * The actual text of the textfield
 	  */
-	protected String text; 
+	protected String text;
+
+	protected Set<Integer> activeKeys;
 
 	/**
 	  * Constructs a TextField object and activates its listeners
@@ -37,6 +39,7 @@ public class TextField extends GraphicComponent {
 		text_font = fnt;
 		height = fnt.getSize()+10;
 		text = "";
+		activeKeys = new HashSet<Integer>();
 	}
 
 	/**
@@ -90,21 +93,29 @@ public class TextField extends GraphicComponent {
 	  */
 	@Override
 	public void keyPressed(KeyEvent e) {
-	    int keyCode = e.getKeyCode();
-	    char key = ((char)keyCode+"").toLowerCase().charAt(0);
+		int keyCode = e.getKeyCode();
+		activeKeys.add(keyCode);
 
 	    if (keyCode == KeyEvent.VK_ENTER) {
 	    	hasEntered = true;
 	    } else if (text.length() > 0 && keyCode == KeyEvent.VK_BACK_SPACE) {
 	    	text = text.substring(0,text.length()-1);
-	    } else if (key == '%' || key == '\'' || key == '&' || key == '(' || key == ')' || key < ' ' || key > 'z' || CovidCashier.frame.getFontMetrics(text_font).charsWidth((text+(char)keyCode).toCharArray(),0,text.length()+1) > width-20) {
+	    } else if (keyCode != KeyEvent.VK_SPACE && (keyCode < KeyEvent.VK_A || keyCode > KeyEvent.VK_Z) || CovidCashier.frame.getFontMetrics(text_font).charsWidth((text+(char)keyCode).toCharArray(),0,text.length()+1) > width-20) {
 	    	// prevent repaint as it is redundant
 	    	return;
 	    } else {
-	    	text += (char)keyCode;
+			if(keyCode == 32 || activeKeys.contains(KeyEvent.VK_SHIFT))
+				text += (char)keyCode;
+			else
+				text += (char)(keyCode+32);
 	    }
 		CovidCashier.frame.repaint();
 	} 
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		activeKeys.remove(e.getKeyCode());
+	}
 
 	@Override
 	protected boolean withinCoordinates() {return false;}

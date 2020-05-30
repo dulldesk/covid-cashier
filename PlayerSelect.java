@@ -108,7 +108,6 @@ public class PlayerSelect extends Menu {
 			else if (stage.equals("character")) charInput(g);
 
 			testSprite.draw(g);
-			System.out.println(testSprite.getX()+" "+testSprite.getY());
 		}
 
 		/**
