@@ -107,6 +107,32 @@ public abstract class Character {
 	}
 
 	/**
+	  * Constructs a Character object and loads the appropriate sprites into the steps map
+	  * @param name 		the Character's name, as chosen by the user
+	  * @param type 		the name of the player sprite that was chosen
+	  * @param gender 		the gender of the Character chosen
+	  * @param clothing 	the clothing of the Character chosen
+	  * @param equipment	the protective equipement of the Character chosen
+	  */
+	  public Character(String name, String type, char gender, char clothing, String equipment) {
+		this.name = name;
+		this.gender = gender;
+		this.clothingType = clothing;
+		this.protectiveEquipment = equipment;
+
+		// Default values
+		this.direction = 's';
+
+		this.x_coord = 100;
+		this.y_coord = 100;
+
+		stepNo = 0;
+
+		steps = new HashMap<String,Image>();
+		loadSprites();
+	}
+
+	/**
 	  * Loads the image files into the steps HashMap for each character subclass
 	  * @param player 	the type of player
 	  */
@@ -138,22 +164,6 @@ public abstract class Character {
 
 	public int getY() {
 		return y_coord;
-	}
-
-	/**
-	  * Set player clothing
-	  * @param clothing		the clothing type
-	  */
-	  public void setClothing(char clothing) {
-		clothingType = clothing;	
-	}
-
-	/**
-	  * Set player clothing
-	  * @param equipment	the protective equipment type
-	  */
-	  public void setEquipment(String equipment) {
-		protectiveEquipment = equipment;	
 	}
 
 	/**

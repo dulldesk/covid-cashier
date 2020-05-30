@@ -32,6 +32,22 @@ public class Player extends Character {
 	}
 
 	/**
+	  * Set player clothing
+	  * @param clothing		the clothing type
+	  */
+	  public void setClothing(char clothing) {
+		clothingType = clothing;	
+	}
+
+	/**
+	  * Set player clothing
+	  * @param equipment	the protective equipment type
+	  */
+	  public void setEquipment(String equipment) {
+		protectiveEquipment = equipment;	
+	}
+
+	/**
 	  * Loads the image files into the steps HashMap for each character subclass
 	  */
 	@Override
