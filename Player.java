@@ -93,7 +93,7 @@ public class Player extends Character {
 	private void loadMovement() {
 		movement.put("player-up", new Movement(KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0), new AbstractAction() {
 		    public void actionPerformed(ActionEvent e) {
-		    	direction = 'N';
+		    	direction = 'n';
 		    	y_coord--;
 		    	CovidCashier.frame.repaint();
 		    }
@@ -101,7 +101,7 @@ public class Player extends Character {
 
 		movement.put("player-down", new Movement(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0),new AbstractAction() {
 		    public void actionPerformed(ActionEvent e) {
-		    	direction = 'S';
+		    	direction = 's';
 		    	y_coord++;
 		    	CovidCashier.frame.repaint();
 		    }
@@ -109,7 +109,7 @@ public class Player extends Character {
 
 		movement.put("player-left", new Movement(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0), new AbstractAction() {
 		    public void actionPerformed(ActionEvent e) {
-		    	direction = 'W';
+		    	direction = 'w';
 		    	x_coord--;
 		    	CovidCashier.frame.repaint();
 		    }
@@ -117,7 +117,7 @@ public class Player extends Character {
 
 		movement.put("player-right", new Movement(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0), new AbstractAction() {
 		    public void actionPerformed(ActionEvent e) {
-		    	direction = 'E';
+		    	direction = 'e';
 		    	x_coord++;
 		    	CovidCashier.frame.repaint();
 		    }
