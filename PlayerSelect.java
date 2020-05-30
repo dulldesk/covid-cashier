@@ -84,7 +84,7 @@ public class PlayerSelect extends Menu {
 		public SelectionDrawing() {
 			super();
 			field.activate();
-			testSprite = new Player("A", 'F');
+			testSprite = new Player("A", 'M');
       
 			// The first stage is name selection
 			stage = "name";
