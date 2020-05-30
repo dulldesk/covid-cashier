@@ -80,7 +80,7 @@ public abstract class Character {
 	/**
 	  * The number of types of steps for a sprite's direction of movement
 	  */
-	protected static final int TOTAL_STEPS = 2;
+	protected static final int TOTAL_STEPS = 4;
 
 	/**
 	  * Holds the last time that the character's drawing was repainted. "Slows down" the movement of the character. 
@@ -166,7 +166,7 @@ public abstract class Character {
 	  */
 	public void draw(Graphics g) {
 		stepNo %= TOTAL_STEPS;
-		g.drawImage(getSprite(stepNo+1),x_coord,y_coord,null);
+		g.drawImage(getSprite(stepNo),x_coord,y_coord,null);
 	}
 
 	/**
