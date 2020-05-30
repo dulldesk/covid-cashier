@@ -97,8 +97,8 @@ public abstract class Character {
 		this.clothingType = 'c';
 		this.protectiveEquipment = 'n';
 
-		this.x_coord = 0;
-		this.y_coord = 0;
+		this.x_coord = 100;
+		this.y_coord = 100;
 
 		stepNo = 0;
 
@@ -132,6 +132,14 @@ public abstract class Character {
 		y_coord = y;		
 	}
 
+	public int getX() {
+		return x_coord;
+	}
+
+	public int getY() {
+		return y_coord;
+	}
+
 	/**
 	  * Draws the character to the window
 	  * @param g 	The Graphics object to draw on
@@ -139,7 +147,6 @@ public abstract class Character {
 	  */
 	public void draw(Graphics g) {
 		g.drawImage(getSprite(stepNo+1),x_coord,y_coord,null);
-
 		stepNo++;
 		stepNo %= TOTAL_STEPS;
 	}

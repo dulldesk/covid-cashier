@@ -1,7 +1,7 @@
 /**
   * The character selection screen
   * 
-  * Last edit: 5/28/2020
+  * Last edit: 5/29/2020
   * @author 	Celeste, Eric
   * @version 	1.0
   * @since 		1.0
@@ -76,7 +76,7 @@ public class PlayerSelect extends Menu {
 		/**
 	  	  * ---
 		  */
-		private Player player;
+		private Player testSprite;
 
 		/**
 		  * Object constructor. Uses the superclass's constructor and initializes fields.
@@ -84,9 +84,11 @@ public class PlayerSelect extends Menu {
 		public SelectionDrawing() {
 			super();
 			field.activate();
-			player = new Player("A", 'M');
+			testSprite = new Player("A", 'F');
 			// The first stage is name selection
 			stage = "name";
+
+			testSprite.activate();
 		}
 
 		/**
@@ -104,7 +106,8 @@ public class PlayerSelect extends Menu {
 			if (stage.equals("name")) nameInput(g);
 			else if (stage.equals("character")) charInput(g);
 
-			player.draw(g);
+			testSprite.draw(g);
+			System.out.println(testSprite.getX()+" "+testSprite.getY());
 		}
 
 		/**
@@ -149,7 +152,7 @@ public class PlayerSelect extends Menu {
 			}
 
 			// force refresh
-			repaint();
+			// repaint();
 		}
 
 		/**
