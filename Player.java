@@ -58,7 +58,7 @@ public class Player extends Character {
 	  */
 	public void activate() {
 		for (String key : movement.keySet()) {
-			((JComponent)(CovidCashier.frame.getContentPane())).getActionMap().put(key,movement.get(key).getAction());
+			CovidCashier.frame.getRootPane().getActionMap().put(key,movement.get(key).getAction());
 		}
 	}
 
@@ -67,7 +67,7 @@ public class Player extends Character {
 	  */
 	public void deactivate() {
 		for (String key : movement.keySet()) {
-			((JComponent)(CovidCashier.frame.getContentPane())).getActionMap().put(key,null);
+			CovidCashier.frame.getRootPane().getActionMap().put(key,null);
 		}
 	}
 
@@ -78,14 +78,16 @@ public class Player extends Character {
 		movement.put("player-up", new Movement(KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0), new AbstractAction() {
 		    public void actionPerformed(ActionEvent e) {
 		    	direction = 'N';
-		    	y_coord++;
+		    	y_coord--;
+		    	CovidCashier.frame.repaint();
 		    }
 		}));
 
 		movement.put("player-down", new Movement(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0),new AbstractAction() {
 		    public void actionPerformed(ActionEvent e) {
 		    	direction = 'S';
-		    	y_coord--;
+		    	y_coord++;
+		    	CovidCashier.frame.repaint();
 		    }
 		}));
 
@@ -93,6 +95,7 @@ public class Player extends Character {
 		    public void actionPerformed(ActionEvent e) {
 		    	direction = 'W';
 		    	x_coord--;
+		    	CovidCashier.frame.repaint();
 		    }
 		}));
 
@@ -100,12 +103,13 @@ public class Player extends Character {
 		    public void actionPerformed(ActionEvent e) {
 		    	direction = 'E';
 		    	x_coord++;
+		    	CovidCashier.frame.repaint();
 		    }
 		}));
 
 		// Loads the movements into the main frame's input map
 		for (String key : movement.keySet()) {
-			((JComponent)(CovidCashier.frame.getContentPane())).getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(movement.get(key).getKeyStroke(),key);
+			CovidCashier.frame.getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(movement.get(key).getKeyStroke(),key);
 		}
 	}
 

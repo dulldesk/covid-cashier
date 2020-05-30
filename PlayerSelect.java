@@ -76,7 +76,7 @@ public class PlayerSelect extends Menu {
 		/**
 	  	  * ---
 		  */
-		private Character testSprite;
+		private Player testSprite;
 
 		/**
 		  * Object constructor. Uses the superclass's constructor and initializes fields.
@@ -84,9 +84,12 @@ public class PlayerSelect extends Menu {
 		public SelectionDrawing() {
 			super();
 			field.activate();
-			testSprite = new Customer("A", 'F');
+			testSprite = new Player("A", 'F');
+      
 			// The first stage is name selection
 			stage = "name";
+
+			testSprite.activate();
 		}
 
 		/**
@@ -105,6 +108,7 @@ public class PlayerSelect extends Menu {
 			else if (stage.equals("character")) charInput(g);
 
 			testSprite.draw(g);
+			System.out.println(testSprite.getX()+" "+testSprite.getY());
 		}
 
 		/**
@@ -149,7 +153,7 @@ public class PlayerSelect extends Menu {
 			}
 
 			// force refresh
-			repaint();
+			// repaint();
 		}
 
 		/**
