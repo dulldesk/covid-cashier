@@ -1,9 +1,9 @@
 /**
   * Stores stylistic and user selection data
   * 
-  * Last edit: 5/25/2020
-  * @author 	Celeste
-  * @version 	1.0
+  * Last edit: 5/29/2020
+  * @author 	Celeste, Eric
+  * @version 	1.1
   * @since 		1.0
   */
 

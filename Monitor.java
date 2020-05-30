@@ -1,8 +1,8 @@
 /**
   * Stores data of and draws a monitor
   * 
-  * Last edit: 5/26/2020
-  * @author 	Celeste
+  * Last edit: 5/29/2020
+  * @author 	Celeste, Eric
   * @version 	1.0
   * @since 		1.0
   */

@@ -1,7 +1,7 @@
 /**
   * A menu screen
   * 
-  * Last edit: 5/26/2020
+  * Last edit: 5/29/2020
   * @author 	Celeste, Eric
   * @version 	1.0
   * @since 		1.0

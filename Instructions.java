@@ -1,8 +1,8 @@
 /**
   * The instructions screen
   * 
-  * Last edit: 5/26/2020
-  * @author 	Celeste
+  * Last edit: 5/28/2020
+  * @author 	Celeste, Eric
   * @version 	1.0
   * @since 		1.0
   */
@@ -102,10 +102,7 @@ public class Instructions extends Menu {
 			// 	firstTime = false;
 			// }
 
-			// temporary background
-			Color LIGHT_BLUE = new Color(233, 255, 251);
-			g.setColor(LIGHT_BLUE);
-			g.fillRect(0,0,Style.FRAME_WIDTH,Style.FRAME_HEIGHT);
+			g.drawImage(Style.loadImage("Register_Screen.png",Style.FRAME_WIDTH,Style.FRAME_HEIGHT),0,0,null);
 
 			g.setColor(Color.black);
 			g.setFont(Style.TITLE_FONT);
