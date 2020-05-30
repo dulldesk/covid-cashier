@@ -46,7 +46,7 @@ public abstract class Character {
 	/**
 	  * The type of personal protective equipment the character currently wearing, denotated by the first character of said type. 
 	  */
-	protected char protectiveEquipment;
+	protected String protectiveEquipment;
 
 	/**
 	  * The image sprites to be used for a character's movement.
@@ -86,7 +86,7 @@ public abstract class Character {
 	  * Constructs a Character object and loads the appropriate sprites into the steps map
 	  * @param name 	the Character's name, as chosen by the user
 	  * @param type 	the name of the player sprite that was chosen
-	  * @param gender 	the geneder of the Character chosen
+	  * @param gender 	the gender of the Character chosen
 	  */
 	public Character(String name, String type, char gender) {
 		this.name = name;
@@ -95,7 +95,7 @@ public abstract class Character {
 		// Default values
 		this.direction = 's'; 
 		this.clothingType = 'c';
-		this.protectiveEquipment = 'n';
+		this.protectiveEquipment = "n";
 
 		this.x_coord = 100;
 		this.y_coord = 100;
@@ -138,6 +138,22 @@ public abstract class Character {
 
 	public int getY() {
 		return y_coord;
+	}
+
+	/**
+	  * Set player clothing
+	  * @param clothing		the clothing type
+	  */
+	  public void setClothing(char clothing) {
+		clothingType = clothing;	
+	}
+
+	/**
+	  * Set player clothing
+	  * @param equipment	the protective equipment type
+	  */
+	  public void setEquipment(String equipment) {
+		protectiveEquipment = equipment;	
 	}
 
 	/**

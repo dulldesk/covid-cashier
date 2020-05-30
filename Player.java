@@ -1,8 +1,8 @@
 /**
   * A player character
   * 
-  * Last edit: 5/28/2020
-  * @author 	Celeste
+  * Last edit: 5/29/2020
+  * @author 	Celeste, Eric
   * @version 	1.1
   * @since 		1.0
   */
@@ -23,7 +23,7 @@ public class Player extends Character {
 	/**
 	  * Constructs a Character object and loads the appropriate sprites into the steps map
 	  * @param name 	the Character's name, as chosen by the user
-	  * @param gender 	the geneder of the Character chosen
+	  * @param gender 	the gender of the Character chosen
 	  */
 	public Player(String name, char gender) {
 		super(name,"player",gender);
@@ -33,7 +33,6 @@ public class Player extends Character {
 
 	/**
 	  * Loads the image files into the steps HashMap for each character subclass
-	  * @param player 	the type of player
 	  */
 	@Override
 	protected void loadSprites() {

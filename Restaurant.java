@@ -4,7 +4,7 @@
   * Last edit: 5/29/2020
   * @author 	Celeste
   * @version 	1.0
-  * @since 		1.1
+  * @since 		1.0
   */
 
 import java.awt.*;

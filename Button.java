@@ -1,7 +1,7 @@
 /**
   * Clickable button for Swing Graphics.
   * 
-  * Last edit: 5/25/2020
+  * Last edit: 5/29/2020
   * @author 	Celeste, Eric
   * @version 	1.0
   * @since 		1.0
