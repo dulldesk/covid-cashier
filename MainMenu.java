@@ -10,6 +10,7 @@
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import javax.swing.Timer;
 import java.util.*;
 
 public class MainMenu extends Menu {
@@ -54,8 +55,16 @@ public class MainMenu extends Menu {
 	  * GUI for the instructions
 	  */
 	public class MainMenuDrawing extends MenuDrawing {
-
+		/**
+		 * Temporary order number
+		 */
 		int orderNumber = (int)(Math.random()*1000000);
+
+		/**
+		 * Timer
+		 */
+		Timer timer;
+
 		/**
 		  * Object constructor. Uses the superclass's constructor
 		  */
@@ -85,7 +94,8 @@ public class MainMenu extends Menu {
 			centerAlignStr(g, "222 Corona St.", 190, 98);
 			centerAlignStr(g, days[date.get(Calendar.DAY_OF_WEEK)]+" "+
 					String.format("%02d",date.get(Calendar.MONTH)+1)+"/"+String.format("%02d",date.get(Calendar.DATE))+"/"+date.get(Calendar.YEAR)+" "+
-					String.format("%02d",date.get(Calendar.HOUR))+":"+String.format("%02d",date.get(Calendar.MINUTE))+" "+(date.get(Calendar.AM_PM)==0?"AM":"PM"), 180, 116);
+					String.format("%02d",date.get(Calendar.HOUR))+":"+String.format("%02d",date.get(Calendar.MINUTE))+" "+
+					(date.get(Calendar.AM_PM)==0?"AM":"PM"), 180, 116);
 			centerAlignStr(g, "========================", 170, 132);
 			centerAlignStr(g, "** ORDER#: "+String.format("%06d",orderNumber)+" **", 170, 148);
 			g.drawString("1   PANDEMIC", 100, 180);
@@ -112,6 +122,7 @@ public class MainMenu extends Menu {
 					// System.out.println("here "+btn.getName());
 				} 
 			}
+			refreshScreen();
 		}
 
 		/**
@@ -121,6 +132,19 @@ public class MainMenu extends Menu {
 		@Override
 		public int getTitleY() {
 			return titleY;
+		}
+
+		public void refreshScreen() {
+			timer = new Timer(0, new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					repaint();
+				}
+			});
+			timer.setRepeats(true);
+			//Aprox. 60 FPS
+			timer.setDelay(17);
+			timer.start();
 		}
 	}
 }
