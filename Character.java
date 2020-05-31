@@ -199,7 +199,7 @@ public abstract class Character {
 		  * The refresh rate of the player's walking, in nanoseconds
 		  * <p> After this number of nanoseconds, the frame can repaint.
 		  */
-		private final long REFRESH_RATE = (long)6e7; 
+		private final long REFRESH_RATE = (long)6.5e7; 
 
 		public LastTrigger (long t, char d) {
 			time = t;
