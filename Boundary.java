@@ -31,6 +31,13 @@ public class Boundary extends GraphicComponent {
 	@Override
 	public void draw(Graphics g) {}
 
+	/**
+	  * @param figure 	the Character to detect collision for
+	  * @return whether a given Character has collided with this boundary object
+	  */
+	public boolean isColliding(Character figure) {
+		return figure.getX() + Character.WIDTH > x_coord && figure.getX() <= x_coord + width && figure.getY() + Character.HEIGHT > y_coord && figure.getY() <= y_coord + height;
+	}
 
 	/**
 	  * Checks whether the user's mouse is within the boundaries of this boundary object

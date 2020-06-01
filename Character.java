@@ -166,7 +166,18 @@ public abstract class Character {
 	  */
 	public void draw(Graphics g) {
 		stepNo %= TOTAL_STEPS;
-		g.drawImage(getSprite(stepNo),x_coord,y_coord,null);
+		g.drawImage(getSprite(stepNo), x_coord, y_coord % Style.FRAME_HEIGHT, null);
+	}
+	
+	/** 
+	  * @param boundaries 	a list of Boundary objects that may be collided with
+	  * @return whether the character has collided with a boundary object
+	  */
+	public boolean hasCollided(java.util.List<Boundary> boundaries) {
+		for (Boundary bnd : boundaries) {
+			 if (bnd.isColliding(this)) return true;
+		}
+		return false;
 	}
 
 	/**

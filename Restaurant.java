@@ -17,6 +17,11 @@ public class Restaurant {
 	  * The map image
 	  */
 	private final Image MAP;
+
+	/**
+	  * The map height
+	  */
+	private final int MAP_HEIGHT = 900;
 	
 	/**
 	  * Whether the user has selected the training level
@@ -27,23 +32,34 @@ public class Restaurant {
 
 	public Character user;
 
-	public ArrayList<Station> stations;
+	private ArrayList<Station> stations;
+
+	private ArrayList<Boundary> furniture;
+
 	
 	public Restaurant(boolean training) {
-		MAP = Style.loadImage("map.png",Style.FRAME_WIDTH,Style.FRAME_HEIGHT);
+		MAP = Style.loadImage("map.png",Style.FRAME_WIDTH,MAP_HEIGHT);
 		inTraining = training;
 
 		user = new Player(User.name, User.gender);
+
+		// initial position
 		user.setCoordinates(0,100);
 
 		stations = new ArrayList<Station>();
+		furniture = new ArrayList<Boundary>();
 		loadStations();
+		loadFurnitureBoundaries();
 
 		workplace = new RestaurantDrawing();
 		Style.changeDrawing(workplace);
 	}
 
 	private void loadStations() {
+
+	}
+
+	private void loadFurnitureBoundaries() {
 
 	}
 
@@ -69,7 +85,7 @@ public class Restaurant {
 		public void paintComponent(Graphics g) {
 			super.paintComponent(g);
 			
-			// user.draw(g);
+			// if (!hasCollided(furniture)) user.draw(g);
 			
 		}
 	}
