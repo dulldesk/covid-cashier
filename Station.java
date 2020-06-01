@@ -47,6 +47,4 @@ public class Station extends Boundary {
 	public void deactivate() {
 		super.deactivate(true,false);
 	}
-
-	}
 }
