@@ -1,7 +1,7 @@
 /**
   * Stores stylistic and user selection data
   * 
-  * Last edit: 5/29/2020
+  * Last edit: 6/1/2020
   * @author 	Celeste, Eric
   * @version 	1.1
   * @since 		1.0
@@ -94,5 +94,15 @@ public final class Style {
 		bGr.drawImage(img, 0, 0, null);
 		bGr.dispose();
     	return bImage;
+	}
+
+	/**
+	  * Returns the width of a String based on a given Graphics object
+	  * @param g 	the Graphics object whose current font is to be used
+	  * @param text the String to get the width of
+	  * @return the width of the String, in pixels
+	  */
+	public static int getStringWidth(String text, Graphics g) {
+		return g.getFontMetrics().charsWidth(text.toCharArray(),0,text.length());
 	}
 }
