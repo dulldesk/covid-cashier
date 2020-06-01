@@ -30,7 +30,7 @@ public class Customer extends Character {
 	protected void loadSprites() {
 		String[][] keys = {{"s", "e", "n", "w"},
 						{"1", "2", "3", "4"}};
-		Image spritesheet = Style.loadImage("Customer"+(gender=='M'?1:2)+".png",(int)(1536/4.8),(int)(2048/4.8));
+		Image spritesheet = Style.loadImage("Customer"+(gender=='M'?1:2)+".png",(int)(2048/4.8),(int)(2048/4.8));
 		for(int y = 0; y < 4; y++) {
 			for(int x = 0; x < 4; x++) {
 				String key = keys[0][y]+"-"+keys[1][x]+"-c-"+(gender=='M'?"n":"m");
