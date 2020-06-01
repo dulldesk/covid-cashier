@@ -92,7 +92,7 @@ public class Player extends Character {
 	  * Loads movements into the map of key bindings and into the main frame's input map
 	  */
 	private void loadMovement() {
-		final int DELTA_DIST = 8;
+		final int DELTA_DIST = 10;
 		movement.put("player-up", new Movement(KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0), new AbstractAction() {
 		    public void actionPerformed(ActionEvent e) {
 		    	if (lastMvTime.compareNow('n')) {

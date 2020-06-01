@@ -127,7 +127,6 @@ public abstract class Character {
 
 	/**
 	  * Loads the image files into the steps HashMap for each character subclass
-	  * @param player 	the type of player
 	  */
 	protected abstract void loadSprites();
 
@@ -139,7 +138,6 @@ public abstract class Character {
 	protected Image getSprite(int step) {
 		return steps.get(direction+"-"+(step+1)+"-"+clothingType+"-"+protectiveEquipment);
 	}
-
 
 	/**
 	  * Set player coordinates
@@ -181,7 +179,6 @@ public abstract class Character {
 	}
 
 	/**
-	  * Provides the character's name
 	  * @return the name of the character
 	  */
 	public String toString() {
