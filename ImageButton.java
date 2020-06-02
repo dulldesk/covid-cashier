@@ -79,13 +79,11 @@ public class ImageButton extends Button {
 	    	if (isHovered) {
 				g.drawImage(icon_enlarged,x_coord-enlargeDiff/2,y_coord-enlargeDiff/2,null);
 				g.setFont(text_font.deriveFont(text_font.getSize()*1.1F));
-				if (!name.trim().equals(""))
-					g.drawString(name,x_coord+icon.getWidth(null)/2-g.getFontMetrics().charsWidth(name.toCharArray(),0,name.length())/2,y_coord+icon.getHeight(null)+60);
 	    	} else {
 				g.drawImage(icon,x_coord,y_coord,null);
-				if (!name.trim().equals(""))
-					g.drawString(name,x_coord+icon.getWidth(null)/2-g.getFontMetrics().charsWidth(name.toCharArray(),0,name.length())/2,y_coord+icon.getHeight(null)+60);
 	    	}
+			if (!name.trim().equals(""))
+				g.drawString(name,x_coord+icon.getWidth(null)/2-Style.getStringWidth(name,g)/2,y_coord+icon.getHeight(null)+60);
 		} catch (Exception e) {}
 	}
 

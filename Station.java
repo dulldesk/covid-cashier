@@ -3,7 +3,7 @@
   * 
   * <p>The station is "represented" as an imaginary rectangle that detects hover / click events 
   * 
-  * Last edit: 5/29/2020
+  * Last edit: 6/1/2020
   * @author 	Celeste
   * @version 	1.0
   * @since 		1.0
@@ -12,7 +12,9 @@
 import java.awt.*;
 import javax.swing.*;
 
-public class Station extends GraphicComponent {
+public class Station extends Boundary {
+	private StationDrawing drawing;
+
 	/**
 	  * Constructs a station
 	  * @param name 	the name of the station
@@ -22,14 +24,8 @@ public class Station extends GraphicComponent {
 	  * @param h 		height of the station 
 	  */
 	public Station(String name, int x, int y, int w, int h) {
-		x_coord = x;
-		y_coord = y;
-		width = w;
-		height = h;
+		super(name,x,y,w,h);
 		this.name = name;
-
-		// no text font
-		text_font = null;
 
 		isClicked = false;
 		isHovered = false;
@@ -39,29 +35,16 @@ public class Station extends GraphicComponent {
 	public void draw(Graphics g) {}
 
 	/**
-	  * Activates the station's listeners. It will listen for click and hover events.
+	  * Activates click and hover listeners. 
 	  */
 	public void activate() {
 		super.activate(true,false);
 	}
 
 	/**
-	  * Deativates the station's listeners. It will cease to listen for click and hover events.
+	  * Deativates click and hover listeners.
 	  */
 	public void deactivate() {
 		super.deactivate(true,false);
-	}
-
-	/**
-	  * Check whether the user's mouse is within the boundaries of this station
-	  * @return whether the mouse is within the boundaries of this station
-	  */
-	@Override
-	protected boolean withinCoordinates() {
-		try {
-			Point pnt = CovidCashier.frame.getMousePosition();
-			return pnt.x > x_coord && pnt.y > y_coord && pnt.x < x_coord + width && pnt.y < y_coord + height;
-		} catch (Exception e) {}
-		return false;
 	}
 }

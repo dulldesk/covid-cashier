@@ -71,6 +71,8 @@ public abstract class GraphicComponent implements MouseMotionListener, MouseList
 
 	/**
 	  * Activates the component's listeners and the like
+	  * @param mouse 	whether to listen for mouse events
+	  * @param key 	 	whether to listen for key events
 	  */
 	public void activate(boolean mouse, boolean key) {
 		if (mouse) {
@@ -84,6 +86,8 @@ public abstract class GraphicComponent implements MouseMotionListener, MouseList
 
 	/**
 	  * Deativates the components's listeners and the like
+	  * @param mouse 	whether to stop listening for mouse events
+	  * @param key 	 	whether to stop listening for key events
 	  */
 	public void deactivate(boolean mouse, boolean key) {
 		if (mouse) {

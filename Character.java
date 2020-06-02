@@ -127,7 +127,6 @@ public abstract class Character {
 
 	/**
 	  * Loads the image files into the steps HashMap for each character subclass
-	  * @param player 	the type of player
 	  */
 	protected abstract void loadSprites();
 
@@ -139,7 +138,6 @@ public abstract class Character {
 	protected Image getSprite(int step) {
 		return steps.get(direction+"-"+(step+1)+"-"+clothingType+"-"+protectiveEquipment);
 	}
-
 
 	/**
 	  * Set player coordinates
@@ -166,11 +164,21 @@ public abstract class Character {
 	  */
 	public void draw(Graphics g) {
 		stepNo %= TOTAL_STEPS;
-		g.drawImage(getSprite(stepNo),x_coord,y_coord,null);
+		g.drawImage(getSprite(stepNo), x_coord, y_coord % Style.FRAME_HEIGHT, null);
+	}
+	
+	/** 
+	  * @param boundaries 	a list of Boundary objects that may be collided with
+	  * @return whether the character has collided with a boundary object
+	  */
+	public boolean hasCollided(java.util.List<Boundary> boundaries) {
+		for (Boundary bnd : boundaries) {
+			 if (bnd.isColliding(this)) return true;
+		}
+		return false;
 	}
 
 	/**
-	  * Provides the character's name
 	  * @return the name of the character
 	  */
 	public String toString() {

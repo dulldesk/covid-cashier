@@ -128,7 +128,7 @@ public class Instructions extends Menu {
 			int row=1;
 			String [] words = info.split(" ");
 			for (String word : words) {
-				if (g.getFontMetrics().charsWidth(line.toCharArray(),0,line.length()) > nodeWidth) {
+				if (Style.getStringWidth(line,g) > nodeWidth) {
 					g.drawString(line,leftAlign,titleY+(int)(row*1.5*Style.TEXT_FONT.getSize()));
 					line = "";
 					row++;
