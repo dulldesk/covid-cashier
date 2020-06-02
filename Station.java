@@ -13,7 +13,7 @@ import java.awt.*;
 import javax.swing.*;
 
 public class Station extends Boundary {
-	private StationDrawing drawing;
+	// private StationDrawing drawing;
 
 	/**
 	  * Constructs a station
@@ -24,7 +24,7 @@ public class Station extends Boundary {
 	  * @param h 		height of the station 
 	  */
 	public Station(String name, int x, int y, int w, int h) {
-		super(name,x,y,w,h);
+		super(x,y,w,h);
 		this.name = name;
 
 		isClicked = false;
