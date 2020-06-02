@@ -63,7 +63,6 @@ public class Player extends Character {
 				for(int x = 0; x < 4; x++) {
 					String key = keys[0][y]+"-"+keys[1][x]+"-"+(s==0?keys[2][0]:keys[2][1])+"-"+(s>1?keys[3][s-1]:keys[3][0]);
 					BufferedImage sprite = Style.toBufferedImage(spritesheet).getSubimage((int)(x*512/4.8), (int)(y*512/4.8), (int)(512/4.8), (int)(512/4.8));
-					System.out.println(key);
 					steps.put(key, sprite);
 				}
 			}
