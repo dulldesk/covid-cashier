@@ -21,7 +21,7 @@ public class Customer extends Character {
 	  * @param gender 	the gender of the Character chosen
 	  */
 	public Customer(String name, char gender, String equipment) {
-		super(name,"customer",gender,'c',equipment);
+		super(name,"customer",gender,'C',equipment);
     }
     /**
 	  * Loads the image files into the steps HashMap for each character subclass
@@ -30,10 +30,10 @@ public class Customer extends Character {
 	protected void loadSprites() {
 		String[][] keys = {{"s", "e", "n", "w"},
 						{"1", "2", "3", "4"}};
-		Image spritesheet = Style.loadImage("Customer"+(gender=='M'?1:2)+".png",(int)(2048/4.8),(int)(2048/4.8));
+		Image spritesheet = Style.loadImage("Customer"+gender+".png",(int)(2048/4.8),(int)(2048/4.8));
 		for(int y = 0; y < 4; y++) {
 			for(int x = 0; x < 4; x++) {
-				String key = keys[0][y]+"-"+keys[1][x]+"-c-"+(gender=='M'?"n":"m");
+				String key = keys[0][y]+"-"+keys[1][x]+"-C-"+(gender=='M'?"N":"M");
                 BufferedImage sprite = Style.toBufferedImage(spritesheet).getSubimage((int)(x*512/4.8), (int)(y*512/4.8), (int)(512/4.8), (int)(512/4.8));
                 steps.put(key, sprite);
             }

@@ -95,7 +95,7 @@ public abstract class Character {
 	  * @param gender 	the gender of the Character chosen
 	  */
 	public Character(String name, String type, char gender) {
-		this(name,type,gender,'c',"n");
+		this(name,type,gender,'C',"N");
 	}
 
 	/**
@@ -113,7 +113,7 @@ public abstract class Character {
 		this.protectiveEquipment = equipment;
 
 		// Default values
-		this.direction = 's';
+		this.direction = 'S';
 		this.x_coord = 100;
 		this.y_coord = 100;
 
