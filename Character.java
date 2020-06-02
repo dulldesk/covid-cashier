@@ -19,7 +19,7 @@ public abstract class Character {
 	protected String name;
 
 	/**
-	  * The character's gender, represented by its first character
+	  * The character's gender, represented by its first character (capitalized)
 	  */
 	protected char gender;
 
@@ -39,12 +39,12 @@ public abstract class Character {
 	protected char direction;
 
 	/**
-	  * The type of clothing that the character currently wearing, denotated by the first character of said type. 
+	  * The type of clothing that the character currently wearing, denotated by the first character of said type (capitalized)
 	  */
 	protected char clothingType;
 
 	/**
-	  * The type of personal protective equipment the character currently wearing, denotated by the first character of said type. 
+	  * The type of personal protective equipment the character currently wearing, denotated by the first character of said type (capitalized)
 	  */
 	protected String protectiveEquipment;
 
@@ -55,7 +55,7 @@ public abstract class Character {
 	  *   <li> d is the direction that the character is facing (north, south, east, or west)
 	  *   <li> s is the type of step that the character is taking (a natural number)
 	  *   <li> c is the type of clothing to be drawn (casual or work). 
-	  *   <li> p specifies the personal protective equipment that the player has (mask and/or gloves). Represented by the addition of a character (m, g, or mg). 
+	  *   <li> p specifies the personal protective equipment that the player has (mask and/or gloves). Represented by the addition of a character (M, G, or MG). 
 	  * </ul>
 	  * <p> Optional parameters are denoted by [] in the key. 
 	  * <p> The value of each key is the corresponding image represented by the key. 
@@ -156,6 +156,11 @@ public abstract class Character {
 	public int getY() {
 		return y_coord;
 	}
+
+	/**
+	  * @return the type of character (i.e. its image file name)
+	  */
+	public abstract String getType();
 
 	/**
 	  * Draws the character to the window

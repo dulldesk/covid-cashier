@@ -22,6 +22,7 @@ public class Coworker extends Character {
 	public Coworker(String name) {
         super(name,"coworker",'M','w',"mg");
     }
+
     /**
 	  * Loads the image files into the steps HashMap for each character subclass
 	  */
@@ -31,11 +32,19 @@ public class Coworker extends Character {
             {"1", "2", "3", "4"}};
 		Image spritesheet = Style.loadImage("Coworker.png",(int)(2048/4.8),(int)(2048/4.8));
 		for(int y = 0; y < 4; y++) {
-		  for(int x = 0; x < 4; x++) {
+			for(int x = 0; x < 4; x++) {
 				String key = keys[0][y]+"-"+keys[1][x]+"-w-mg";
                 BufferedImage sprite = Style.toBufferedImage(spritesheet).getSubimage((int)(x*512/4.8), (int)(y*512/4.8), (int)(512/4.8), (int)(512/4.8));
                 steps.put(key, sprite);
             }
         }
+	}
+
+	/**
+	  * @return the type of character (i.e. its image file name)
+	  */
+	@Override
+	public String getType() {
+		return "Coworker";
 	}
 }

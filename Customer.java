@@ -39,4 +39,12 @@ public class Customer extends Character {
             }
         }
 	}
+
+	/**
+	  * @return the type of character (i.e. its image file name)
+	  */
+	@Override
+	public String getType() {
+		return "Customer" + gender;
+	}
 }

@@ -54,8 +54,8 @@ public class Player extends Character {
 	protected void loadSprites() {
 		String[][] keys = {{"s", "e", "n", "w"},
 						{"1", "2", "3", "4"},
-						{"c", "w"},
-						{"n", "m", "g", "mg"}};
+						{"C", "W"},
+						{"N", "M", "G", "MG"}};
 		String[] imgs = {"C", "W", "W_M", "W_G", "W_MG"};
 		for(int s = 0; s < 5; s++) {
 			Image spritesheet = Style.loadImage("Player"+gender+"_"+imgs[s]+".png",(int)(2048/4.8),(int)(2048/4.8));
@@ -63,11 +63,18 @@ public class Player extends Character {
 				for(int x = 0; x < 4; x++) {
 					String key = keys[0][y]+"-"+keys[1][x]+"-"+(s==0?keys[2][0]:keys[2][1])+"-"+(s>1?keys[3][s-1]:keys[3][0]);
 					BufferedImage sprite = Style.toBufferedImage(spritesheet).getSubimage((int)(x*512/4.8), (int)(y*512/4.8), (int)(512/4.8), (int)(512/4.8));
-					System.out.println(key);
 					steps.put(key, sprite);
 				}
 			}
 		}
+	}
+
+	/**
+	  * @return the type of character (i.e. its image file name)
+	  */
+	@Override
+	public String getType() {
+		return "Player" + gender + "_" + clothingType + (protectiveEquipment.equals("N") ? "" : "_" + protectiveEquipment);
 	}
 
 	/**
