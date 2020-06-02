@@ -97,6 +97,16 @@ public final class Style {
 	}
 
 	/**
+	  * Returns the width of a String based on a given Font
+	  * @param f 	the font to use for the text
+	  * @param text the String to get the width of
+	  * @return the width of the String, in pixels
+	  */
+	public static int getStringWidth(String text, Font f) {
+		return (new JPanel()).getFontMetrics(f).charsWidth(text.toCharArray(),0,text.length());
+	}
+
+	/**
 	  * Returns the width of a String based on a given Graphics object
 	  * @param g 	the Graphics object whose current font is to be used
 	  * @param text the String to get the width of
