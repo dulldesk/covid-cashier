@@ -35,7 +35,7 @@ public class Instructions extends Menu {
 	public Instructions() {
 		info = "";
 		try {
-			BufferedReader br = new BufferedReader(new InputStreamReader(Style.class.getResourceAsStream("src/text/instructions.md")));
+			BufferedReader br = Style.getBufferedReader("instructions.md");
 			
 			// skip heading
 			br.readLine();

@@ -84,7 +84,7 @@ public final class Style {
 
 	/**
 	  * Changes and updates the frame
-	  * @param drawing 		the component to be updated to
+	  * @param img 		the Image to "cast"
 	  */
 	public static BufferedImage toBufferedImage(Image img) {
 		if (img instanceof BufferedImage)
@@ -94,6 +94,15 @@ public final class Style {
 		bGr.drawImage(img, 0, 0, null);
 		bGr.dispose();
     	return bImage;
+	}
+
+	/**
+	  * Creates a BufferedReader from a given file
+	  * @param name 	the name of the file, including the extension
+	  * @return a BufferedReader object of the given file
+	  */
+	public static BufferedReader getBufferedReader(String name) {
+		return new BufferedReader(new InputStreamReader(Style.class.getResourceAsStream("src/text/" + name)));
 	}
 
 	/**
