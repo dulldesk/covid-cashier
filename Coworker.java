@@ -28,16 +28,16 @@ public class Coworker extends Character {
 	    */
 		@Override
 		protected void loadSprites() {
-			String[][] keys = {{"s", "e", "n", "w"},
-	            {"1", "2", "3", "4"}};
-			Image spritesheet = Style.loadImage("Coworker.png",(int)(2048/4.8),(int)(2048/4.8));
-			for(int y = 0; y < 4; y++) {
-				for(int x = 0; x < 4; x++) {
-					String key = keys[0][y]+"-"+keys[1][x]+"-W-MG";
-	                BufferedImage sprite = Style.toBufferedImage(spritesheet).getSubimage((int)(x*512/4.8), (int)(y*512/4.8), (int)(512/4.8), (int)(512/4.8));
-	                steps.put(key, sprite);
-	            }
-	        }
+        String[][] keys = {{"s", "e", "n", "w"},
+                        {"1", "2", "3", "4"}};
+        Image spritesheet = Utility.loadImage("Coworker.png",(int)(2048/4.8),(int)(2048/4.8));
+        for(int y = 0; y < 4; y++) {
+            for(int x = 0; x < 4; x++) {
+                String key = keys[0][y]+"-"+keys[1][x]+"-W-MG";
+                BufferedImage sprite = Utility.toBufferedImage(spritesheet).getSubimage((int)(x*512/4.8), (int)(y*512/4.8), (int)(512/4.8), (int)(512/4.8));
+                steps.put(key, sprite);
+	          }
+	      }
 		}
 
 	/**

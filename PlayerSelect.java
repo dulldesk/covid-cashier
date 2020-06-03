@@ -35,13 +35,13 @@ public class PlayerSelect extends Menu {
 		int alignY = 180;
 		icons = new ArrayList<ImageButton>(2);
 
-		icons.add(new ImageButton("male",200,alignY,Style.LABEL_FONT,Style.loadImage("PlayerM_Face.png",100,125)));
-		icons.add(new ImageButton("female",Style.FRAME_WIDTH-300,alignY,Style.LABEL_FONT,Style.loadImage("PlayerF_Face.png",100,125)));
+		icons.add(new ImageButton("male",200,alignY,Utility.LABEL_FONT,Utility.loadImage("PlayerM_Face.png",100,125)));
+		icons.add(new ImageButton("female",Utility.FRAME_WIDTH-300,alignY,Utility.LABEL_FONT,Utility.loadImage("PlayerF_Face.png",100,125)));
 
-		field = new TextField(Style.FRAME_WIDTH/5,Style.FRAME_HEIGHT/2-25,3*Style.FRAME_WIDTH/5,Style.LABEL_FONT);
+		field = new TextField(Utility.FRAME_WIDTH/5,Utility.FRAME_HEIGHT/2-25,3*Utility.FRAME_WIDTH/5,Utility.LABEL_FONT);
 
 		drawing = new SelectionDrawing();
-		Style.changeDrawing(drawing);
+		Utility.changeDrawing(drawing);
 	}
 
 	/**
@@ -71,7 +71,7 @@ public class PlayerSelect extends Menu {
 		/**
 	  	  * The menu image
 		  */
-		private final Image MENU = Style.loadImage("Menu_BG.png",Style.FRAME_WIDTH,Style.FRAME_HEIGHT);
+		private final Image MENU = Utility.loadImage("Menu_BG.png",Utility.FRAME_WIDTH,Utility.FRAME_HEIGHT);
 
 		/**
 	  	  * ---

@@ -47,7 +47,7 @@ public class Restaurant {
 	}
 
 	public Restaurant(boolean training) {
-		MAP = Style.loadImage("map.png",Style.FRAME_WIDTH,MAP_HEIGHT);
+		MAP = Utility.loadImage("map.png",Utility.FRAME_WIDTH,MAP_HEIGHT);
 		inTraining = training;
 
 		user = new Player(User.name, User.gender);
@@ -57,7 +57,7 @@ public class Restaurant {
 		user.setCoordinates(0,100);
 
 		workplace = new RestaurantDrawing();
-		Style.changeDrawing(workplace);
+		Utility.changeDrawing(workplace);
 	}
 
 	private static void loadStations() {

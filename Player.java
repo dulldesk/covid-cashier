@@ -58,11 +58,11 @@ public class Player extends Character {
 						{"N", "M", "G", "MG"}};
 		String[] imgs = {"C", "W", "W_M", "W_G", "W_MG"};
 		for(int s = 0; s < 5; s++) {
-			Image spritesheet = Style.loadImage("Player"+gender+"_"+imgs[s]+".png",(int)(2048/4.8),(int)(2048/4.8));
+			Image spritesheet = Utility.loadImage("Player"+gender+"_"+imgs[s]+".png",(int)(2048/4.8),(int)(2048/4.8));
 			for(int y = 0; y < 4; y++) {
 				for(int x = 0; x < 4; x++) {
 					String key = keys[0][y]+"-"+keys[1][x]+"-"+(s==0?keys[2][0]:keys[2][1])+"-"+(s>1?keys[3][s-1]:keys[3][0]);
-					BufferedImage sprite = Style.toBufferedImage(spritesheet).getSubimage((int)(x*512/4.8), (int)(y*512/4.8), (int)(512/4.8), (int)(512/4.8));
+					BufferedImage sprite = Utility.toBufferedImage(spritesheet).getSubimage((int)(x*512/4.8), (int)(y*512/4.8), (int)(512/4.8), (int)(512/4.8));
 					steps.put(key, sprite);
 				}
 			}

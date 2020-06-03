@@ -149,6 +149,14 @@ public abstract class Character {
 		y_coord = y;		
 	}
 
+	/**
+	  * Set player direction
+	  * @param dir	the direction
+	  */
+	  public void setDirection(char dir) {
+		direction = dir;		
+	}
+
 	public int getX() {
 		return x_coord;
 	}
@@ -173,7 +181,7 @@ public abstract class Character {
 	  */
 	public void draw(Graphics g) {
 		stepNo %= TOTAL_STEPS;
-		g.drawImage(getSprite(stepNo), x_coord, y_coord % Style.FRAME_HEIGHT, null);
+		g.drawImage(getSprite(stepNo), x_coord, y_coord % Utility.FRAME_HEIGHT, null);
 	}
 	
 	/** 

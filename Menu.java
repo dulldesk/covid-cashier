@@ -61,7 +61,7 @@ public abstract class Menu {
 		  * @param title		the phrase to be drawn
 		  */
 		public void drawTitle(Graphics g, String title) {
-			g.setFont(Style.TITLE_FONT);
+			g.setFont(Utility.TITLE_FONT);
 			centerAlignStr(g,title,-0.2);			
 		}
 
@@ -72,7 +72,7 @@ public abstract class Menu {
 		  * @param centerAlign	whether to center align the text
 		  */
 		public void drawTitle(Graphics g, String title, int x, int y) {
-			g.setFont(Style.TITLE_FONT);
+			g.setFont(Utility.TITLE_FONT);
 			g.drawString(title,x,y);
 		}
 
@@ -83,11 +83,11 @@ public abstract class Menu {
 		  * @param row 			the row of the option
 		  */
 		public void centerAlignStr(Graphics g, String phrase, double row) {
-			g.drawString(phrase,Style.FRAME_WIDTH/2-Style.getStringWidth(phrase,g)/2,getTitleY() + (int)((row*1.55+0.5)*g.getFontMetrics().getHeight()));
+			g.drawString(phrase,Utility.FRAME_WIDTH/2-Utility.getStringWidth(phrase,g)/2,getTitleY() + (int)((row*1.55+0.5)*g.getFontMetrics().getHeight()));
 		}
 		
 		public void centerAlignStr(Graphics g, String phrase, int x, int y) {
-			g.drawString(phrase,x-Style.getStringWidth(phrase,g)/2,y+g.getFontMetrics().getHeight()/2);
+			g.drawString(phrase,x-Utility.getStringWidth(phrase,g)/2,y+g.getFontMetrics().getHeight()/2);
 		}
 	}
 }
