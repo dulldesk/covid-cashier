@@ -16,6 +16,11 @@ public class Station extends Boundary {
 	// private StationDrawing drawing;
 
 	/**
+	  * The direction that the player must face to enter the station
+	  */
+	private char requiredDir;
+
+	/**
 	  * Constructs a station
 	  * @param name 	the name of the station
 	  * @param x 		x-coordinate (top-left corner)
@@ -23,9 +28,9 @@ public class Station extends Boundary {
 	  * @param w 		width of the station
 	  * @param h 		height of the station 
 	  */
-	public Station(String name, int x, int y, int w, int h) {
+	public Station(int x, int y, int w, int h, char direction) {
 		super(x,y,w,h);
-		this.name = name;
+		requiredDir = direction;
 
 		isClicked = false;
 		isHovered = false;
@@ -46,5 +51,17 @@ public class Station extends Boundary {
 	  */
 	public void deactivate() {
 		super.deactivate(true,false);
+	}
+
+	/**
+	  * Determines whether a given character is within the range of a station and facing it
+	  * @param figure the figure whose proximity to the station is to be checked
+	  * @return whether figure is within the range of a station
+	  */
+	public boolean withinStation(Character figure) {
+		return figure.getDirection() == requiredDir 
+			&& (requiredDir == 'n' || requiredDir == 's' 
+			? figure.getX() >= x_coord && figure.getX() + Character.WIDTH <= x_coord + width && ((requiredDir == 'n' && figure.getY() >= y_coord && figure.getY() <= y_coord + height) || (requiredDir == 's' && figure.getY() + Character.HEIGHT >= y_coord && figure.getY() + Character.HEIGHT <= y_coord + height))
+			: figure.getY() >= y_coord && figure.getY() + Character.HEIGHT <= y_coord + height && ((requiredDir == 'w' && figure.getX() >= x_coord && figure.getX() <= x_coord + width) || (requiredDir == 'e' && figure.getX() + Character.WIDTH >= x_coord && figure.getX() + Character.WIDTH <= x_coord + width)) ); 
 	}
 }
