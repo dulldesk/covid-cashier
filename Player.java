@@ -1,7 +1,7 @@
 /**
   * A player character
   * 
-  * Last edit: 5/29/2020
+  * Last edit: 6/3/2020
   * @author 	Celeste, Eric
   * @version 	1.1
   * @since 		1.0
@@ -100,55 +100,34 @@ public class Player extends Character {
 	  */
 	private void loadMovement() {
 		final int DELTA_DIST = 10;
-		movement.put("player-up", new Movement(KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0), new AbstractAction() {
-		    public void actionPerformed(ActionEvent e) {
-		    	if (lastMvTime.compareNow('n')) {
-			    	direction = 'n';
-			    	y_coord -= DELTA_DIST;
-			    	refresh();
-		    	}
-		    }
-		}));
 
-		movement.put("player-down", new Movement(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0),new AbstractAction() {
-		    public void actionPerformed(ActionEvent e) {
-		    	if (lastMvTime.compareNow('s')) {
-			    	direction = 's';
-			    	y_coord += DELTA_DIST;
-			    	refresh();
-		    	}
-		    }
-		}));
+		final String [] keys = {"up", "down", "left", "right"};
+		final char [] dirs = "nswe".toCharArray();
+		final int [] strokes = {KeyEvent.VK_UP, KeyEvent.VK_DOWN, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT};
 
-		movement.put("player-left", new Movement(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0), new AbstractAction() {
-		    public void actionPerformed(ActionEvent e) {
-		    	if (lastMvTime.compareNow('w')) {
-			    	direction = 'w';
-			    	x_coord -= DELTA_DIST;
-			    	refresh();
-		    	}
-		    }
-		}));
+		for (int i=0;i<keys.length;i++) {
+			// resolves error: local variables referenced from an inner class must be final or effectively final
+			final int index = i;
+			
+			movement.put("player-"+keys[index], new Movement(KeyStroke.getKeyStroke(strokes[index], 0), new AbstractAction() {
+				public void actionPerformed(ActionEvent e) {
+					if (lastMvTime.compareNow(dirs[index]) && !hasCollided(Restaurant.boundaries)) {
+						direction = dirs[index];
 
-		movement.put("player-right", new Movement(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0), new AbstractAction() {
-		    public void actionPerformed(ActionEvent e) {
-		    	if (lastMvTime.compareNow('e')) {
-			    	direction = 'e';
-			    	x_coord += DELTA_DIST;
-			    	refresh();
-			    }
-		    }
-		}));
+						if (index < 2) y_coord += DELTA_DIST * (dirs[index] == 'n' ? -1 : 1);
+						else x_coord += DELTA_DIST * (dirs[index] == 'w' ? -1 : 1);
+
+						stepNo++;
+						CovidCashier.frame.repaint();
+					}
+				}
+			}));
+		}
 
 		// Loads the movements into the main frame's input map
 		for (String key : movement.keySet()) {
 			CovidCashier.frame.getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(movement.get(key).getKeyStroke(),key);
 		}
-	}
-
-	private void refresh() {
-		stepNo++;
-    	CovidCashier.frame.repaint();
 	}
 
 	/**
