@@ -36,11 +36,11 @@ public class MainMenu extends Menu {
 		buttons = new ArrayList<Button>(OPTIONS.length);
 
 		for (int i=0;i<OPTIONS.length;i++) {
-			buttons.add(new Button(OPTIONS[i], leftAlign, titleY + 20 + (int)((i+1)*1.5*Style.LABEL_FONT.getSize()), Style.LABEL_FONT));
+			buttons.add(new Button(OPTIONS[i], leftAlign, titleY + 20 + (int)((i+1)*1.5*Utility.LABEL_FONT.getSize()), Utility.LABEL_FONT));
 		}
 
 		drawing = new MainMenuDrawing();
-		Style.changeDrawing(drawing);
+		Utility.changeDrawing(drawing);
 	}
 
 	/**
@@ -81,16 +81,16 @@ public class MainMenu extends Menu {
 		@Override
 		public void display(Graphics g) {
 			// System.out.println("main menu");
-			g.setFont(Style.TITLE_FONT_SMALL);
+			g.setFont(Utility.TITLE_FONT_SMALL);
 			g.setColor(Color.black);
 			centerAlignStr(g, "COVID Cashier", 545, titleY);
 
 			Calendar date = Calendar.getInstance();
 			String[] days = {"Sat", "Sun", "Mon", "Tues", "Wed", "Thurs", "Fri"};
 			g.setColor(new Color(50, 50, 50));
-			g.setFont(Style.LABEL_FONT.deriveFont(18F));
+			g.setFont(Utility.LABEL_FONT.deriveFont(18F));
 			centerAlignStr(g, "Wandi's", 200, 82);
-			g.setFont(Style.LABEL_FONT.deriveFont(14F));
+			g.setFont(Utility.LABEL_FONT.deriveFont(14F));
 			centerAlignStr(g, "222 Corona St.", 190, 98);
 			centerAlignStr(g, days[date.get(Calendar.DAY_OF_WEEK)]+" "+
 					String.format("%02d",date.get(Calendar.MONTH)+1)+"/"+String.format("%02d",date.get(Calendar.DATE))+"/"+date.get(Calendar.YEAR)+" "+
