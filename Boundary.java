@@ -39,16 +39,8 @@ public class Boundary extends GraphicComponent {
 		return figure.getX() + Character.WIDTH > x_coord && figure.getX() <= x_coord + width && figure.getY() + Character.HEIGHT > y_coord && figure.getY() <= y_coord + height;
 	}
 
-	/**
-	  * Checks whether the user's mouse is within the boundaries of this boundary object
-	  * @return whether the mouse is within the boundaries of this boundary object
-	  */
 	@Override
 	protected boolean withinCoordinates() {
-		try {
-			Point pnt = CovidCashier.frame.getMousePosition();
-			return pnt.x > x_coord && pnt.y > y_coord && pnt.x < x_coord + width && pnt.y < y_coord + height;
-		} catch (Exception e) {}
 		return false;
 	}
 }
