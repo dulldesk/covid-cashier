@@ -11,6 +11,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import java.util.*;
+import java.io.*;
 
 public class Restaurant {
 	/**
@@ -28,43 +29,97 @@ public class Restaurant {
 	  */
 	private boolean inTraining;
 
+	/**
+	  * JComponent object of the workplace drawing
+	  */
 	private RestaurantDrawing workplace;
 
 	public Character user;
 
-	private ArrayList<Station> stations;
+	/**
+	  * Number of completed stations
+	  */
+	private int completedStations;
 
-	private ArrayList<Boundary> furniture;
+	/**
+	  * List of enter-able stations
+	  */
+	public static ArrayList<Station> stations;
 
-	
+	/**
+	  * Boundaries that the user cannot move beyond
+	  */
+	public static ArrayList<Boundary> boundaries;
+
+	static {
+		stations = new ArrayList<Station>();
+		boundaries = new ArrayList<Boundary>();
+		loadStations();
+		loadBoundaries();
+	}
+
 	public Restaurant(boolean training) {
 		MAP = Utility.loadImage("map.png",Utility.FRAME_WIDTH,MAP_HEIGHT);
 		inTraining = training;
 
 		user = new Player(User.name, User.gender);
+		completedStations = 0;
 
 		// initial position
 		user.setCoordinates(0,100);
-
-		stations = new ArrayList<Station>();
-		furniture = new ArrayList<Boundary>();
-		loadStations();
-		loadFurnitureBoundaries();
 
 		workplace = new RestaurantDrawing();
 		Utility.changeDrawing(workplace);
 	}
 
-	private void loadStations() {
+	/**
+	  * Loads stations into its ArrayList
+	  */
+	private static void loadStations() {
+		try {
+			BufferedReader br = Utility.getBufferedReader("stations.txt");
 
+			for (String nxt = br.readLine(); nxt != null; nxt = br.readLine()) {
+				String [] tokens = nxt.split(",");
+				if (nxt.startsWith("#") || tokens.length != 5) continue;
+				stations.add(new Station(Integer.parseInt(tokens[0]),Integer.parseInt(tokens[1]),Integer.parseInt(tokens[2]),Integer.parseInt(tokens[3]),tokens[4].charAt(0)));
+			}
+		} 
+		catch (IOException e) {}
+		catch (NumberFormatException e) {}
 	}
 
-	private void loadFurnitureBoundaries() {
+	/**
+	  * Loads boundaries into its ArrayList
+	  */
+	private static void loadBoundaries() {
+		try {
+			BufferedReader br = Utility.getBufferedReader("boundaries.txt");
 
+			for (String nxt = br.readLine(); nxt != null; nxt = br.readLine()) {
+				String [] tokens = nxt.split(",");
+				if (nxt.startsWith("#") || tokens.length != 4) continue;
+				boundaries.add(new Boundary(Integer.parseInt(tokens[0]),Integer.parseInt(tokens[1]),Integer.parseInt(tokens[2]),Integer.parseInt(tokens[3])));
+			}
+		} 
+		catch (IOException e) {}
+		catch (NumberFormatException e) {}
 	}
 
 	public void halt() {
 		for (Station stn : stations) stn.deactivate();
+	}
+
+	public int getCompletedStationsNo() {
+		return completedStations;
+	}
+
+	public void increaseCompletedStations() {
+		completedStations++;
+	}
+
+	public ArrayList<Boundary> getBoundaries() {
+		return boundaries;
 	}
 
 	private class RestaurantDrawing extends JComponent {
