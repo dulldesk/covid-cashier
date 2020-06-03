@@ -149,6 +149,14 @@ public abstract class Character {
 		y_coord = y;		
 	}
 
+	/**
+	  * Set player direction
+	  * @param dir	the direction
+	  */
+	  public void setDirection(char dir) {
+		direction = dir;		
+	}
+
 	public int getX() {
 		return x_coord;
 	}
