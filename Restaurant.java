@@ -29,14 +29,26 @@ public class Restaurant {
 	  */
 	private boolean inTraining;
 
+	/**
+	  * JComponent object of the workplace drawing
+	  */
 	private RestaurantDrawing workplace;
 
 	public Character user;
 
+	/**
+	  * Number of completed stations
+	  */
 	private int completedStations;
 
+	/**
+	  * List of enter-able stations
+	  */
 	public static ArrayList<Station> stations;
 
+	/**
+	  * Boundaries that the user cannot move beyond
+	  */
 	public static ArrayList<Boundary> boundaries;
 
 	static {
@@ -60,23 +72,29 @@ public class Restaurant {
 		Utility.changeDrawing(workplace);
 	}
 
+	/**
+	  * Loads stations into its ArrayList
+	  */
 	private static void loadStations() {
 		try {
-			BufferedReader br = Style.getBufferedReader("stations.txt");
+			BufferedReader br = Utility.getBufferedReader("stations.txt");
 
 			for (String nxt = br.readLine(); nxt != null; nxt = br.readLine()) {
 				String [] tokens = nxt.split(",");
 				if (nxt.startsWith("#") || tokens.length != 5) continue;
-				stations.add(new Station(Integerteger.parseInt(tokens[0]),Integer.parseInt(tokens[1]),Integer.parseInt(tokens[2]),Integer.parseInt(tokens[3]),tokens[4].charAt(0)));
+				stations.add(new Station(Integer.parseInt(tokens[0]),Integer.parseInt(tokens[1]),Integer.parseInt(tokens[2]),Integer.parseInt(tokens[3]),tokens[4].charAt(0)));
 			}
 		} 
 		catch (IOException e) {}
 		catch (NumberFormatException e) {}
 	}
 
+	/**
+	  * Loads boundaries into its ArrayList
+	  */
 	private static void loadBoundaries() {
 		try {
-			BufferedReader br = Style.getBufferedReader("boundaries.txt");
+			BufferedReader br = Utility.getBufferedReader("boundaries.txt");
 
 			for (String nxt = br.readLine(); nxt != null; nxt = br.readLine()) {
 				String [] tokens = nxt.split(",");

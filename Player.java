@@ -20,6 +20,8 @@ public class Player extends Character {
 	  */
 	private Map<String,Movement> movement;
 
+	private boolean inRestaurant;
+
 	/**
 	  * Constructs a Character object and loads the appropriate sprites into the steps map
 	  * @param name 	the Character's name, as chosen by the user
@@ -27,6 +29,20 @@ public class Player extends Character {
 	  */
 	public Player(String name, char gender) {
 		super(name,"player",gender);
+		inRestaurant = false;
+		movement = new HashMap<String, Movement>();
+		loadMovement();
+	}
+
+	/**
+	  * Constructs a Character object and loads the appropriate sprites into the steps map
+	  * @param name 	the Character's name, as chosen by the user
+	  * @param gender 	the gender of the Character chosen
+	  */
+	public Player(String name, char gender, boolean inRestaurant) {
+		super(name,"player",gender);
+		this.inRestaurant = inRestaurant;
+
 		movement = new HashMap<String, Movement>();
 		loadMovement();
 	}
@@ -52,7 +68,7 @@ public class Player extends Character {
 	  */
 	@Override
 	protected void loadSprites() {
-		String[][] keys = {{"s", "e", "n", "w"},
+		String[][] keys = {{"S", "E", "N", "W"},
 						{"1", "2", "3", "4"},
 						{"C", "W"},
 						{"N", "M", "G", "MG"}};
@@ -102,20 +118,20 @@ public class Player extends Character {
 		final int DELTA_DIST = 10;
 
 		final String [] keys = {"up", "down", "left", "right"};
-		final char [] dirs = "nswe".toCharArray();
+		final char [] dirs = "NSWE".toCharArray();
 		final int [] strokes = {KeyEvent.VK_UP, KeyEvent.VK_DOWN, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT};
 
 		for (int i=0;i<keys.length;i++) {
 			// resolves error: local variables referenced from an inner class must be final or effectively final
 			final int index = i;
-			
+
 			movement.put("player-"+keys[index], new Movement(KeyStroke.getKeyStroke(strokes[index], 0), new AbstractAction() {
 				public void actionPerformed(ActionEvent e) {
-					if (lastMvTime.compareNow(dirs[index]) && !hasCollided(Restaurant.boundaries)) {
+					if (lastMvTime.compareNow(dirs[index]) && (!inRestaurant || !hasCollided(Restaurant.boundaries))) {
 						direction = dirs[index];
 
-						if (index < 2) y_coord += DELTA_DIST * (dirs[index] == 'n' ? -1 : 1);
-						else x_coord += DELTA_DIST * (dirs[index] == 'w' ? -1 : 1);
+						if (index < 2) y_coord += DELTA_DIST * (dirs[index] == 'N' ? -1 : 1);
+						else x_coord += DELTA_DIST * (dirs[index] == 'W' ? -1 : 1);
 
 						stepNo++;
 						CovidCashier.frame.repaint();

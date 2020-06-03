@@ -28,7 +28,7 @@ public class Customer extends Character {
 	  */
 	@Override
 	protected void loadSprites() {
-		String[][] keys = {{"s", "e", "n", "w"},
+		String[][] keys = {{"S", "E", "N", "W"},
 						{"1", "2", "3", "4"}};
 		Image spritesheet = Utility.loadImage("Customer"+gender+".png",(int)(2048/4.8),(int)(2048/4.8));
 		for(int y = 0; y < 4; y++) {
