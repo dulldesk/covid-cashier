@@ -53,6 +53,7 @@ public class CashRun extends Minigame {
 		public CashRunDrawing() {
             super();
             player = new Player("player", gender);
+            player.setDirection('e');
         }
 
         /**
