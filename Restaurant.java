@@ -11,6 +11,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import java.util.*;
+import java.io.*;
 
 public class Restaurant {
 	/**
@@ -32,11 +33,18 @@ public class Restaurant {
 
 	public Character user;
 
-	private ArrayList<Station> stations;
 
-	private ArrayList<Boundary> furniture;
+	public static ArrayList<Station> stations;
 
-	
+	public static ArrayList<Boundary> boundaries;
+
+	static {
+		stations = new ArrayList<Station>();
+		boundaries = new ArrayList<Boundary>();
+		loadStations();
+		loadBoundaries();
+	}
+
 	public Restaurant(boolean training) {
 		MAP = Style.loadImage("map.png",Style.FRAME_WIDTH,MAP_HEIGHT);
 		inTraining = training;
@@ -46,21 +54,36 @@ public class Restaurant {
 		// initial position
 		user.setCoordinates(0,100);
 
-		stations = new ArrayList<Station>();
-		furniture = new ArrayList<Boundary>();
-		loadStations();
-		loadFurnitureBoundaries();
-
 		workplace = new RestaurantDrawing();
 		Style.changeDrawing(workplace);
 	}
 
-	private void loadStations() {
+	private static void loadStations() {
+		try {
+			BufferedReader br = Style.getBufferedReader("stations.txt");
 
+			for (String nxt = br.readLine(); nxt != null; nxt = br.readLine()) {
+				String [] tokens = nxt.split(",");
+				if (nxt.startsWith("#") || tokens.length != 5) continue;
+				stations.add(new Station(Integerteger.parseInt(tokens[0]),Integer.parseInt(tokens[1]),Integer.parseInt(tokens[2]),Integer.parseInt(tokens[3]),tokens[4].charAt(0)));
+			}
+		} 
+		catch (IOException e) {}
+		catch (NumberFormatException e) {}
 	}
 
-	private void loadFurnitureBoundaries() {
+	private static void loadBoundaries() {
+		try {
+			BufferedReader br = Style.getBufferedReader("boundaries.txt");
 
+			for (String nxt = br.readLine(); nxt != null; nxt = br.readLine()) {
+				String [] tokens = nxt.split(",");
+				if (nxt.startsWith("#") || tokens.length != 4) continue;
+				boundaries.add(new Boundary(Integer.parseInt(tokens[0]),Integer.parseInt(tokens[1]),Integer.parseInt(tokens[2]),Integer.parseInt(tokens[3])));
+			}
+		} 
+		catch (IOException e) {}
+		catch (NumberFormatException e) {}
 	}
 
 	public void halt() {
