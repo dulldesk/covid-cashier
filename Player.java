@@ -116,47 +116,6 @@ public class Player extends Character {
 	  */
 	private void loadMovement() {
 		final int DELTA_DIST = 10;
-<<<<<<< HEAD
-		movement.put("player-up", new Movement(KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0), new AbstractAction() {
-		    public void actionPerformed(ActionEvent e) {
-		    	if (lastMvTime.compareNow('N')) {
-			    	direction = 'N';
-			    	y_coord -= DELTA_DIST;
-			    	refresh();
-		    	}
-		    }
-		}));
-
-		movement.put("player-down", new Movement(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0),new AbstractAction() {
-		    public void actionPerformed(ActionEvent e) {
-		    	if (lastMvTime.compareNow('S')) {
-			    	direction = 'S';
-			    	y_coord += DELTA_DIST;
-			    	refresh();
-		    	}
-		    }
-		}));
-
-		movement.put("player-left", new Movement(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0), new AbstractAction() {
-		    public void actionPerformed(ActionEvent e) {
-		    	if (lastMvTime.compareNow('W')) {
-			    	direction = 'W';
-			    	x_coord -= DELTA_DIST;
-			    	refresh();
-		    	}
-		    }
-		}));
-
-		movement.put("player-right", new Movement(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0), new AbstractAction() {
-		    public void actionPerformed(ActionEvent e) {
-		    	if (lastMvTime.compareNow('E')) {
-			    	direction = 'E';
-			    	x_coord += DELTA_DIST;
-			    	refresh();
-			    }
-		    }
-		}));
-=======
 
 		final String [] keys = {"up", "down", "left", "right"};
 		final char [] dirs = "NSWE".toCharArray();
@@ -180,7 +139,6 @@ public class Player extends Character {
 				}
 			}));
 		}
->>>>>>> stations
 
 		// Loads the movements into the main frame's input map
 		for (String key : movement.keySet()) {
