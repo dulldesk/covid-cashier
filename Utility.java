@@ -1,5 +1,5 @@
 /**
-  * Stores stylistic and user selection data
+  * Stores stylistic data and methods used throughout the program
   * 
   * Last edit: 6/1/2020
   * @author 	Celeste, Eric
@@ -13,7 +13,7 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 import javax.imageio.*;
 
-public final class Style {
+public final class Utility {
 	/**
 	  * The width of the frame, in pixels
 	  */
@@ -53,7 +53,7 @@ public final class Style {
 	  */
 	private static final Font loadFont(String name, float size) {
 		try {
-			return Font.createFont(Font.TRUETYPE_FONT, Style.class.getResourceAsStream("src/fonts/"+name)).deriveFont(size);
+			return Font.createFont(Font.TRUETYPE_FONT, Utility.class.getResourceAsStream("src/fonts/"+name)).deriveFont(size);
 		} catch (Exception e) {}
 		return null;
 	}
@@ -67,7 +67,7 @@ public final class Style {
 	  */
 	public static final Image loadImage(String name, int width, int height) {
 		try {
-			return ImageIO.read(Style.class.getResourceAsStream("src/img/"+name)).getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH);
+			return ImageIO.read(Utility.class.getResourceAsStream("src/img/"+name)).getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH);
 		} catch (IOException e) {}
 		return null;
 	}
@@ -84,7 +84,7 @@ public final class Style {
 
 	/**
 	  * Changes and updates the frame
-	  * @param drawing 		the component to be updated to
+	  * @param img 		the Image to "cast"
 	  */
 	public static BufferedImage toBufferedImage(Image img) {
 		if (img instanceof BufferedImage)
@@ -94,6 +94,15 @@ public final class Style {
 		bGr.drawImage(img, 0, 0, null);
 		bGr.dispose();
     	return bImage;
+	}
+
+	/**
+	  * Creates a BufferedReader from a given file
+	  * @param name 	the name of the file, including the extension
+	  * @return a BufferedReader object of the given file
+	  */
+	public static BufferedReader getBufferedReader(String name) {
+		return new BufferedReader(new InputStreamReader(Utility.class.getResourceAsStream("src/text/" + name)));
 	}
 
 	/**

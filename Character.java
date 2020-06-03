@@ -169,7 +169,7 @@ public abstract class Character {
 	  */
 	public void draw(Graphics g) {
 		stepNo %= TOTAL_STEPS;
-		g.drawImage(getSprite(stepNo), x_coord, y_coord % Style.FRAME_HEIGHT, null);
+		g.drawImage(getSprite(stepNo), x_coord, y_coord % Utility.FRAME_HEIGHT, null);
 	}
 	
 	/** 

@@ -83,7 +83,7 @@ public class ImageButton extends Button {
 				g.drawImage(icon,x_coord,y_coord,null);
 	    	}
 			if (!name.trim().equals(""))
-				g.drawString(name,x_coord+icon.getWidth(null)/2-Style.getStringWidth(name,g)/2,y_coord+icon.getHeight(null)+60);
+				g.drawString(name,x_coord+icon.getWidth(null)/2-Utility.getStringWidth(name,g)/2,y_coord+icon.getHeight(null)+60);
 		} catch (Exception e) {}
 	}
 

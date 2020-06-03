@@ -35,7 +35,7 @@ public class Instructions extends Menu {
 	public Instructions() {
 		info = "";
 		try {
-			BufferedReader br = new BufferedReader(new InputStreamReader(Style.class.getResourceAsStream("src/text/instructions.md")));
+			BufferedReader br = Utility.getBufferedReader("instructions.md");
 			
 			// skip heading
 			br.readLine();
@@ -44,10 +44,10 @@ public class Instructions extends Menu {
 		} catch (Exception e) {System.out.println(e);}
 
 
-		back = new Button("<--",100,Style.FRAME_HEIGHT-100,Style.TEXT_FONT);
+		back = new Button("<--",100,Utility.FRAME_HEIGHT-100,Utility.TEXT_FONT);
 
 		drawing = new InstructionsDrawing();
-		Style.changeDrawing(drawing);
+		Utility.changeDrawing(drawing);
 	}
 
 	/**
@@ -86,7 +86,7 @@ public class Instructions extends Menu {
 		public InstructionsDrawing() {
 			super();
 
-			nodeWidth =  Style.FRAME_WIDTH-270;
+			nodeWidth =  Utility.FRAME_WIDTH-270;
 			back.activate();
 			// firstTime = true;
 		}
@@ -102,13 +102,13 @@ public class Instructions extends Menu {
 			// 	firstTime = false;
 			// }
 
-			g.drawImage(Style.loadImage("Register_Screen.png",Style.FRAME_WIDTH,Style.FRAME_HEIGHT),0,0,null);
+			g.drawImage(Utility.loadImage("Register_Screen.png",Utility.FRAME_WIDTH,Utility.FRAME_HEIGHT),0,0,null);
 
 			g.setColor(Color.black);
-			g.setFont(Style.TITLE_FONT);
+			g.setFont(Utility.TITLE_FONT);
 			g.drawString("INSTRUCTIONS",leftAlign,titleY);
 
-			g.setFont(Style.TEXT_FONT);
+			g.setFont(Utility.TEXT_FONT);
 			drawInfo(g);
 
 			back.draw(g);
@@ -128,20 +128,20 @@ public class Instructions extends Menu {
 			int row=1;
 			String [] words = info.split(" ");
 			for (String word : words) {
-				if (Style.getStringWidth(line,g) > nodeWidth) {
-					g.drawString(line,leftAlign,titleY+(int)(row*1.5*Style.TEXT_FONT.getSize()));
+				if (Utility.getStringWidth(line,g) > nodeWidth) {
+					g.drawString(line,leftAlign,titleY+(int)(row*1.5*Utility.TEXT_FONT.getSize()));
 					line = "";
 					row++;
 				} 
 				line += word+" ";
 
 				if (word.indexOf("\n") == word.length()-1) {
-					g.drawString(line.trim(),leftAlign,titleY+(int)(row*1.5*Style.TEXT_FONT.getSize()));
+					g.drawString(line.trim(),leftAlign,titleY+(int)(row*1.5*Utility.TEXT_FONT.getSize()));
 					line = "";
 					row++; 
 				}
 			}
-			g.drawString(line,leftAlign,titleY+(int)(row*1.5*Style.TEXT_FONT.getSize()));
+			g.drawString(line,leftAlign,titleY+(int)(row*1.5*Utility.TEXT_FONT.getSize()));
 		}
 
 		/**

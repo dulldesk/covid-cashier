@@ -13,12 +13,12 @@ public class Monitor {
 	/**
 	  * The width of the monitor image, in pixels
 	  */
-	private static final int WIDTH = Style.FRAME_WIDTH;
+	private static final int WIDTH = Utility.FRAME_WIDTH;
 
 	/**
 	  * The height of the monitor image, in pixels
 	  */
-	private static final int HEIGHT = Style.FRAME_HEIGHT;
+	private static final int HEIGHT = Utility.FRAME_HEIGHT;
 
 	/**
 	  * The x-coordinate of the monitor image (top-left corner)
@@ -33,7 +33,7 @@ public class Monitor {
 	/**
 	  * The monitor image
 	  */
-	private final static Image MONITOR = Style.loadImage("Cash_Register.png",WIDTH,HEIGHT);
+	private final static Image MONITOR = Utility.loadImage("Cash_Register.png",WIDTH,HEIGHT);
 
 	/**
 	  * Draws a Monitor to the window

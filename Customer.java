@@ -30,11 +30,11 @@ public class Customer extends Character {
 	protected void loadSprites() {
 		String[][] keys = {{"s", "e", "n", "w"},
 						{"1", "2", "3", "4"}};
-		Image spritesheet = Style.loadImage("Customer"+gender+".png",(int)(2048/4.8),(int)(2048/4.8));
+		Image spritesheet = Utility.loadImage("Customer"+gender+".png",(int)(2048/4.8),(int)(2048/4.8));
 		for(int y = 0; y < 4; y++) {
 			for(int x = 0; x < 4; x++) {
 				String key = keys[0][y]+"-"+keys[1][x]+"-C-"+(gender=='M'?"N":"M");
-                BufferedImage sprite = Style.toBufferedImage(spritesheet).getSubimage((int)(x*512/4.8), (int)(y*512/4.8), (int)(512/4.8), (int)(512/4.8));
+                BufferedImage sprite = Utility.toBufferedImage(spritesheet).getSubimage((int)(x*512/4.8), (int)(y*512/4.8), (int)(512/4.8), (int)(512/4.8));
                 steps.put(key, sprite);
             }
         }
