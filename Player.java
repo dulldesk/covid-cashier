@@ -27,7 +27,7 @@ public class Player extends Character {
 	  */
 	public Player(String name, char gender) {
 		super(name,"player",gender);
- 		movement = new HashMap<String, Movement>();
+		movement = new HashMap<String, Movement>();
 		loadMovement();
 	}
 
@@ -35,7 +35,7 @@ public class Player extends Character {
 	  * Set player clothing
 	  * @param clothing		the clothing type
 	  */
-	  public void setClothing(char clothing) {
+	public void setClothing(char clothing) {
 		clothingType = clothing;	
 	}
 
@@ -43,7 +43,7 @@ public class Player extends Character {
 	  * Set player clothing
 	  * @param equipment	the protective equipment type
 	  */
-	  public void setEquipment(String equipment) {
+	public void setEquipment(String equipment) {
 		protectiveEquipment = equipment;	
 	}
 
