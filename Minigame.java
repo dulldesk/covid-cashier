@@ -28,7 +28,7 @@ public abstract class Minigame {
       * Set the score to an amount
       * @param set      
 	  */
-      protected void add(double set) {
+      protected void set(double set) {
         score = set;
     }
 
