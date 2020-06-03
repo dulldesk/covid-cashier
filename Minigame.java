@@ -46,4 +46,10 @@ public abstract class Minigame {
     protected double getScore() {
         return score;
     }
+    
+    /**
+	  * Draw the actual display
+	  * @param g 		the Graphics object to draw on
+	  */
+    public abstract void display(Graphics g);
 }
