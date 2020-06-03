@@ -53,6 +53,17 @@ public abstract class Minigame {
          * @param g 		the Graphics object to draw on
          */
         public abstract void display(Graphics g);
-        
+
+        /**
+		  * Paint method of JComponent
+		  * @param g 	the Graphics object to draw on
+		  */
+		@Override
+		public void paintComponent(Graphics g) {
+			super.paintComponent(g);
+			try {
+				display(g);
+			} catch (Exception e) {}
+		}
     }
 }

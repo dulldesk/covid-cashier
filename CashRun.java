@@ -36,6 +36,7 @@ public class CashRun extends Minigame {
         this.gender = gender;
         this.equipment = equipment;
         drawing = new CashRunDrawing();
+        Utility.changeDrawing(drawing);
     }
 
     /**
@@ -54,6 +55,8 @@ public class CashRun extends Minigame {
             super();
             player = new Player("player", gender);
             player.setDirection('e');
+            player.setEquipment(equipment);
+            System.out.println(player.getSprite(0));
         }
 
         /**
@@ -62,10 +65,8 @@ public class CashRun extends Minigame {
 		  */
 		@Override
 		public void display(Graphics g) {
-
-			g.drawImage(Utility.loadImage("CashRun_BG.png",Utility.FRAME_WIDTH,Utility.FRAME_HEIGHT),0,0,null);
-
-			g.setFont(Utility.TEXT_FONT);
+            g.drawImage(Utility.loadImage("CashRun_BG.png",Utility.FRAME_WIDTH,Utility.FRAME_HEIGHT),0,0,null);
+            player.draw(g);
 		}
     }
 }

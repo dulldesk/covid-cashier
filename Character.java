@@ -153,7 +153,7 @@ public abstract class Character {
 	  * Set player direction
 	  * @param dir	the direction
 	  */
-	  public void setDirection(char dir) {
+	public void setDirection(char dir) {
 		direction = dir;		
 	}
 
