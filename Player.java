@@ -52,7 +52,7 @@ public class Player extends Character {
 	  */
 	@Override
 	protected void loadSprites() {
-		String[][] keys = {{"s", "e", "n", "w"},
+		String[][] keys = {{"S", "E", "N", "W"},
 						{"1", "2", "3", "4"},
 						{"C", "W"},
 						{"N", "M", "G", "MG"}};
@@ -102,8 +102,8 @@ public class Player extends Character {
 		final int DELTA_DIST = 10;
 		movement.put("player-up", new Movement(KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0), new AbstractAction() {
 		    public void actionPerformed(ActionEvent e) {
-		    	if (lastMvTime.compareNow('n')) {
-			    	direction = 'n';
+		    	if (lastMvTime.compareNow('N')) {
+			    	direction = 'N';
 			    	y_coord -= DELTA_DIST;
 			    	refresh();
 		    	}
@@ -112,8 +112,8 @@ public class Player extends Character {
 
 		movement.put("player-down", new Movement(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0),new AbstractAction() {
 		    public void actionPerformed(ActionEvent e) {
-		    	if (lastMvTime.compareNow('s')) {
-			    	direction = 's';
+		    	if (lastMvTime.compareNow('S')) {
+			    	direction = 'S';
 			    	y_coord += DELTA_DIST;
 			    	refresh();
 		    	}
@@ -122,8 +122,8 @@ public class Player extends Character {
 
 		movement.put("player-left", new Movement(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0), new AbstractAction() {
 		    public void actionPerformed(ActionEvent e) {
-		    	if (lastMvTime.compareNow('w')) {
-			    	direction = 'w';
+		    	if (lastMvTime.compareNow('W')) {
+			    	direction = 'W';
 			    	x_coord -= DELTA_DIST;
 			    	refresh();
 		    	}
@@ -132,8 +132,8 @@ public class Player extends Character {
 
 		movement.put("player-right", new Movement(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0), new AbstractAction() {
 		    public void actionPerformed(ActionEvent e) {
-		    	if (lastMvTime.compareNow('e')) {
-			    	direction = 'e';
+		    	if (lastMvTime.compareNow('E')) {
+			    	direction = 'E';
 			    	x_coord += DELTA_DIST;
 			    	refresh();
 			    }
