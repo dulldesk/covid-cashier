@@ -33,6 +33,7 @@ public class Restaurant {
 
 	public Character user;
 
+	private int completedStations;
 
 	public static ArrayList<Station> stations;
 
@@ -50,6 +51,7 @@ public class Restaurant {
 		inTraining = training;
 
 		user = new Player(User.name, User.gender);
+		completedStations = 0;
 
 		// initial position
 		user.setCoordinates(0,100);
@@ -88,6 +90,18 @@ public class Restaurant {
 
 	public void halt() {
 		for (Station stn : stations) stn.deactivate();
+	}
+
+	public int getCompletedStationsNo() {
+		return completedStations;
+	}
+
+	public void increaseCompletedStations() {
+		completedStations++;
+	}
+
+	public ArrayList<Boundary> getBoundaries() {
+		return boundaries;
 	}
 
 	private class RestaurantDrawing extends JComponent {
