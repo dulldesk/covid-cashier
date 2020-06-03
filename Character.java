@@ -165,6 +165,10 @@ public abstract class Character {
 		return y_coord;
 	}
 
+	public char getDirection() {
+		return direction;
+	}
+
 	/**
 	  * @return the type of character (i.e. its image file name)
 	  */

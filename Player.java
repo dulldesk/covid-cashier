@@ -1,7 +1,7 @@
 /**
   * A player character
   * 
-  * Last edit: 5/29/2020
+  * Last edit: 6/3/2020
   * @author 	Celeste, Eric
   * @version 	1.1
   * @since 		1.0
@@ -20,6 +20,8 @@ public class Player extends Character {
 	  */
 	private Map<String,Movement> movement;
 
+	private boolean inRestaurant;
+
 	/**
 	  * Constructs a Character object and loads the appropriate sprites into the steps map
 	  * @param name 	the Character's name, as chosen by the user
@@ -27,7 +29,21 @@ public class Player extends Character {
 	  */
 	public Player(String name, char gender) {
 		super(name,"player",gender);
- 		movement = new HashMap<String, Movement>();
+		inRestaurant = false;
+		movement = new HashMap<String, Movement>();
+		loadMovement();
+	}
+
+	/**
+	  * Constructs a Character object and loads the appropriate sprites into the steps map
+	  * @param name 	the Character's name, as chosen by the user
+	  * @param gender 	the gender of the Character chosen
+	  */
+	public Player(String name, char gender, boolean inRestaurant) {
+		super(name,"player",gender);
+		this.inRestaurant = inRestaurant;
+
+		movement = new HashMap<String, Movement>();
 		loadMovement();
 	}
 
@@ -35,7 +51,7 @@ public class Player extends Character {
 	  * Set player clothing
 	  * @param clothing		the clothing type
 	  */
-	  public void setClothing(char clothing) {
+	public void setClothing(char clothing) {
 		clothingType = clothing;	
 	}
 
@@ -43,7 +59,7 @@ public class Player extends Character {
 	  * Set player clothing
 	  * @param equipment	the protective equipment type
 	  */
-	  public void setEquipment(String equipment) {
+	public void setEquipment(String equipment) {
 		protectiveEquipment = equipment;	
 	}
 
@@ -100,55 +116,34 @@ public class Player extends Character {
 	  */
 	private void loadMovement() {
 		final int DELTA_DIST = 10;
-		movement.put("player-up", new Movement(KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0), new AbstractAction() {
-		    public void actionPerformed(ActionEvent e) {
-		    	if (lastMvTime.compareNow('N')) {
-			    	direction = 'N';
-			    	y_coord -= DELTA_DIST;
-			    	refresh();
-		    	}
-		    }
-		}));
 
-		movement.put("player-down", new Movement(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0),new AbstractAction() {
-		    public void actionPerformed(ActionEvent e) {
-		    	if (lastMvTime.compareNow('S')) {
-			    	direction = 'S';
-			    	y_coord += DELTA_DIST;
-			    	refresh();
-		    	}
-		    }
-		}));
+		final String [] keys = {"up", "down", "left", "right"};
+		final char [] dirs = "NSWE".toCharArray();
+		final int [] strokes = {KeyEvent.VK_UP, KeyEvent.VK_DOWN, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT};
 
-		movement.put("player-left", new Movement(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0), new AbstractAction() {
-		    public void actionPerformed(ActionEvent e) {
-		    	if (lastMvTime.compareNow('W')) {
-			    	direction = 'W';
-			    	x_coord -= DELTA_DIST;
-			    	refresh();
-		    	}
-		    }
-		}));
+		for (int i=0;i<keys.length;i++) {
+			// resolves error: local variables referenced from an inner class must be final or effectively final
+			final int index = i;
 
-		movement.put("player-right", new Movement(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0), new AbstractAction() {
-		    public void actionPerformed(ActionEvent e) {
-		    	if (lastMvTime.compareNow('E')) {
-			    	direction = 'E';
-			    	x_coord += DELTA_DIST;
-			    	refresh();
-			    }
-		    }
-		}));
+			movement.put("player-"+keys[index], new Movement(KeyStroke.getKeyStroke(strokes[index], 0), new AbstractAction() {
+				public void actionPerformed(ActionEvent e) {
+					if (lastMvTime.compareNow(dirs[index]) && (!inRestaurant || !hasCollided(Restaurant.boundaries))) {
+						direction = dirs[index];
+
+						if (index < 2) y_coord += DELTA_DIST * (dirs[index] == 'N' ? -1 : 1);
+						else x_coord += DELTA_DIST * (dirs[index] == 'W' ? -1 : 1);
+
+						stepNo++;
+						CovidCashier.frame.repaint();
+					}
+				}
+			}));
+		}
 
 		// Loads the movements into the main frame's input map
 		for (String key : movement.keySet()) {
 			CovidCashier.frame.getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(movement.get(key).getKeyStroke(),key);
 		}
-	}
-
-	private void refresh() {
-		stepNo++;
-    	CovidCashier.frame.repaint();
 	}
 
 	/**
