@@ -54,9 +54,10 @@ public class CashRun extends Minigame {
 		public CashRunDrawing() {
             super();
             player = new Player("player", gender);
-            player.setDirection('e');
+            player.setDirection('E');
+            player.setClothing('W');
             player.setEquipment(equipment);
-            System.out.println(player.getSprite(0));
+            player.setCoordinates(40, 207);
         }
 
         /**
