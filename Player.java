@@ -102,6 +102,10 @@ public class Player extends Character {
 		}
 	}
 
+	public void drawAtRestaurant(Graphics g) {
+		g.drawImage(getSprite(stepNo),x_coord,Restaurant.getYRelativeToFrame(y_coord),null);
+	}
+
 	/**
 	  * Activates the key bindings
 	  */
