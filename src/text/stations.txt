@@ -4,16 +4,16 @@
 # dir: direction to face in order to enter the station
 
 &fridge
-77,184,149,26,n
+77,184,149,26,N
 
 &covid counter
-74,193,76,160,w
+74,193,76,160,W
 
 &front counter
-214,510,159,26,s
+214,510,159,26,S
 
 &pick up
-373,414,160,26,n
+373,414,160,26,N
 
 &drop off
-480,510,106,26,s
+480,510,106,26,S
