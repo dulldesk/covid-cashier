@@ -58,6 +58,7 @@ public class CashRun extends Minigame {
             player.setClothing('W');
             player.setEquipment(equipment);
             player.setCoordinates(40, 207);
+            player.cashRunActivate();
         }
 
         /**
