@@ -89,7 +89,7 @@ public class Player extends Character {
 	  */
 	public void restaurantActivate() {
 		for (String key : restaurantMovement.keySet()) {
-			CovidCashier.frame.getRootPane().getActionMap().put(key,restaurantMovement.get(key).getAction());
+			CovidCashier.frame.getRootPane().getActionMap().put(restaurantMovement.get(key).getName(),restaurantMovement.get(key).getAction());
 		}
 	}
 
@@ -130,9 +130,10 @@ public class Player extends Character {
 			// resolves error: local variables referenced from an inner class must be final or effectively final
 			final int index = i;
 
-			restaurantMovement.put("player-"+keys[index], new Movement("player-"+keys[index], KeyStroke.getKeyStroke(strokes[index], 0), new AbstractAction() {
+			restaurantMovement.put(keys[index], new Movement("player-"+keys[index], KeyStroke.getKeyStroke(strokes[index], 0), new AbstractAction() {
 				public void actionPerformed(ActionEvent e) {
-					if (lastMvTime.compareNow(dirs[index]) && !hasCollided(Restaurant.boundaries)) {
+					// if (lastMvTime.compareNow(dirs[index]) && !hasCollided(Restaurant.boundaries)) {
+					if (lastMvTime.compareNow(dirs[index]) /*&& !hasCollided(Restaurant.boundaries)*/) {
 						direction = dirs[index];
 
 						if (index < 2) y_coord += DELTA_DIST * (dirs[index] == 'N' ? -1 : 1);
@@ -147,7 +148,7 @@ public class Player extends Character {
 
 		// Loads the restaurant movements into the main frame's input map
 		for (String key : restaurantMovement.keySet()) {
-			CovidCashier.frame.getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(restaurantMovement.get(key).getKeyStroke(),key);
+			CovidCashier.frame.getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(restaurantMovement.get(key).getKeyStroke(),restaurantMovement.get(key).getName());
 		}
 	}
 
@@ -162,6 +163,8 @@ public class Player extends Character {
 				CovidCashier.frame.repaint();
 			}
 		});
+
+		CovidCashier.frame.getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(cashRunMovement.getKeyStroke(),cashRunMovement.getName());
 	}
 	/**
 	  * Contains data about a key binding (i.e. the KeyStroke and Action)
