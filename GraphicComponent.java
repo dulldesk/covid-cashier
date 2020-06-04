@@ -84,6 +84,8 @@ public abstract class GraphicComponent implements MouseMotionListener, MouseList
 		if (mouse) {
 	    	CovidCashier.frame.addMouseListener(this);
 	    	CovidCashier.frame.addMouseMotionListener(this);
+
+	    	resetClicked();
 		}
 		if (key) {
 	    	CovidCashier.frame.addKeyListener(this);
@@ -99,6 +101,8 @@ public abstract class GraphicComponent implements MouseMotionListener, MouseList
 		if (mouse) {
 	    	CovidCashier.frame.removeMouseListener(this);
 	    	CovidCashier.frame.removeMouseMotionListener(this);
+
+	    	resetClicked();
 		}
 		if (key) {
 	    	CovidCashier.frame.removeKeyListener(this);
@@ -112,6 +116,14 @@ public abstract class GraphicComponent implements MouseMotionListener, MouseList
 	public void mouseClicked(MouseEvent e) {
 		isClicked = withinCoordinates();
 		if (isClicked) CovidCashier.frame.repaint();
+	}
+
+	/**
+	  * Sets click and hover properties to false
+	  */
+	public void resetClicked() {
+		isClicked = false;
+		isHovered = false;
 	}
 
 	/**
