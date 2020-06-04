@@ -156,11 +156,15 @@ public class Player extends Character {
 	  * Loads cash run movements into the key binding
 	  */
 	private void loadCashRunMovement() {
-		int dist = 10;
 		cashRunMovement = new Movement("jump", KeyStroke.getKeyStroke( KeyEvent.VK_SPACE, 0), new AbstractAction() {
+			int dist = 10;
 			public void actionPerformed(ActionEvent e) {
-				y_coord += dist;
-				CovidCashier.frame.repaint();
+				while(dist >= -10) {
+					System.out.println(dist);
+					y_coord -= dist;
+					dist -= 2;
+					CovidCashier.frame.repaint();
+				}
 			}
 		});
 
