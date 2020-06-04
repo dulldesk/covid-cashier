@@ -159,12 +159,8 @@ public class Player extends Character {
 		cashRunMovement = new Movement("jump", KeyStroke.getKeyStroke( KeyEvent.VK_SPACE, 0), new AbstractAction() {
 			int dist = 10;
 			public void actionPerformed(ActionEvent e) {
-				while(dist >= -10) {
-					System.out.println(dist);
-					y_coord -= dist;
-					dist -= 2;
-					CovidCashier.frame.repaint();
-				}
+				jumped = true;
+				dist = 24;
 			}
 		});
 
