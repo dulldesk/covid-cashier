@@ -26,13 +26,24 @@ public class Player extends Character {
 	private Movement cashRunMovement;
 
 	/**
+	 * ---
+	 */
+	public boolean jumped;
+        
+	/**
+	 * ---
+	 */
+	public int dist;
+
+	/**
 	  * Constructs a Character object and loads the appropriate sprites into the steps map
 	  * @param name 	the Character's name, as chosen by the user
 	  * @param gender 	the gender of the Character chosen
 	  */
 	public Player(String name, char gender) {
 		super(name,"player",gender);
-
+		dist = 0;
+		jumped = false;
 		restaurantMovement = new HashMap<String, Movement>();
 		loadRestaurantMovement();
 		loadCashRunMovement();
@@ -156,11 +167,10 @@ public class Player extends Character {
 	  * Loads cash run movements into the key binding
 	  */
 	private void loadCashRunMovement() {
-		int dist = 10;
 		cashRunMovement = new Movement("jump", KeyStroke.getKeyStroke( KeyEvent.VK_SPACE, 0), new AbstractAction() {
 			public void actionPerformed(ActionEvent e) {
-				y_coord += dist;
-				CovidCashier.frame.repaint();
+				jumped = true;
+				dist = 24;
 			}
 		});
 
