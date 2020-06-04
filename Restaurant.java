@@ -17,12 +17,12 @@ public class Restaurant {
 	/**
 	  * The map image
 	  */
-	private final Image MAP;
+	private static final Image MAP;
 
 	/**
 	  * The map height
 	  */
-	private final int MAP_HEIGHT = 900;
+	private final static int MAP_HEIGHT = 900;
 	
 	/**
 	  * Whether the user has selected the training level
@@ -34,7 +34,10 @@ public class Restaurant {
 	  */
 	private RestaurantDrawing workplace;
 
-	public Character user;
+	/**
+	  * The user's player
+	  */
+	public Player user;
 
 	/**
 	  * Number of completed stations
@@ -56,17 +59,20 @@ public class Restaurant {
 		boundaries = new ArrayList<Boundary>();
 		loadStations();
 		loadBoundaries();
+		MAP = Utility.loadImage("Restaurant.png",Utility.FRAME_WIDTH,MAP_HEIGHT);
 	}
 
+	public static int topY;
+
 	public Restaurant(boolean training) {
-		MAP = Utility.loadImage("map.png",Utility.FRAME_WIDTH,MAP_HEIGHT);
 		inTraining = training;
 
-		user = new Player(User.name, User.gender);
 		completedStations = 0;
+		topY = 0;
 
 		// initial position
-		user.setCoordinates(0,100);
+		user = new Player(User.name, User.gender);
+		user.setCoordinates(0,375);
 
 		workplace = new RestaurantDrawing();
 		Utility.changeDrawing(workplace);
@@ -80,9 +86,10 @@ public class Restaurant {
 			BufferedReader br = Utility.getBufferedReader("stations.txt");
 
 			for (String nxt = br.readLine(); nxt != null; nxt = br.readLine()) {
-				String [] tokens = nxt.split(",");
-				if (nxt.startsWith("#") || tokens.length != 5) continue;
-				stations.add(new Station(Integer.parseInt(tokens[0]),Integer.parseInt(tokens[1]),Integer.parseInt(tokens[2]),Integer.parseInt(tokens[3]),tokens[4].charAt(0)));
+				if (nxt.startsWith("&")) {
+					String [] tokens = br.readLine().split(",");
+					stations.add(new Station(nxt.substring(1), Integer.parseInt(tokens[0]),Integer.parseInt(tokens[1]),Integer.parseInt(tokens[2]),Integer.parseInt(tokens[3]),tokens[4].charAt(0)));
+				}
 			}
 		} 
 		catch (IOException e) {}
@@ -150,6 +157,7 @@ public class Restaurant {
 			super();
 
 			for (Station stn : stations) stn.activate();
+			user.restaurantActivate();
 		}
 
 		/**
@@ -160,8 +168,13 @@ public class Restaurant {
 		public void paintComponent(Graphics g) {
 			super.paintComponent(g);
 			
-			// if (!hasCollided(furniture)) user.draw(g);
+			// background
+			g.drawImage(MAP,0,topY,null);
+
+			user.draw(g);
 			
+			for (Boundary bnd : boundaries) bnd.draw(g);
+
 		}
 	}
 }
