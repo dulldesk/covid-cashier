@@ -26,13 +26,24 @@ public class Player extends Character {
 	private Movement cashRunMovement;
 
 	/**
+	 * ---
+	 */
+	public boolean jumped;
+        
+	/**
+	 * ---
+	 */
+	public int dist;
+
+	/**
 	  * Constructs a Character object and loads the appropriate sprites into the steps map
 	  * @param name 	the Character's name, as chosen by the user
 	  * @param gender 	the gender of the Character chosen
 	  */
 	public Player(String name, char gender) {
 		super(name,"player",gender);
-
+		dist = 0;
+		jumped = false;
 		restaurantMovement = new HashMap<String, Movement>();
 		loadRestaurantMovement();
 		loadCashRunMovement();
