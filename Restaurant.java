@@ -122,6 +122,26 @@ public class Restaurant {
 		return boundaries;
 	}
 
+
+	/**
+	  * Gets the y coordinate relative to the frame as opposed to the map image
+	  * @param y the coordinate to use
+	  * @return the y coordinate relative to the frame 
+	  */
+	public static int getYRelativeToFrame(int y) {
+		return y >= MAP_HEIGHT ? y - MAP_HEIGHT : y;
+	}
+
+	/**
+	  * Gets the y coordinate relative to the map as opposed to the frame
+	  * @param y the coordinate to use
+	  * @return the y coordinate relative to the map 
+	  */
+	public static int getYRelativeToMap(int y) {
+		return y + topY;
+	}
+
+
 	private class RestaurantDrawing extends JComponent {
 		/**
 		  * Constructor
