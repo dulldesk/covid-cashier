@@ -20,7 +20,10 @@ public class Player extends Character {
 	  */
 	private Map<String,Movement> restaurantMovement;
 
-	private boolean inRestaurant;
+	/**
+	  * Key bindings for player jumping
+	  */
+	private Movement cashRunMovement;
 
 	/**
 	  * Constructs a Character object and loads the appropriate sprites into the steps map
@@ -28,20 +31,11 @@ public class Player extends Character {
 	  * @param gender 	the gender of the Character chosen
 	  */
 	public Player(String name, char gender) {
-		this(name,gender, false);
-	}
-
-	/**
-	  * Constructs a Character object and loads the appropriate sprites into the steps map
-	  * @param name 	the Character's name, as chosen by the user
-	  * @param gender 	the gender of the Character chosen
-	  */
-	public Player(String name, char gender, boolean inRestaurant) {
 		super(name,"player",gender);
-		this.inRestaurant = inRestaurant;
 
 		restaurantMovement = new HashMap<String, Movement>();
 		loadRestaurantMovement();
+		loadCashRunMovement();
 	}
 
 	/**
@@ -93,19 +87,33 @@ public class Player extends Character {
 	/**
 	  * Activates the key bindings
 	  */
-	public void activate() {
+	public void restaurantActivate() {
 		for (String key : restaurantMovement.keySet()) {
-			CovidCashier.frame.getRootPane().getActionMap().put(key,restaurantMovement.get(key).getAction());
+			CovidCashier.frame.getRootPane().getActionMap().put(restaurantMovement.get(key).getName(),restaurantMovement.get(key).getAction());
 		}
 	}
 
 	/**
 	  * Deactivates the key bindings
 	  */
-	public void deactivate() {
+	public void restaurantDeactivate() {
 		for (String key : restaurantMovement.keySet()) {
 			CovidCashier.frame.getRootPane().getActionMap().put(key,null);
 		}
+	}
+
+	/**
+	  * Activates the key bindings
+	  */
+	public void cashRunActivate() {
+		CovidCashier.frame.getRootPane().getActionMap().put(cashRunMovement.getName(),cashRunMovement.getAction());
+	}
+
+	/**
+	  * Deactivates the key bindings
+	  */
+	public void cashRunDeactivate() {
+		CovidCashier.frame.getRootPane().getActionMap().put(cashRunMovement.getName(),null);
 	}
 
 	/**
@@ -122,9 +130,10 @@ public class Player extends Character {
 			// resolves error: local variables referenced from an inner class must be final or effectively final
 			final int index = i;
 
-			restaurantMovement.put("player-"+keys[index], new Movement(KeyStroke.getKeyStroke(strokes[index], 0), new AbstractAction() {
+			restaurantMovement.put(keys[index], new Movement("player-"+keys[index], KeyStroke.getKeyStroke(strokes[index], 0), new AbstractAction() {
 				public void actionPerformed(ActionEvent e) {
-					if (lastMvTime.compareNow(dirs[index]) && (!inRestaurant || !hasCollided(Restaurant.boundaries))) {
+					// if (lastMvTime.compareNow(dirs[index]) && !hasCollided(Restaurant.boundaries)) {
+					if (lastMvTime.compareNow(dirs[index]) /*&& !hasCollided(Restaurant.boundaries)*/) {
 						direction = dirs[index];
 
 						if (index < 2) y_coord += DELTA_DIST * (dirs[index] == 'N' ? -1 : 1);
@@ -139,14 +148,33 @@ public class Player extends Character {
 
 		// Loads the restaurant movements into the main frame's input map
 		for (String key : restaurantMovement.keySet()) {
-			CovidCashier.frame.getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(restaurantMovement.get(key).getKeyStroke(),key);
+			CovidCashier.frame.getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(restaurantMovement.get(key).getKeyStroke(),restaurantMovement.get(key).getName());
 		}
 	}
 
 	/**
+	  * Loads cash run movements into the key binding
+	  */
+	private void loadCashRunMovement() {
+		int dist = 10;
+		cashRunMovement = new Movement("jump", KeyStroke.getKeyStroke( KeyEvent.VK_SPACE, 0), new AbstractAction() {
+			public void actionPerformed(ActionEvent e) {
+				y_coord += dist;
+				CovidCashier.frame.repaint();
+			}
+		});
+
+		CovidCashier.frame.getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(cashRunMovement.getKeyStroke(),cashRunMovement.getName());
+	}
+	/**
 	  * Contains data about a key binding (i.e. the KeyStroke and Action)
 	  */
 	private class Movement {
+		/**
+		  * The name of the KeyStroke
+		  */
+		private String name;
+
 		/**
 		  * The KeyStroke to be mapped to the action
 		  */
@@ -160,9 +188,17 @@ public class Player extends Character {
 		/**
 		  * Constructs a Movement object
 		  */
-		public Movement(KeyStroke k, AbstractAction a) {
+		public Movement(String n, KeyStroke k, AbstractAction a) {
+			name = n;
 			key = k;
 			action = a;
+		}
+
+		/**
+		  * Fetches the name of the object
+		  */
+		public String getName() {
+			return name;
 		}
 
 		/**
