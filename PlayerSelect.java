@@ -89,7 +89,7 @@ public class PlayerSelect extends Menu {
 			// The first stage is name selection
 			stage = "name";
 
-			testSprite.activate();
+			testSprite.restaurantActivate();
 		}
 
 		/**

@@ -20,7 +20,10 @@ public class Player extends Character {
 	  */
 	private Map<String,Movement> restaurantMovement;
 
-	private boolean inRestaurant;
+	/**
+	  * Key bindings for player jumping
+	  */
+	private Movement cashRunMovement;
 
 	/**
 	  * Constructs a Character object and loads the appropriate sprites into the steps map
@@ -28,20 +31,11 @@ public class Player extends Character {
 	  * @param gender 	the gender of the Character chosen
 	  */
 	public Player(String name, char gender) {
-		this(name,gender, false);
-	}
-
-	/**
-	  * Constructs a Character object and loads the appropriate sprites into the steps map
-	  * @param name 	the Character's name, as chosen by the user
-	  * @param gender 	the gender of the Character chosen
-	  */
-	public Player(String name, char gender, boolean inRestaurant) {
 		super(name,"player",gender);
-		this.inRestaurant = inRestaurant;
 
 		restaurantMovement = new HashMap<String, Movement>();
 		loadRestaurantMovement();
+		loadCashRunMovement();
 	}
 
 	/**
@@ -93,7 +87,7 @@ public class Player extends Character {
 	/**
 	  * Activates the key bindings
 	  */
-	public void activate() {
+	public void restaurantActivate() {
 		for (String key : restaurantMovement.keySet()) {
 			CovidCashier.frame.getRootPane().getActionMap().put(key,restaurantMovement.get(key).getAction());
 		}
@@ -102,7 +96,25 @@ public class Player extends Character {
 	/**
 	  * Deactivates the key bindings
 	  */
-	public void deactivate() {
+	public void restaurantDeactivate() {
+		for (String key : restaurantMovement.keySet()) {
+			CovidCashier.frame.getRootPane().getActionMap().put(key,null);
+		}
+	}
+
+	/**
+	  * Activates the key bindings
+	  */
+	  public void cashRunActivate() {
+		for (String key : restaurantMovement.keySet()) {
+			CovidCashier.frame.getRootPane().getActionMap().put(key,restaurantMovement.get(key).getAction());
+		}
+	}
+
+	/**
+	  * Deactivates the key bindings
+	  */
+	public void cashRunDeactivate() {
 		for (String key : restaurantMovement.keySet()) {
 			CovidCashier.frame.getRootPane().getActionMap().put(key,null);
 		}
@@ -124,7 +136,7 @@ public class Player extends Character {
 
 			restaurantMovement.put("player-"+keys[index], new Movement(KeyStroke.getKeyStroke(strokes[index], 0), new AbstractAction() {
 				public void actionPerformed(ActionEvent e) {
-					if (lastMvTime.compareNow(dirs[index]) && (!inRestaurant || !hasCollided(Restaurant.boundaries))) {
+					if (lastMvTime.compareNow(dirs[index]) && !hasCollided(Restaurant.boundaries)) {
 						direction = dirs[index];
 
 						if (index < 2) y_coord += DELTA_DIST * (dirs[index] == 'N' ? -1 : 1);
@@ -143,6 +155,18 @@ public class Player extends Character {
 		}
 	}
 
+	/**
+	  * Loads cash run movements into the key binding
+	  */
+	private void loadCashRunMovement() {
+		int dist = 10;
+		cashRunMovement = new Movement(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0), new AbstractAction() {
+			public void actionPerformed(ActionEvent e) {
+				y_coord += dist;
+				CovidCashier.frame.repaint();
+			}
+		});
+	}
 	/**
 	  * Contains data about a key binding (i.e. the KeyStroke and Action)
 	  */
