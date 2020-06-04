@@ -36,7 +36,16 @@ public class Boundary extends GraphicComponent {
 	  * @return whether a given Character has collided with this boundary object
 	  */
 	public boolean isColliding(Character figure) {
-		return figure.getX() + Character.WIDTH > x_coord && figure.getX() <= x_coord + width && figure.getY() + Character.HEIGHT > y_coord && figure.getY() <= y_coord + height;
+		int y = Restaurant.getYRelativeToMap(y_coord);
+		if (
+			figure.getX() <= x_coord + width && 
+			figure.getX() + Character.WIDTH >= x_coord && 
+			figure.getY() <= y + height &&
+			figure.getY() + Character.HEIGHT >= y
+			) {
+			return true;
+		}
+		return false;
 	}
 
 	@Override
