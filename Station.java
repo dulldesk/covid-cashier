@@ -27,10 +27,12 @@ public class Station extends Boundary {
 	  * @param y 		y-coordinate (top-left corner)
 	  * @param w 		width of the station
 	  * @param h 		height of the station 
+	  * @param dir 		the direction that a character must face in order to enter the station
 	  */
-	public Station(int x, int y, int w, int h, char direction) {
+	public Station(String name, int x, int y, int w, int h, char dir) {
 		super(x,y,w,h);
-		requiredDir = direction;
+		this.name = name;
+		requiredDir = dir;
 
 		isClicked = false;
 		isHovered = false;
