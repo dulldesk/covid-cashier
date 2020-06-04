@@ -168,6 +168,7 @@ public class Player extends Character {
 	  */
 	private void loadCashRunMovement() {
 		cashRunMovement = new Movement("jump", KeyStroke.getKeyStroke( KeyEvent.VK_SPACE, 0), new AbstractAction() {
+			int dist = 10;
 			public void actionPerformed(ActionEvent e) {
 				jumped = true;
 				dist = 24;
