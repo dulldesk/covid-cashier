@@ -22,7 +22,7 @@ public class MainMenu extends Menu {
 	/**
 	  * Holds the available options on the main menu
 	  */
-	private final String [] OPTIONS = {"Instructions", "Play", "Quit"};
+	private final String [] OPTIONS = {"Instructions", "Train", "Play", "Quit"};
 
 	/**
 	  * Holds the buttons displayed on the screen
@@ -36,7 +36,7 @@ public class MainMenu extends Menu {
 		buttons = new ArrayList<Button>(OPTIONS.length);
 
 		for (int i=0;i<OPTIONS.length;i++) {
-			buttons.add(new Button(OPTIONS[i], leftAlign, titleY + 20 + (int)((i+1)*1.5*Utility.LABEL_FONT.getSize()), Utility.LABEL_FONT));
+			buttons.add(new Button(OPTIONS[i], leftAlign, titleY + 15 + (int)((i+1)*1.2*Utility.LABEL_FONT.getSize()), Utility.LABEL_FONT));
 		}
 
 		drawing = new MainMenuDrawing();
@@ -85,6 +85,37 @@ public class MainMenu extends Menu {
 			g.setColor(Color.black);
 			centerAlignStr(g, "COVID Cashier", 545, titleY);
 
+			drawReceipt(g);
+
+			for (Button btn : buttons) {
+				btn.draw(g);
+				if (btn.isClicked()) {
+					halt();
+					switch (btn.getName().toUpperCase()) {
+						case "INSTRUCTIONS": 
+							new Instructions();
+							break;
+						case "TRAIN": 
+							new Restaurant(true);
+							break;
+						case "PLAY": 
+							new Restaurant(false);
+							break;
+						case "QUIT": 
+							new Quit();
+							break;
+					}
+					// System.out.println("here "+btn.getName());
+					return;
+				} 
+			}
+			refreshScreen();
+		}
+
+		/**
+		  * Draws text on the main menu receipt
+		  */
+		public void drawReceipt(Graphics g) {
 			Calendar date = Calendar.getInstance();
 			String[] days = {"Sat", "Sun", "Mon", "Tues", "Wed", "Thurs", "Fri"};
 			g.setColor(new Color(50, 50, 50));
@@ -103,26 +134,6 @@ public class MainMenu extends Menu {
 			g.drawString("SUBTOTAL", 100, 230);
 			centerAlignStr(g, "========================", 165, 238);
 			g.drawString("TOTAL", 100, 260);
-
-			for (Button btn : buttons) {
-				btn.draw(g);
-				if (btn.isClicked()) {
-					// do something
-					halt();
-					switch (btn.getName().toUpperCase()) {
-						case "INSTRUCTIONS": 
-							new Instructions();
-							break;
-						case "PLAY": 
-							break;
-						case "QUIT": 
-							new Quit();
-							break;
-					}
-					// System.out.println("here "+btn.getName());
-				} 
-			}
-			refreshScreen();
 		}
 
 		/**
