@@ -106,14 +106,14 @@ public class Player extends Character {
 	  * Activates the key bindings
 	  */
 	public void cashRunActivate() {
-		CovidCashier.frame.getRootPane().getActionMap().put("jump",cashRunMovement.getAction());
+		CovidCashier.frame.getRootPane().getActionMap().put(cashRunMovement.getName(),cashRunMovement.getAction());
 	}
 
 	/**
 	  * Deactivates the key bindings
 	  */
 	public void cashRunDeactivate() {
-		CovidCashier.frame.getRootPane().getActionMap().put("jump",null);
+		CovidCashier.frame.getRootPane().getActionMap().put(cashRunMovement.getName(),null);
 	}
 
 	/**
