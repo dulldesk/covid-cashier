@@ -18,7 +18,7 @@ public class Player extends Character {
 	/**
 	  * Contains key bindings for moving the player around
 	  */
-	private Map<String,Movement> movement;
+	private Map<String,Movement> restaurantMovement;
 
 	private boolean inRestaurant;
 
@@ -28,10 +28,7 @@ public class Player extends Character {
 	  * @param gender 	the gender of the Character chosen
 	  */
 	public Player(String name, char gender) {
-		super(name,"player",gender);
-		inRestaurant = false;
-		movement = new HashMap<String, Movement>();
-		loadMovement();
+		this(name,gender, false);
 	}
 
 	/**
@@ -43,8 +40,8 @@ public class Player extends Character {
 		super(name,"player",gender);
 		this.inRestaurant = inRestaurant;
 
-		movement = new HashMap<String, Movement>();
-		loadMovement();
+		restaurantMovement = new HashMap<String, Movement>();
+		loadRestaurantMovement();
 	}
 
 	/**
@@ -97,8 +94,8 @@ public class Player extends Character {
 	  * Activates the key bindings
 	  */
 	public void activate() {
-		for (String key : movement.keySet()) {
-			CovidCashier.frame.getRootPane().getActionMap().put(key,movement.get(key).getAction());
+		for (String key : restaurantMovement.keySet()) {
+			CovidCashier.frame.getRootPane().getActionMap().put(key,restaurantMovement.get(key).getAction());
 		}
 	}
 
@@ -106,15 +103,15 @@ public class Player extends Character {
 	  * Deactivates the key bindings
 	  */
 	public void deactivate() {
-		for (String key : movement.keySet()) {
+		for (String key : restaurantMovement.keySet()) {
 			CovidCashier.frame.getRootPane().getActionMap().put(key,null);
 		}
 	}
 
 	/**
-	  * Loads movements into the map of key bindings and into the main frame's input map
+	  * Loads restaurant movements into the map of key bindings and into the main frame's input map
 	  */
-	private void loadMovement() {
+	private void loadRestaurantMovement() {
 		final int DELTA_DIST = 10;
 
 		final String [] keys = {"up", "down", "left", "right"};
@@ -125,7 +122,7 @@ public class Player extends Character {
 			// resolves error: local variables referenced from an inner class must be final or effectively final
 			final int index = i;
 
-			movement.put("player-"+keys[index], new Movement(KeyStroke.getKeyStroke(strokes[index], 0), new AbstractAction() {
+			restaurantMovement.put("player-"+keys[index], new Movement(KeyStroke.getKeyStroke(strokes[index], 0), new AbstractAction() {
 				public void actionPerformed(ActionEvent e) {
 					if (lastMvTime.compareNow(dirs[index]) && (!inRestaurant || !hasCollided(Restaurant.boundaries))) {
 						direction = dirs[index];
@@ -140,9 +137,9 @@ public class Player extends Character {
 			}));
 		}
 
-		// Loads the movements into the main frame's input map
-		for (String key : movement.keySet()) {
-			CovidCashier.frame.getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(movement.get(key).getKeyStroke(),key);
+		// Loads the restaurant movements into the main frame's input map
+		for (String key : restaurantMovement.keySet()) {
+			CovidCashier.frame.getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(restaurantMovement.get(key).getKeyStroke(),key);
 		}
 	}
 
