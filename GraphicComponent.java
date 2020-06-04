@@ -52,11 +52,17 @@ public abstract class GraphicComponent implements MouseMotionListener, MouseList
 	protected String name;
 
 	/**
-	  * Returns whether the component has just been clicked by the user
 	  * @return whether the component has just been clicked by the user
 	  */
 	public boolean isClicked() {
 		return isClicked;
+	}
+
+	/**
+	  * @return whether the user is hovering over the component
+	  */
+	public boolean isHovered() {
+		return isHovered;
 	}
 
 	public String getName() {
