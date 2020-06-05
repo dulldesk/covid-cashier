@@ -29,11 +29,16 @@ public class Player extends Character {
 	 * ---
 	 */
 	public boolean jumped;
+
+	/**
+	 * ---
+	 */
+	public boolean activated;
         
 	/**
 	 * ---
 	 */
-	public int dist;
+	public int speed;
 
 	/**
 	  * Constructs a Character object and loads the appropriate sprites into the steps map
@@ -42,8 +47,9 @@ public class Player extends Character {
 	  */
 	public Player(String name, char gender) {
 		super(name,"player",gender);
-		dist = 0;
+		speed = 0;
 		jumped = false;
+		activated = false;
 		restaurantMovement = new HashMap<String, Movement>();
 		loadRestaurantMovement();
 		loadCashRunMovement();
@@ -117,6 +123,7 @@ public class Player extends Character {
 	  * Activates the key bindings
 	  */
 	public void cashRunActivate() {
+		activated = true;
 		CovidCashier.frame.getRootPane().getActionMap().put(cashRunMovement.getName(),cashRunMovement.getAction());
 	}
 
@@ -124,6 +131,7 @@ public class Player extends Character {
 	  * Deactivates the key bindings
 	  */
 	public void cashRunDeactivate() {
+		activated = false;
 		CovidCashier.frame.getRootPane().getActionMap().put(cashRunMovement.getName(),null);
 	}
 
@@ -168,10 +176,9 @@ public class Player extends Character {
 	  */
 	private void loadCashRunMovement() {
 		cashRunMovement = new Movement("jump", KeyStroke.getKeyStroke( KeyEvent.VK_SPACE, 0), new AbstractAction() {
-			int dist = 10;
 			public void actionPerformed(ActionEvent e) {
 				jumped = true;
-				dist = 24;
+				speed = 52;
 			}
 		});
 
