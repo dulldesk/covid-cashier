@@ -1,5 +1,5 @@
 /**
-  * The Cash Run minigame
+  * The Fridge minigame
   * 
   * Last edit: 6/5/2020
   * @author 	Eric
@@ -14,17 +14,17 @@ import javax.swing.Timer;
 import java.util.*;
 import java.io.*;
 
-public class CashRun extends Minigame {
+public class FridgeTiles extends Minigame {
     /**
 	  * Contains the minigame graphics / GUI
 	  */
     private MinigameDrawing drawing;
-    
+
     /**
 	  * Contains the gender of the player.
 	  */
     private char gender;
-    
+
     /**
 	  * Contains the type of protective equipment the player was wearing in the restaurant.
 	  */
@@ -33,17 +33,17 @@ public class CashRun extends Minigame {
     /**
 	  * Initializes and displays the drawing to the frame
 	  */
-    public CashRun(char gender, String equipment) {
+    public FridgeTiles(char gender, String equipment) {
         this.gender = gender;
         this.equipment = equipment;
-        drawing = new CashRunDrawing();
+        drawing = new FridgeTilesDrawing();
         Utility.changeDrawing(drawing);
     }
 
     /**
 	  * GUI for the minigame
 	  */
-    public class CashRunDrawing extends MinigameDrawing {
+    public class FridgeTilesDrawing extends MinigameDrawing {
         /**
 		  * Player
 		  */
@@ -77,14 +77,14 @@ public class CashRun extends Minigame {
         /**
 		  * Object constructor. Uses the superclass's constructor
 		  */
-		public CashRunDrawing() {
+		public FridgeTilesDrawing() {
             super();
             player = new Player("player", gender);
-            player.setDirection('E');
+            player.setDirection('N');
             player.setClothing('W');
             player.setEquipment(equipment);
-            player.setCoordinates(40, 211);
-            player.cashRunActivate();
+            player.setCoordinates(287, 370);
+            player.fridgeTilesActivate();
             obstacles = new ArrayList<Obstacle>();
             spacing = 0;
             rand = (int)(Math.random()*20);
@@ -97,42 +97,26 @@ public class CashRun extends Minigame {
 		  */
 		@Override
 		public void display(Graphics g) {
-            g.drawImage(Utility.loadImage("CashRun_BG.png",Utility.FRAME_WIDTH,Utility.FRAME_HEIGHT),0,0,null);
-            if(spacing > 20+rand) {
-                String name = (Math.random()<0.5?"Cash":"Card");
-                obstacles.add(new Obstacle(name, 800, 247, (name.equals("Cash")?288:320), 480));
+            g.drawImage(Utility.loadImage("FridgeTiles_BG.png",Utility.FRAME_WIDTH,Utility.FRAME_HEIGHT),0,0,null);
+            if(spacing > 15+rand) {
+                String name = "Temp";
+                obstacles.add(new Obstacle(name, 290+(int)(Math.random()*3)*80, -100, 480, 480));
                 spacing = 0;
-                rand = (int)(Math.random()*20);
+                rand = (int)(Math.random()*15);
             }
             spacing++;
             for(int i = obstacles.size()-1; i >= 0; i--) {
                 Obstacle curr = obstacles.get(i);
-                curr.x_coord -= 15;
+                curr.y_coord += 15;
                 curr.draw(g);
                 if(isColliding(player, curr)) {
-                    if(curr.name.equals("Cash")) score -= 10;
-                    else score += 10;
+                    score -= 10;
                 }
-                if(curr.x_coord < -50)
+                if(curr.y_coord > 500)
                     obstacles.remove(i);
             }
-            if(!player.jumped) {
-                if(!player.activated)
-                    player.cashRunActivate();
-                if(refresh)
-                    player.stepNo++;
-            } else {
-                player.cashRunDeactivate();
-                player.stepNo = 1;
-                if(player.speed > -44) {
-                    player.speed-=8;
-                    //System.out.println(player.speed);
-                } else {
-                    player.jumped = false;
-                    player.speed = 0;
-                }
-            }
-            player.y_coord -= player.speed;
+            if(refresh)
+                player.stepNo++;
             player.draw(g);
             refresh = !refresh;
             g.drawString("Score: "+score, 10, 15);

@@ -20,16 +20,16 @@ public abstract class Minigame {
       * Increase the score by an amount
       * @param add      
 	  */
-    protected void add(double add) {
-        score += add;
+    protected void changeScore(double amount) {
+        score += amount;
     }
 
     /**
       * Set the score to an amount
       * @param set      
 	  */
-      protected void set(double set) {
-        score = set;
+      protected void set(double amount) {
+        score = amount;
     }
 
     /**
