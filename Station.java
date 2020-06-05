@@ -54,7 +54,8 @@ public class Station extends Boundary {
 	  * @param figure the figure whose proximity to the station is to be checked
 	  * @return whether figure is within the range of a station
 	  */
-	public boolean withinStation(Character figure) {
+	@Override
+	public boolean isColliding(Character figure) {
 		return figure.getDirection() == requiredDir 
 			&& (requiredDir == 'N' || requiredDir == 'S' 
 			? figure.getX() >= x_coord && figure.getX() + figure.width <= x_coord + width && ((requiredDir == 'N' && figure.getY() >= y_coord && figure.getY() <= y_coord + height) || (requiredDir == 's' && figure.getY() + figure.height >= y_coord && figure.getY() + figure.height <= y_coord + height))
