@@ -23,7 +23,7 @@ public abstract class ScreenMovement {
 		prefix = pre;
 		multiple = true;
 		movementMap = new HashMap<String, Movement>();
-		loadMovement();
+		loadKeyBindings();
 	}
 
 	public ScreenMovement(String pre, boolean single) {
@@ -31,15 +31,11 @@ public abstract class ScreenMovement {
 		prefix = pre;
 		multiple = false;
 		movementStroke = null;
-		loadMovement();
-	}
-
-	private void loadMovement() {
 		loadKeyBindings();
-		loadInputMap();
 	}
 
 	public void activate() {
+		loadInputMap();
 		if (multiple) {
 			for (String key : movementMap.keySet()) {
 				CovidCashier.frame.getRootPane().getActionMap().put(movementMap.get(key).getName(),movementMap.get(key).getAction());
@@ -50,6 +46,7 @@ public abstract class ScreenMovement {
 	}
 
 	public void deactivate() {
+		unloadInputMap();
 		if (multiple) {
 			for (String key : movementMap.keySet()) {
 				CovidCashier.frame.getRootPane().getActionMap().put(key,null);
@@ -69,6 +66,16 @@ public abstract class ScreenMovement {
 			}
 		} else {
 			CovidCashier.frame.getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(movementStroke.getKeyStroke(),movementStroke.getName());
+		}
+	}
+
+	public void unloadInputMap() {
+		if (multiple) {
+			for (String key : movementMap.keySet()) {
+				CovidCashier.frame.getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(movementMap.get(key).getKeyStroke(),"none");
+			}
+		} else {
+			CovidCashier.frame.getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(movementStroke.getKeyStroke(),"none");
 		}
 	}
 
