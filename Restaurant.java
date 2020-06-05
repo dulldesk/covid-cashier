@@ -1,7 +1,7 @@
 /**
   * The Restaurant workplace. This is where both the training level and the live level take place
   * 
-  * Last edit: 5/29/2020
+  * Last edit: 6/5/2020
   * @author 	Celeste
   * @version 	1.0
   * @since 		1.0

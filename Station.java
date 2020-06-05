@@ -3,7 +3,7 @@
   * 
   * <p>The station is "represented" as an imaginary rectangle that detects hover / click events 
   * 
-  * Last edit: 6/1/2020
+  * Last edit: 6/3/2020
   * @author 	Celeste
   * @version 	1.0
   * @since 		1.0

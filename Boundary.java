@@ -3,7 +3,7 @@
   *
   * <p>The boundary object is "represented" as an imaginary rectangle. The user cannot walk on top of it
   *
-  * Last edit: 6/1/2020
+  * Last edit: 6/4/2020
   * @author 	Celeste
   * @version 	1.0
   * @since 		1.0

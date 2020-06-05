@@ -1,7 +1,7 @@
 /**
   * A player character
   * 
-  * Last edit: 6/3/2020
+  * Last edit: 6/5/2020
   * @author 	Celeste, Eric
   * @version 	1.1
   * @since 		1.0
