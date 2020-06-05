@@ -42,9 +42,7 @@ public class Boundary extends GraphicComponent {
 	}
 
 	@Override
-	public void draw(Graphics g) {
-		g.drawRect(x_coord,Restaurant.getYRelativeToFrame(y_coord),width,height);
-	}
+	public void draw(Graphics g) {}
 
 	/**
 	  * @param figure 	the Character to detect collision for
