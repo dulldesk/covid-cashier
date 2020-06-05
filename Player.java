@@ -142,10 +142,15 @@ public class Player extends Character {
 						if (index < 2) y_coord += DELTA_DIST * (dirs[index] == 'N' ? -1 : 1);
 						else x_coord += DELTA_DIST * (dirs[index] == 'W' ? -1 : 1);
 
+						char origDir = direction;
+						direction = dirs[index];
+
  						if (hasCollided(Restaurant.boundaries)) {
  							// undo
 							if (index < 2) y_coord -= DELTA_DIST * (dirs[index] == 'N' ? -1 : 1);
 							else x_coord -= DELTA_DIST * (dirs[index] == 'W' ? -1 : 1);
+							
+							direction = origDir;
 							return;
  						}
 

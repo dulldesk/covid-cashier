@@ -15,12 +15,25 @@ import java.util.*;
 
 public class Boundary extends GraphicComponent {
 	/**
+	  * The direction that the player must face to enter the station
+	  */
+	protected char requiredDir;
+
+	/**
 	  * Constructs a boundary object
 	  * @param x 		x-coordinate (top-left corner)
 	  * @param y 		y-coordinate (top-left corner)
 	  * @param w 		width of the boundary object
 	  * @param h 		height of the boundary object 
+	  * @param dir 		the direction that a character must face in order to hit the boundary
 	  */
+	public Boundary(int x, int y, int w, int h, char dir) {
+		x_coord = x;
+		y_coord = y;
+		width = w;
+		height = h;
+		requiredDir = dir;
+	}
 	public Boundary(int x, int y, int w, int h) {
 		x_coord = x;
 		y_coord = y;
@@ -30,7 +43,7 @@ public class Boundary extends GraphicComponent {
 
 	@Override
 	public void draw(Graphics g) {
-		g.drawRect(x_coord,Restaurant.getYRelativeToMap(y_coord),width,height);
+		g.drawRect(x_coord,Restaurant.getYRelativeToFrame(y_coord),width,height);
 	}
 
 	/**
@@ -38,16 +51,12 @@ public class Boundary extends GraphicComponent {
 	  * @return whether a given Character has collided with this boundary object
 	  */
 	public boolean isColliding(Character figure) {
-		int y = Restaurant.getYRelativeToMap(y_coord);
-		if (
-			figure.getX() <= x_coord + width && 
+		// return false;
+		return figure.getDirection() == requiredDir && 
+			figure.getX() <= x_coord + width &&
 			figure.getX() + Character.WIDTH >= x_coord && 
-			figure.getY() <= y + height &&
-			figure.getY() + Character.HEIGHT >= y
-			) {
-			return true;
-		}
-		return false;
+			figure.getY() <= y_coord + height &&
+			figure.getY() + Character.HEIGHT >= y_coord;
 	}
 
 	@Override
