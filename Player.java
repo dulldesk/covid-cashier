@@ -103,7 +103,8 @@ public class Player extends Character {
 	}
 
 	public void drawAtRestaurant(Graphics g) {
-		g.drawImage(getSprite(stepNo),x_coord,Restaurant.getYRelativeToFrame(y_coord),null);
+		stepNo %= TOTAL_STEPS;
+		g.drawImage(getSprite(stepNo), x_coord, Restaurant.getYRelativeToFrame(y_coord), null);
 	}
 
 	/**
@@ -137,7 +138,6 @@ public class Player extends Character {
 			restaurantMovement.put(keys[index], new Movement("player-"+keys[index], KeyStroke.getKeyStroke(strokes[index], 0), new AbstractAction() {
 				public void actionPerformed(ActionEvent e) {
 					if (lastMvTime.compareNow(dirs[index])) {
-					// if (lastMvTime.compareNow(dirs[index]) /*&& !hasCollided(Restaurant.boundaries)*/) {
 
 						if (index < 2) y_coord += DELTA_DIST * (dirs[index] == 'N' ? -1 : 1);
 						else x_coord += DELTA_DIST * (dirs[index] == 'W' ? -1 : 1);
@@ -154,9 +154,7 @@ public class Player extends Character {
 							return;
  						}
 
-						if (index < 2) Restaurant.topY -= DELTA_DIST * (dirs[index] == 'N' ? -1 : 1);
-
-						direction = dirs[index];
+						if (index < 2) Restaurant.topY -= DELTA_DIST* (dirs[index] == 'N' ? -1 : 1);
 
 						stepNo++;
 						CovidCashier.frame.repaint();

@@ -22,7 +22,7 @@ public class Restaurant {
 	/**
 	  * The map height
 	  */
-	private final static int MAP_HEIGHT = 900;
+	public final static int MAP_HEIGHT = 1040;
 	
 	/**
 	  * Whether the user has selected the training level
@@ -70,11 +70,12 @@ public class Restaurant {
 		inTraining = training;
 
 		completedStations = 0;
-		topY = 0;
 
 		// initial position
 		user = new Player(User.name, User.gender);
-		user.setCoordinates(0,375);
+		user.setCoordinates(5,375);
+
+		topY = user.getY() - Utility.FRAME_HEIGHT - Character.HEIGHT/2;
 
 		workplace = new RestaurantDrawing();
 		Utility.changeDrawing(workplace);
@@ -107,8 +108,8 @@ public class Restaurant {
 
 			for (String nxt = br.readLine(); nxt != null; nxt = br.readLine()) {
 				String [] tokens = nxt.split(",");
-				if (nxt.startsWith("#") || tokens.length != 4) continue;
-				boundaries.add(new Boundary(Integer.parseInt(tokens[0]),Integer.parseInt(tokens[1]),Integer.parseInt(tokens[2]),Integer.parseInt(tokens[3])));
+				if (nxt.startsWith("#") || tokens.length != 5) continue;
+				boundaries.add(new Boundary(Integer.parseInt(tokens[0]),Integer.parseInt(tokens[1]),Integer.parseInt(tokens[2]),Integer.parseInt(tokens[3]),tokens[4].charAt(0)));
 			}
 		} 
 		catch (IOException e) {}
@@ -131,25 +132,14 @@ public class Restaurant {
 		return boundaries;
 	}
 
-
 	/**
 	  * Gets the y coordinate relative to the frame as opposed to the map image
 	  * @param y the coordinate to use
 	  * @return the y coordinate relative to the frame 
 	  */
 	public static int getYRelativeToFrame(int y) {
-		return y >= MAP_HEIGHT ? y - MAP_HEIGHT : y;
-	}
-
-	/**
-	  * Gets the y coordinate relative to the map as opposed to the frame
-	  * @param y the coordinate to use
-	  * @return the y coordinate relative to the map 
-	  */
-	public static int getYRelativeToMap(int y) {
 		return y + topY;
 	}
-
 
 	private class RestaurantDrawing extends JComponent {
 		/**
@@ -181,7 +171,10 @@ public class Restaurant {
 			// background
 			g.drawImage(MAP,0,topY,null);
 
-			user.draw(g);
+			user.drawAtRestaurant(g);
+
+			System.out.println(user.getX() + " " + user.getY() + " ; " + getYRelativeToFrame(user.getY()));
+			System.out.println(topY);
 			
 
 			for (Boundary bnd : boundaries) bnd.draw(g);
