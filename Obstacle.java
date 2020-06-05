@@ -55,8 +55,8 @@ public class Obstacle {
         name = n;
         x_coord = x;
         y_coord = y;
-        width = (int)(w/7.5);
-        height = (int)(h/7.5);
+        width = (int)(w/8);
+        height = (int)(h/8);
         obstacle = Utility.loadImage(name+".png", width, height);
     }
 

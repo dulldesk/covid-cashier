@@ -26,6 +26,11 @@ public class Player extends Character {
 	private Movement cashRunMovement;
 
 	/**
+	  * Contains key bindings for moving the player around
+	  */
+	private Map<String,Movement> fridgeTilesMovement;
+
+	/**
 	 * ---
 	 */
 	public boolean jumped;
@@ -51,8 +56,10 @@ public class Player extends Character {
 		jumped = false;
 		activated = false;
 		restaurantMovement = new HashMap<String, Movement>();
+		fridgeTilesMovement = new HashMap<String, Movement>();
 		loadRestaurantMovement();
 		loadCashRunMovement();
+		loadFridgeTilesMovement();
 	}
 
 	/**
@@ -111,6 +118,7 @@ public class Player extends Character {
 	  * Activates the key bindings
 	  */
 	public void restaurantActivate() {
+		activated = true;
 		for (String key : restaurantMovement.keySet()) {
 			CovidCashier.frame.getRootPane().getActionMap().put(restaurantMovement.get(key).getName(),restaurantMovement.get(key).getAction());
 		}
@@ -120,6 +128,7 @@ public class Player extends Character {
 	  * Deactivates the key bindings
 	  */
 	public void restaurantDeactivate() {
+		activated = false;
 		for (String key : restaurantMovement.keySet()) {
 			CovidCashier.frame.getRootPane().getActionMap().put(key,null);
 		}
@@ -144,6 +153,26 @@ public class Player extends Character {
 	public void cashRunDeactivate() {
 		activated = false;
 		CovidCashier.frame.getRootPane().getActionMap().put(cashRunMovement.getName(),null);
+	}
+
+	/**
+	  * Activates the key bindings
+	  */
+	public void fridgeTilesActivate() {
+		activated = true;
+		for (String key : fridgeTilesMovement.keySet()) {
+			CovidCashier.frame.getRootPane().getActionMap().put(fridgeTilesMovement.get(key).getName(),fridgeTilesMovement.get(key).getAction());
+		}
+	}
+
+	/**
+	  * Deactivates the key bindings
+	  */
+	public void fridgeTilesDeactivate() {
+		activated = false;
+		for (String key : fridgeTilesMovement.keySet()) {
+			CovidCashier.frame.getRootPane().getActionMap().put(key,null);
+		}
 	}
 
 	/**
@@ -198,7 +227,7 @@ public class Player extends Character {
 	  * Loads cash run movements into the key binding
 	  */
 	private void loadCashRunMovement() {
-		cashRunMovement = new Movement("jump", KeyStroke.getKeyStroke( KeyEvent.VK_SPACE, 0), new AbstractAction() {
+		cashRunMovement = new Movement("jump", KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0), new AbstractAction() {
 			public void actionPerformed(ActionEvent e) {
 				jumped = true;
 				speed = 52;
@@ -206,6 +235,26 @@ public class Player extends Character {
 		});
 
 		CovidCashier.frame.getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(cashRunMovement.getKeyStroke(),cashRunMovement.getName());
+	}
+
+	private void loadFridgeTilesMovement() {
+		fridgeTilesMovement.put("left", new Movement("left", KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0), new AbstractAction() {
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("left");
+				if(x_coord-80 > 280)
+					x_coord -= 80;
+			}
+		}));
+		fridgeTilesMovement.put("right", new Movement("right", KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0), new AbstractAction() {
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("right");
+				if(x_coord+80 < 520)
+					x_coord += 80;
+			}
+		}));
+		for (String key : fridgeTilesMovement.keySet()) {
+			CovidCashier.frame.getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(fridgeTilesMovement.get(key).getKeyStroke(),fridgeTilesMovement.get(key).getName());
+		}
 	}
 	/**
 	  * Contains data about a key binding (i.e. the KeyStroke and Action)
