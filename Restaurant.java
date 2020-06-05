@@ -56,12 +56,18 @@ public class Restaurant {
 	  */
 	public static ArrayList<Boundary> boundaries;
 
+	public static final Image LONG_COUNTER;
+
+	public static final Image FRONT_COUNTER;
+
 	static {
 		stations = new ArrayList<Station>();
 		boundaries = new ArrayList<Boundary>();
 		loadStations();
 		loadBoundaries();
 		MAP = Utility.loadImage("Restaurant.png",Utility.FRAME_WIDTH,MAP_HEIGHT);
+		LONG_COUNTER = Utility.loadImage("Counter.png",590,90);
+		FRONT_COUNTER = Utility.loadImage("Front Counter.png",640,97);
 	}
 
 	public static int topY;
@@ -170,6 +176,9 @@ public class Restaurant {
 			
 			// background
 			g.drawImage(MAP,0,topY,null);
+			g.drawImage(LONG_COUNTER,210,getYRelativeToFrame(335),null);
+			g.drawImage(FRONT_COUNTER,0,getYRelativeToFrame(542),null);
+
 
 			user.drawAtRestaurant(g);
 
