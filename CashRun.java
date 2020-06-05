@@ -109,7 +109,7 @@ public class CashRun extends Minigame {
                 Obstacle curr = obstacles.get(i);
                 curr.x_coord -= 15;
                 curr.draw(g);
-                if(isColliding(player, curr) {
+                if(isColliding(player, curr)) {
                     if(curr.name.equals("Cash")) score -= 10;
                     else score += 10;
                 }
