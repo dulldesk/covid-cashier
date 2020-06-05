@@ -1,9 +1,9 @@
 /**
   * The Cash Run minigame
   * 
-  * Last edit: 6/3/2020
+  * Last edit: 6/4/2020
   * @author 	Eric
-  * @version 	1.0
+  * @version 	1.1
   * @since 		1.0
   */
 
@@ -55,6 +55,26 @@ public class CashRun extends Minigame {
         private Timer timer;
 
         /**
+         * List of Obstacles
+         */
+        private ArrayList<Obstacle> obstacles;
+
+        /**
+         * ---
+         */
+        private int rand;
+
+        /**
+         * ---
+         */
+        private int spacing;
+
+        /**
+         * ---
+         */
+        private boolean refresh;
+        
+        /**
 		  * Object constructor. Uses the superclass's constructor
 		  */
 		public CashRunDrawing() {
@@ -65,6 +85,10 @@ public class CashRun extends Minigame {
             player.setEquipment(equipment);
             player.setCoordinates(40, 207);
             player.cashRunActivate();
+            obstacles = new ArrayList<Obstacle>();
+            spacing = 0;
+            rand = (int)(Math.random()*20);
+            refresh = false;
         }
 
         /**
@@ -75,35 +99,56 @@ public class CashRun extends Minigame {
 		public void display(Graphics g) {
             g.drawImage(Utility.loadImage("CashRun_BG.png",Utility.FRAME_WIDTH,Utility.FRAME_HEIGHT),0,0,null);
             if(!player.jumped) {
-                player.cashRunActivate();
-                player.stepNo++;
+                if(!player.activated)
+                    player.cashRunActivate();
+                if(refresh)
+                    player.stepNo++;
             } else {
                 player.cashRunDeactivate();
                 player.stepNo = 1;
-                if(player.dist > -22) {
-                    player.dist-=2;
-                    System.out.println(player.dist);
-                }
-                else {
+                if(player.speed > -44) {
+                    player.speed-=8;
+                    //System.out.println(player.speed);
+                } else {
                     player.jumped = false;
-                    player.dist = 0;
+                    player.speed = 0;
                 }
             }
-            player.y_coord -= player.dist;
+            player.y_coord -= player.speed;
             player.draw(g);
-            refreshScreen();
+            if(spacing > 20+rand) {
+                String name = (Math.random()<0.5?"Cash":"Card");
+                obstacles.add(new Obstacle(name, 800, 247, (name.equals("Cash")?288:320), 480));
+                spacing = 0;
+                rand = (int)(Math.random()*20);
+            }
+            spacing++;
+            for(int i = obstacles.size()-1; i >= 0; i--) {
+                obstacles.get(i).x_coord -= 15;
+                obstacles.get(i).draw(g);
+                if(player.y_coord+496/4.8 > obstacles.get(i).y_coord && player.x_coord+112/4.8 < obstacles.get(i).x_coord+obstacles.get(i).width && player.x_coord+464/4.8 > obstacles.get(i).x_coord) {
+                    if(obstacles.get(i).name.equals("Cash")) score -= 10;
+                    else score += 10;
+                }
+                if(obstacles.get(i).x_coord < -50)
+                    obstacles.remove(i);
+            }
+            refresh = !refresh;
+            g.drawString("Score: "+score, 10, 15);
+            g.setColor(Color.blue);
+            try{Thread.sleep(17);}catch(Exception e){}
+            repaint();
+            //refreshScreen();
         }
 
         public void refreshScreen() {
-			timer = new Timer(0, new ActionListener() {
+			timer = new Timer(1000, new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					repaint();
 				}
 			});
 			timer.setRepeats(false);
-			//Aprox. 60 FPS
-			timer.setDelay(17);
 			timer.start();
 		}
     }
