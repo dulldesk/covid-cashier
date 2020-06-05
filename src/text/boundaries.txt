@@ -1,18 +1,43 @@
 # boundaries
-# order: x,y,w,h
+# order: x,y,w,h,dir
 # (x,y): top left corner
+# dir: user's direction
 
-# top row
-0,0,805,183
+# top row, N
+0,0,805,110,N
 
-# top right
-727,182,78,161
+# top right, E
+730,110,90,240,E
 
-# covid counter
-0,182,210,231
+# covid counter, W
+0,103,50,240,W
 
-# long counter
-210,343,595,70
+# covid counter, N
+0,323,50,30,N
 
-# front counter
-0,536,640,77
+# long counter, E
+210,383,30,6,E
+
+# long counter, S
+225,383,700,6,S
+
+# long counter, N
+225,370,700,6,N
+
+# front counter, S
+0,580,618,6,S
+
+# front counter, N
+0,575,618,6,N
+
+# front counter, W
+619,576,2,6,W
+
+# east wall
+816,0,10,1100,E
+
+# south wall
+0,1045,810,10,S
+
+# west wall
+-27,0,10,1100,W

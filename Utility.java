@@ -41,9 +41,13 @@ public final class Utility {
 
 	/**
 	  * Font for descriptions, captions, and the like
-	  * [to change]
 	  */
 	public static final Font TEXT_FONT = loadFont("Inconsolata-Medium.ttf",25);
+
+	/**
+	  * Font for small captions
+	  */
+	public static final Font TEXT_FONT_SMALL = loadFont("Inconsolata-Medium.ttf",15);
 
 	/**
 	  * Loads a final static Font object
@@ -106,7 +110,7 @@ public final class Utility {
 	}
 
 	/**
-	  * Returns the width of a String based on a given Font
+	  * Gets the width of a String based on a given Font
 	  * @param f 	the font to use for the text
 	  * @param text the String to get the width of
 	  * @return the width of the String, in pixels
@@ -116,7 +120,7 @@ public final class Utility {
 	}
 
 	/**
-	  * Returns the width of a String based on a given Graphics object
+	  * Gets the width of a String based on a given Graphics object
 	  * @param g 	the Graphics object whose current font is to be used
 	  * @param text the String to get the width of
 	  * @return the width of the String, in pixels

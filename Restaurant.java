@@ -1,7 +1,7 @@
 /**
   * The Restaurant workplace. This is where both the training level and the live level take place
   * 
-  * Last edit: 5/29/2020
+  * Last edit: 6/5/2020
   * @author 	Celeste
   * @version 	1.0
   * @since 		1.0
@@ -17,12 +17,12 @@ public class Restaurant {
 	/**
 	  * The map image
 	  */
-	private final Image MAP;
+	private static final Image MAP;
 
 	/**
 	  * The map height
 	  */
-	private final int MAP_HEIGHT = 900;
+	public final static int MAP_HEIGHT = 1040;
 	
 	/**
 	  * Whether the user has selected the training level
@@ -34,12 +34,17 @@ public class Restaurant {
 	  */
 	private RestaurantDrawing workplace;
 
-	public Character user;
+	/**
+	  * The user's player
+	  */
+	public Player user;
 
 	/**
 	  * Number of completed stations
 	  */
 	private int completedStations;
+
+	private TaskList stationList;
 
 	/**
 	  * List of enter-able stations
@@ -51,22 +56,32 @@ public class Restaurant {
 	  */
 	public static ArrayList<Boundary> boundaries;
 
+	public static final Image LONG_COUNTER;
+
+	public static final Image FRONT_COUNTER;
+
 	static {
 		stations = new ArrayList<Station>();
 		boundaries = new ArrayList<Boundary>();
 		loadStations();
 		loadBoundaries();
+		MAP = Utility.loadImage("Restaurant.png",Utility.FRAME_WIDTH,MAP_HEIGHT);
+		LONG_COUNTER = Utility.loadImage("Counter.png",590,90);
+		FRONT_COUNTER = Utility.loadImage("Front Counter.png",640,97);
 	}
 
+	public static int topY;
+
 	public Restaurant(boolean training) {
-		MAP = Utility.loadImage("map.png",Utility.FRAME_WIDTH,MAP_HEIGHT);
 		inTraining = training;
 
-		user = new Player(User.name, User.gender);
 		completedStations = 0;
 
 		// initial position
-		user.setCoordinates(0,100);
+		user = new Player(User.name, User.gender);
+		user.setCoordinates(5,375);
+
+		topY = user.getY() - Utility.FRAME_HEIGHT - user.height/2;
 
 		workplace = new RestaurantDrawing();
 		Utility.changeDrawing(workplace);
@@ -80,9 +95,10 @@ public class Restaurant {
 			BufferedReader br = Utility.getBufferedReader("stations.txt");
 
 			for (String nxt = br.readLine(); nxt != null; nxt = br.readLine()) {
-				String [] tokens = nxt.split(",");
-				if (nxt.startsWith("#") || tokens.length != 5) continue;
-				stations.add(new Station(Integer.parseInt(tokens[0]),Integer.parseInt(tokens[1]),Integer.parseInt(tokens[2]),Integer.parseInt(tokens[3]),tokens[4].charAt(0)));
+				if (nxt.startsWith("&")) {
+					String [] tokens = br.readLine().split(",");
+					stations.add(new Station(nxt.substring(1), Integer.parseInt(tokens[0]),Integer.parseInt(tokens[1]),Integer.parseInt(tokens[2]),Integer.parseInt(tokens[3]),tokens[4].charAt(0)));
+				}
 			}
 		} 
 		catch (IOException e) {}
@@ -98,8 +114,8 @@ public class Restaurant {
 
 			for (String nxt = br.readLine(); nxt != null; nxt = br.readLine()) {
 				String [] tokens = nxt.split(",");
-				if (nxt.startsWith("#") || tokens.length != 4) continue;
-				boundaries.add(new Boundary(Integer.parseInt(tokens[0]),Integer.parseInt(tokens[1]),Integer.parseInt(tokens[2]),Integer.parseInt(tokens[3])));
+				if (nxt.startsWith("#") || tokens.length != 5) continue;
+				boundaries.add(new Boundary(Integer.parseInt(tokens[0]),Integer.parseInt(tokens[1]),Integer.parseInt(tokens[2]),Integer.parseInt(tokens[3]),tokens[4].charAt(0)));
 			}
 		} 
 		catch (IOException e) {}
@@ -122,6 +138,15 @@ public class Restaurant {
 		return boundaries;
 	}
 
+	/**
+	  * Gets the y coordinate relative to the frame as opposed to the map image
+	  * @param y the coordinate to use
+	  * @return the y coordinate relative to the frame 
+	  */
+	public static int getYRelativeToFrame(int y) {
+		return y + topY;
+	}
+
 	private class RestaurantDrawing extends JComponent {
 		/**
 		  * Constructor
@@ -129,7 +154,16 @@ public class Restaurant {
 		public RestaurantDrawing() {
 			super();
 
+
+			if (inTraining) {
+				stationList = new Checklist();
+			} else {
+				stationList = new OrderList();
+			}
+			stationList.activate();
+
 			for (Station stn : stations) stn.activate();
+			user.restaurantActivate();
 		}
 
 		/**
@@ -140,8 +174,21 @@ public class Restaurant {
 		public void paintComponent(Graphics g) {
 			super.paintComponent(g);
 			
-			// if (!hasCollided(furniture)) user.draw(g);
+			// background
+			g.drawImage(MAP,0,topY,null);
+			g.drawImage(LONG_COUNTER,210,getYRelativeToFrame(335),null);
+			g.drawImage(FRONT_COUNTER,0,getYRelativeToFrame(542),null);
+
+
+			user.drawAtRestaurant(g);
+
+			System.out.println(user.getX() + " " + user.getY() + " ; " + getYRelativeToFrame(user.getY()));
+			System.out.println(topY);
 			
+
+			for (Boundary bnd : boundaries) bnd.draw(g);
+
+			stationList.draw(g);
 		}
 	}
 }

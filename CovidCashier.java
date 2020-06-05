@@ -35,8 +35,12 @@ public final class CovidCashier  {
 		initializeFrame();
 
 		// new SplashScreen();
-		//new PlayerSelect();
-		new CashRun('M', "MG");
+		new PlayerSelect();
+		//new CashRun('M', "MG");
+
+		// User.gender = 'M';
+		// User.name="edas";
+		// new Restaurant(true);
 		
 		frame.setVisible(true);
 	}

@@ -3,7 +3,7 @@
   * 
   * <p>The station is "represented" as an imaginary rectangle that detects hover / click events 
   * 
-  * Last edit: 6/1/2020
+  * Last edit: 6/3/2020
   * @author 	Celeste
   * @version 	1.0
   * @since 		1.0
@@ -16,21 +16,17 @@ public class Station extends Boundary {
 	// private StationDrawing drawing;
 
 	/**
-	  * The direction that the player must face to enter the station
-	  */
-	private char requiredDir;
-
-	/**
 	  * Constructs a station
 	  * @param name 	the name of the station
 	  * @param x 		x-coordinate (top-left corner)
 	  * @param y 		y-coordinate (top-left corner)
 	  * @param w 		width of the station
 	  * @param h 		height of the station 
+	  * @param dir 		the direction that a character must face in order to enter the station
 	  */
-	public Station(int x, int y, int w, int h, char direction) {
-		super(x,y,w,h);
-		requiredDir = direction;
+	public Station(String name, int x, int y, int w, int h, char dir) {
+		super(x,y,w,h,dir);
+		this.name = name;
 
 		isClicked = false;
 		isHovered = false;
