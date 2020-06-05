@@ -83,7 +83,7 @@ public class CashRun extends Minigame {
             player.setDirection('E');
             player.setClothing('W');
             player.setEquipment(equipment);
-            player.setCoordinates(40, 207);
+            player.setCoordinates(40, 211);
             player.cashRunActivate();
             obstacles = new ArrayList<Obstacle>();
             spacing = 0;
@@ -98,6 +98,24 @@ public class CashRun extends Minigame {
 		@Override
 		public void display(Graphics g) {
             g.drawImage(Utility.loadImage("CashRun_BG.png",Utility.FRAME_WIDTH,Utility.FRAME_HEIGHT),0,0,null);
+            if(spacing > 20+rand) {
+                String name = (Math.random()<0.5?"Cash":"Card");
+                obstacles.add(new Obstacle(name, 800, 247, (name.equals("Cash")?288:320), 480));
+                spacing = 0;
+                rand = (int)(Math.random()*20);
+            }
+            spacing++;
+            for(int i = obstacles.size()-1; i >= 0; i--) {
+                Obstacle curr = obstacles.get(i);
+                curr.x_coord -= 15;
+                curr.draw(g);
+                if(isColliding(player, curr) {
+                    if(curr.name.equals("Cash")) score -= 10;
+                    else score += 10;
+                }
+                if(curr.x_coord < -50)
+                    obstacles.remove(i);
+            }
             if(!player.jumped) {
                 if(!player.activated)
                     player.cashRunActivate();
@@ -116,23 +134,6 @@ public class CashRun extends Minigame {
             }
             player.y_coord -= player.speed;
             player.draw(g);
-            if(spacing > 20+rand) {
-                String name = (Math.random()<0.5?"Cash":"Card");
-                obstacles.add(new Obstacle(name, 800, 247, (name.equals("Cash")?288:320), 480));
-                spacing = 0;
-                rand = (int)(Math.random()*20);
-            }
-            spacing++;
-            for(int i = obstacles.size()-1; i >= 0; i--) {
-                obstacles.get(i).x_coord -= 15;
-                obstacles.get(i).draw(g);
-                if(player.y_coord+496/4.8 > obstacles.get(i).y_coord && player.x_coord+112/4.8 < obstacles.get(i).x_coord+obstacles.get(i).width && player.x_coord+464/4.8 > obstacles.get(i).x_coord) {
-                    if(obstacles.get(i).name.equals("Cash")) score -= 10;
-                    else score += 10;
-                }
-                if(obstacles.get(i).x_coord < -50)
-                    obstacles.remove(i);
-            }
             refresh = !refresh;
             g.drawString("Score: "+score, 10, 15);
             g.setColor(Color.blue);
@@ -150,6 +151,10 @@ public class CashRun extends Minigame {
 			});
 			timer.setRepeats(false);
 			timer.start();
-		}
+        }
+        
+        public boolean isColliding(Player p, Obstacle o) {
+            return p.y_coord < o.y_coord+o.height && p.y_coord+p.height > o.y_coord && p.x_coord < o.x_coord+o.width && p.x_coord+p.width-20 > o.x_coord;
+        }
     }
 }

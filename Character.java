@@ -70,12 +70,12 @@ public abstract class Character {
 	/**
 	  * The width of a sprite image, in pixels
 	  */
-	public static int width;
+	protected int width;
 
 	/**
 	  * The height of a sprite image, in pixels
 	  */
-	public static int height = 100;
+	protected int height = 100;
 
 	/**
 	  * The number of types of steps for a sprite's direction of movement

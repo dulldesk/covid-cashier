@@ -61,7 +61,7 @@ public class Station extends Boundary {
 	public boolean withinStation(Character figure) {
 		return figure.getDirection() == requiredDir 
 			&& (requiredDir == 'N' || requiredDir == 'S' 
-			? figure.getX() >= x_coord && figure.getX() + Character.WIDTH <= x_coord + width && ((requiredDir == 'N' && figure.getY() >= y_coord && figure.getY() <= y_coord + height) || (requiredDir == 's' && figure.getY() + Character.HEIGHT >= y_coord && figure.getY() + Character.HEIGHT <= y_coord + height))
-			: figure.getY() >= y_coord && figure.getY() + Character.HEIGHT <= y_coord + height && ((requiredDir == 'W' && figure.getX() >= x_coord && figure.getX() <= x_coord + width) || (requiredDir == 'e' && figure.getX() + Character.WIDTH >= x_coord && figure.getX() + Character.WIDTH <= x_coord + width)) ); 
+			? figure.getX() >= x_coord && figure.getX() + figure.width <= x_coord + width && ((requiredDir == 'N' && figure.getY() >= y_coord && figure.getY() <= y_coord + height) || (requiredDir == 's' && figure.getY() + figure.height >= y_coord && figure.getY() + figure.height <= y_coord + height))
+			: figure.getY() >= y_coord && figure.getY() + figure.height <= y_coord + height && ((requiredDir == 'W' && figure.getX() >= x_coord && figure.getX() <= x_coord + width) || (requiredDir == 'e' && figure.getX() + figure.width >= x_coord && figure.getX() + figure.width <= x_coord + width)) ); 
 	}
 }
