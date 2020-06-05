@@ -36,7 +36,7 @@ public class Boundary extends GraphicComponent {
 	  * @return whether a given Character has collided with this boundary object
 	  */
 	public boolean isColliding(Character figure) {
-		return figure.getX() + Character.WIDTH > x_coord && figure.getX() <= x_coord + width && figure.getY() + Character.HEIGHT > y_coord && figure.getY() <= y_coord + height;
+		return figure.getX() + Character.width > x_coord && figure.getX() <= x_coord + width && figure.getY() + Character.height > y_coord && figure.getY() <= y_coord + height;
 	}
 
 	@Override

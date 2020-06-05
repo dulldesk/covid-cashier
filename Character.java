@@ -70,12 +70,12 @@ public abstract class Character {
 	/**
 	  * The width of a sprite image, in pixels
 	  */
-	public static final int WIDTH = 100;
+	public static int width;
 
 	/**
 	  * The height of a sprite image, in pixels
 	  */
-	public static final int HEIGHT = 100;
+	public static int height = 100;
 
 	/**
 	  * The number of types of steps for a sprite's direction of movement
@@ -136,6 +136,7 @@ public abstract class Character {
 	  * @return the corresponding sprite for the current character's step movement
 	  */
 	protected Image getSprite(int step) {
+		width = steps.get(direction+"-"+(step+1)+"-"+clothingType+"-"+protectiveEquipment).getWidth(null);
 		return steps.get(direction+"-"+(step+1)+"-"+clothingType+"-"+protectiveEquipment);
 	}
 
