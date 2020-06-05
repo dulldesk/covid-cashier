@@ -41,9 +41,13 @@ public final class Utility {
 
 	/**
 	  * Font for descriptions, captions, and the like
-	  * [to change]
 	  */
 	public static final Font TEXT_FONT = loadFont("Inconsolata-Medium.ttf",25);
+
+	/**
+	  * Font for small captions
+	  */
+	public static final Font TEXT_FONT_SMALL = loadFont("Inconsolata-Medium.ttf",15);
 
 	/**
 	  * Loads a final static Font object
