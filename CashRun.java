@@ -136,13 +136,13 @@ public class CashRun extends Minigame {
             refresh = !refresh;
             g.drawString("Score: "+score, 10, 15);
             g.setColor(Color.blue);
-            try{Thread.sleep(17);}catch(Exception e){}
-            repaint();
-            //refreshScreen();
+            //try{Thread.sleep(17);}catch(Exception e){}
+            //repaint();
+            refreshScreen();
         }
 
         public void refreshScreen() {
-			timer = new Timer(1000, new ActionListener() {
+			timer = new Timer(0, new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					repaint();
