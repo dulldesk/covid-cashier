@@ -51,9 +51,9 @@ public class Boundary extends GraphicComponent {
 	public boolean isColliding(Character figure) {
 		return figure.getDirection() == requiredDir &&
 			figure.getX() <= x_coord + width &&
-			figure.getX() + Character.WIDTH >= x_coord &&
+			figure.getX() + figure.width >= x_coord &&
 			figure.getY() <= y_coord + height &&
-			figure.getY() + Character.HEIGHT >= y_coord;
+			figure.getY() + figure.height >= y_coord;
 	}
 
 	@Override

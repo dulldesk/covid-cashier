@@ -75,7 +75,7 @@ public class Restaurant {
 		user = new Player(User.name, User.gender);
 		user.setCoordinates(5,375);
 
-		topY = user.getY() - Utility.FRAME_HEIGHT - Character.HEIGHT/2;
+		topY = user.getY() - Utility.FRAME_HEIGHT - user.height/2;
 
 		workplace = new RestaurantDrawing();
 		Utility.changeDrawing(workplace);
