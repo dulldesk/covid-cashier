@@ -84,7 +84,7 @@ public class FridgeTiles extends Minigame {
             player.setClothing('W');
             player.setEquipment(equipment);
             player.setCoordinates(287, 370);
-            player.fridgeTilesActivate();
+            player.fridgeTilesMovement.activate();
             obstacles = new ArrayList<Obstacle>();
             spacing = 0;
             rand = (int)(Math.random()*20);

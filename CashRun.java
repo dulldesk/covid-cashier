@@ -84,7 +84,7 @@ public class CashRun extends Minigame {
             player.setClothing('W');
             player.setEquipment(equipment);
             player.setCoordinates(40, 211);
-            player.cashRunActivate();
+            player.cashRunMovement.activate();
             obstacles = new ArrayList<Obstacle>();
             spacing = 0;
             rand = (int)(Math.random()*20);
@@ -117,12 +117,12 @@ public class CashRun extends Minigame {
                     obstacles.remove(i);
             }
             if(!player.jumped) {
-                if(!player.activated)
-                    player.cashRunActivate();
+                // if(!player.activated)
+                player.cashRunMovement.activate();
                 if(refresh)
                     player.stepNo++;
             } else {
-                player.cashRunDeactivate();
+                player.cashRunMovement.deactivate();
                 player.stepNo = 1;
                 if(player.speed > -44) {
                     player.speed-=8;

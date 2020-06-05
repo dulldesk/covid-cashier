@@ -163,7 +163,7 @@ public class Restaurant {
 			stationList.activate();
 
 			for (Station stn : stations) stn.activate();
-			user.restaurantActivate();
+			user.restaurantMovement.activate();
 		}
 
 		/**
