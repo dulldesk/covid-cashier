@@ -1,5 +1,5 @@
 /**
-  * Contains key binding creation and usage methods
+  * Contains and manages key bindings for specific screens (e.g. restaurant, a minigame)
   * 
   * Last edit: 6/5/2020
   * @author 	Celeste
@@ -15,7 +15,7 @@ public abstract class ScreenMovement {
 
 	protected Movement movementStroke;
 
-	protected boolean multiple;
+	private boolean multiple;
 
 	protected String prefix;
 
@@ -56,10 +56,10 @@ public abstract class ScreenMovement {
 		}
 	}
 
-	public abstract void loadKeyBindings();
+	protected abstract void loadKeyBindings();
 
 	// Loads all bindings into the main frame's input map
-	public void loadInputMap() {
+	protected void loadInputMap() {
 		if (multiple) {
 			for (String key : movementMap.keySet()) {
 				CovidCashier.frame.getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(movementMap.get(key).getKeyStroke(),movementMap.get(key).getName());
@@ -69,7 +69,7 @@ public abstract class ScreenMovement {
 		}
 	}
 
-	public void unloadInputMap() {
+	protected void unloadInputMap() {
 		if (multiple) {
 			for (String key : movementMap.keySet()) {
 				CovidCashier.frame.getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(movementMap.get(key).getKeyStroke(),"none");

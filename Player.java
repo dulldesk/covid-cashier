@@ -114,15 +114,12 @@ public class Player extends Character {
 		}
 	}
 
-	/**
-	  * @return the type of character (i.e. its image file name)
-	  */
 	@Override
 	public String getType() {
 		return "Player" + gender + "_" + clothingType + (protectiveEquipment.equals("N") ? "" : "_" + protectiveEquipment);
 	}
 
-	public void drawAtRestaurant(Graphics g) {
+	public void draw(Graphics g, boolean atRestaurant) {
 		stepNo %= TOTAL_STEPS;
 		g.drawImage(getSprite(stepNo), x_coord, Restaurant.getYRelativeToFrame(y_coord), null);
 	}
@@ -132,7 +129,7 @@ public class Player extends Character {
 			super("fridge");
 		}
 		
-		public void loadKeyBindings() {
+		protected void loadKeyBindings() {
 			movementMap.put("left", new Movement("left", KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0), new AbstractAction() {
 				public void actionPerformed(ActionEvent e) {
 					System.out.println("left");
@@ -155,7 +152,7 @@ public class Player extends Character {
 			super("cash", true);
 		}
 
-		public void loadKeyBindings() {
+		protected void loadKeyBindings() {
 			movementStroke = new Movement("jump", KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0), new AbstractAction() {
 				public void actionPerformed(ActionEvent e) {
 					jumped = true;
@@ -170,7 +167,7 @@ public class Player extends Character {
 			super("rest");
 		}
 
-		public void loadKeyBindings() {
+		protected void loadKeyBindings() {
 			final int DELTA_DIST = 10;
 
 			final String [] keys = {"up", "down", "left", "right"};
@@ -184,7 +181,6 @@ public class Player extends Character {
 
 				movementMap.put(keys[index], new Movement(keys[index], KeyStroke.getKeyStroke(strokes[index], 0), new AbstractAction() {
 					public void actionPerformed(ActionEvent e) {
-						System.out.println(dirs[index]);
 						if (lastMvTime.compareNow(dirs[index])) {
 
 							if (index < 2) y_coord += DELTA_DIST * (dirs[index] == 'N' ? -1 : 1);
@@ -193,8 +189,7 @@ public class Player extends Character {
 							char origDir = direction;
 							direction = dirs[index];
 
-							if (false && hasCollided(Restaurant.boundaries)) {
-							// if (hasCollided(Restaurant.boundaries)) {
+							if (hasCollided(Restaurant.boundaries)) {
 	 							// undo
 								if (index < 2) y_coord -= DELTA_DIST * (dirs[index] == 'N' ? -1 : 1);
 								else x_coord -= DELTA_DIST * (dirs[index] == 'W' ? -1 : 1);
