@@ -16,11 +16,6 @@ public class Station extends Boundary {
 	// private StationDrawing drawing;
 
 	/**
-	  * The direction that the player must face to enter the station
-	  */
-	private char requiredDir;
-
-	/**
 	  * Constructs a station
 	  * @param name 	the name of the station
 	  * @param x 		x-coordinate (top-left corner)
@@ -30,9 +25,8 @@ public class Station extends Boundary {
 	  * @param dir 		the direction that a character must face in order to enter the station
 	  */
 	public Station(String name, int x, int y, int w, int h, char dir) {
-		super(x,y,w,h);
+		super(x,y,w,h,dir);
 		this.name = name;
-		requiredDir = dir;
 
 		isClicked = false;
 		isHovered = false;

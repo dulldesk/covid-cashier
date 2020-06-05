@@ -123,7 +123,7 @@ public abstract class GraphicComponent implements MouseMotionListener, MouseList
 	  */
 	public void resetClicked() {
 		isClicked = false;
-		isHovered = false;
+		// isHovered = false;
 	}
 
 	/**

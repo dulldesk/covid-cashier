@@ -44,6 +44,8 @@ public class Restaurant {
 	  */
 	private int completedStations;
 
+	private TaskList stationList;
+
 	/**
 	  * List of enter-able stations
 	  */
@@ -156,6 +158,14 @@ public class Restaurant {
 		public RestaurantDrawing() {
 			super();
 
+
+			if (inTraining) {
+				stationList = new Checklist();
+			} else {
+				stationList = new OrderList();
+			}
+			stationList.activate();
+
 			for (Station stn : stations) stn.activate();
 			user.restaurantActivate();
 		}
@@ -173,8 +183,10 @@ public class Restaurant {
 
 			user.draw(g);
 			
+
 			for (Boundary bnd : boundaries) bnd.draw(g);
 
+			stationList.draw(g);
 		}
 	}
 }
