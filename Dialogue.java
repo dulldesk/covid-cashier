@@ -9,6 +9,7 @@
 
 import java.awt.*;
 import javax.swing.*;
+import java.awt.event.*;
 
 public class Dialogue extends GraphicComponent {
 	// private final String [] text_lines;
@@ -33,6 +34,10 @@ public class Dialogue extends GraphicComponent {
 	private static final int BOX_HEIGHT = 120;
 
 	private final int PADDING;
+
+	protected boolean isEntered;
+
+	private EntryBinding enterKey;
 
 	// private Button next;
 
@@ -75,15 +80,22 @@ public class Dialogue extends GraphicComponent {
 
 		PADDING = (height - FACE_SIZE)/2;
 
+		isEntered = false;
+		enterKey = new EntryBinding();
+
 		// next = new Button(prompt,x_coord+width-20,y_coord+height-20,Utility.TEXT_FONT,Color.white,Color.grey);
 	}
 
 	public void activate() {
 		// next.activate();
+		isEntered = false;
+		enterKey.activate();
 	}
 
 	public void deactivate() {
 		// next.deactivate();
+		enterKey.deactivate();
+		isEntered = false;
 	}
 
 	@Override
@@ -122,8 +134,24 @@ public class Dialogue extends GraphicComponent {
 		g.drawString(line,x_coord + PADDING+FACE_SIZE+10,y_coord+(int)(row*1.5*Utility.TEXT_FONT.getSize()));
 	}
 
+	public boolean isEntered() {
+		return isEntered;
+	}
+
 	@Override
 	protected boolean withinCoordinates() {return false;}
 
-	// private class EnterBinding extends 
+	private class EntryBinding extends ScreenMovement {
+		public EntryBinding() {
+			super("dialogue");
+		}
+
+		protected void loadKeyBindings() {
+			movementMap.put("continue",new Movement("continue", KeyEvent.VK_ENTER, new AbstractAction() {
+				public void actionPerformed(ActionEvent e) {
+					isEntered = true;
+				}
+			}));
+		}
+	}
 }
