@@ -42,7 +42,7 @@ public class Restaurant {
 	/**
 	  * Number of completed stations
 	  */
-	private int completedStations;
+	public static int completedStations;
 
 	private TaskList stationList;
 
@@ -61,6 +61,7 @@ public class Restaurant {
 	public static final Image FRONT_COUNTER;
 
 	static {
+		completedStations = 0;
 		stations = new ArrayList<Station>();
 		boundaries = new ArrayList<Boundary>();
 		loadStations();
@@ -126,11 +127,11 @@ public class Restaurant {
 		for (Station stn : stations) stn.deactivate();
 	}
 
-	public int getCompletedStationsNo() {
+	public static int getCompletedStationsNo() {
 		return completedStations;
 	}
 
-	public void increaseCompletedStations() {
+	public static void increaseCompletedStations() {
 		completedStations++;
 	}
 
@@ -163,7 +164,7 @@ public class Restaurant {
 			stationList.activate();
 
 			for (Station stn : stations) stn.activate();
-			user.restaurantActivate();
+			user.restaurantMovement.activate();
 		}
 
 		/**
@@ -180,7 +181,7 @@ public class Restaurant {
 			g.drawImage(FRONT_COUNTER,0,getYRelativeToFrame(542),null);
 
 
-			user.drawAtRestaurant(g);
+			user.draw(g, true);
 
 			System.out.println(user.getX() + " " + user.getY() + " ; " + getYRelativeToFrame(user.getY()));
 			System.out.println(topY);

@@ -35,8 +35,8 @@ public class PlayerSelect extends Menu {
 		int alignY = 180;
 		icons = new ArrayList<ImageButton>(2);
 
-		icons.add(new ImageButton("male",200,alignY,Utility.LABEL_FONT,Utility.loadImage("PlayerM_Face.png",100,125)));
-		icons.add(new ImageButton("female",Utility.FRAME_WIDTH-300,alignY,Utility.LABEL_FONT,Utility.loadImage("PlayerF_Face.png",100,125)));
+		icons.add(new ImageButton("Male",200,alignY,Utility.LABEL_FONT,Utility.loadImage("PlayerM_Face.png",100,125)));
+		icons.add(new ImageButton("Female",Utility.FRAME_WIDTH-300,alignY,Utility.LABEL_FONT,Utility.loadImage("PlayerF_Face.png",100,125)));
 
 		field = new TextField(Utility.FRAME_WIDTH/5,Utility.FRAME_HEIGHT/2-25,3*Utility.FRAME_WIDTH/5,Utility.LABEL_FONT);
 
@@ -74,22 +74,13 @@ public class PlayerSelect extends Menu {
 		private final Image MENU = Utility.loadImage("Menu_BG.png",Utility.FRAME_WIDTH,Utility.FRAME_HEIGHT);
 
 		/**
-	  	  * ---
-		  */
-		private Player testSprite;
-
-		/**
 		  * Object constructor. Uses the superclass's constructor and initializes fields.
 		  */
 		public SelectionDrawing() {
 			super();
 			field.activate();
-			testSprite = new Player("A", 'M');
-      
 			// The first stage is name selection
 			stage = "name";
-
-			testSprite.restaurantActivate();
 		}
 
 		/**
@@ -101,13 +92,10 @@ public class PlayerSelect extends Menu {
 			// background
 			
 			g.drawImage(MENU,0,0,null);
-
 			g.setColor(Color.black);
 
 			if (stage.equals("name")) nameInput(g);
 			else if (stage.equals("character")) charInput(g);
-
-			testSprite.draw(g);
 		}
 
 		/**
@@ -124,7 +112,6 @@ public class PlayerSelect extends Menu {
 				// if the icon has been clicked, get data and move on
 				if (btn.isClicked()) {
 					User.gender = btn.getName().charAt(0);
-
 					halt();
 					new MainMenu();
 					return;
