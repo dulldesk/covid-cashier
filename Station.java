@@ -3,9 +3,9 @@
   * 
   * <p>The station is "represented" as an imaginary rectangle that detects hover / click events 
   * 
-  * Last edit: 6/3/2020
+  * Last edit: 6/12/2020
   * @author 	Celeste
-  * @version 	1.0
+  * @version 	1.1
   * @since 		1.0
   */
 
@@ -14,7 +14,6 @@ import javax.swing.*;
 
 public class Station extends Boundary {
 	private Dialogue entryCard;
-	// private StationDrawing drawing;
 
 	private boolean deactivated;
 

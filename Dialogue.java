@@ -1,10 +1,10 @@
 /**
   * A Dialogue object to host dialogue
   * 
-  * Last edit: 6/1/2020
+  * Last edit: 6/12/2020
   * @author 	Celeste
   * @version 	1.0
-  * @since 		1.0
+  * @since 		1.1
   */
 
 import java.awt.*;
