@@ -40,6 +40,10 @@ public class CashRun extends Minigame {
         Utility.changeDrawing(drawing);
     }
 
+    public CashRun(Character user) {
+        this(user.getGender(), user.getPPE());
+    }
+
     /**
 	  * GUI for the minigame
 	  */

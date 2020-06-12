@@ -41,6 +41,13 @@ public class FridgeTiles extends Minigame {
     }
 
     /**
+      * Overloaded constructor
+      */
+    public FridgeTiles(Character user) {
+        this(user.getGender(), user.getPPE());
+    }
+
+    /**
 	  * GUI for the minigame
 	  */
     public class FridgeTilesDrawing extends MinigameDrawing {
