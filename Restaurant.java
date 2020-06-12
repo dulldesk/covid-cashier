@@ -37,7 +37,7 @@ public class Restaurant {
 	/**
 	  * The user's player
 	  */
-	public Player user;
+	public static Player user;
 
 	/**
 	  * Number of completed stations
