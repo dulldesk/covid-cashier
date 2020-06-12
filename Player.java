@@ -149,16 +149,16 @@ public class Player extends Character {
 
 	public class CashRunBindings extends ScreenMovement {
 		public CashRunBindings() {
-			super("cash", true);
+			super("cash");
 		}
 
 		protected void loadKeyBindings() {
-			movementStroke = new Movement("jump", KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0), new AbstractAction() {
+			movementMap.put("jump", new Movement("jump", KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0), new AbstractAction() {
 				public void actionPerformed(ActionEvent e) {
 					jumped = true;
 					speed = 52;
 				}
-			});
+			}));
 		}
 	}
 

@@ -13,46 +13,25 @@ import javax.swing.*;
 public abstract class ScreenMovement {
 	protected Map<String, Movement> movementMap;
 
-	protected Movement movementStroke;
-
-	private boolean multiple;
-
 	protected String prefix;
 
 	public ScreenMovement(String pre) {
 		prefix = pre;
-		multiple = true;
 		movementMap = new HashMap<String, Movement>();
-		loadKeyBindings();
-	}
-
-	public ScreenMovement(String pre, boolean single) {
-		// must initialize the movement stroke in the loadKeyBindings method
-		prefix = pre;
-		multiple = false;
-		movementStroke = null;
 		loadKeyBindings();
 	}
 
 	public void activate() {
 		loadInputMap();
-		if (multiple) {
-			for (String key : movementMap.keySet()) {
-				CovidCashier.frame.getRootPane().getActionMap().put(movementMap.get(key).getName(),movementMap.get(key).getAction());
-			}
-		} else {
-			CovidCashier.frame.getRootPane().getActionMap().put(movementStroke.getName(),movementStroke.getAction());
+		for (String key : movementMap.keySet()) {
+			CovidCashier.frame.getRootPane().getActionMap().put(movementMap.get(key).getName(),movementMap.get(key).getAction());
 		}
 	}
 
 	public void deactivate() {
 		unloadInputMap();
-		if (multiple) {
-			for (String key : movementMap.keySet()) {
-				CovidCashier.frame.getRootPane().getActionMap().put(key,null);
-			}
-		} else {
-			CovidCashier.frame.getRootPane().getActionMap().put(movementStroke.getName(),null);
+		for (String key : movementMap.keySet()) {
+			CovidCashier.frame.getRootPane().getActionMap().put(key,null);
 		}
 	}
 
@@ -60,22 +39,14 @@ public abstract class ScreenMovement {
 
 	// Loads all bindings into the main frame's input map
 	protected void loadInputMap() {
-		if (multiple) {
-			for (String key : movementMap.keySet()) {
-				CovidCashier.frame.getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(movementMap.get(key).getKeyStroke(),movementMap.get(key).getName());
-			}
-		} else {
-			CovidCashier.frame.getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(movementStroke.getKeyStroke(),movementStroke.getName());
+		for (String key : movementMap.keySet()) {
+			CovidCashier.frame.getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(movementMap.get(key).getKeyStroke(),movementMap.get(key).getName());
 		}
 	}
 
 	protected void unloadInputMap() {
-		if (multiple) {
-			for (String key : movementMap.keySet()) {
-				CovidCashier.frame.getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(movementMap.get(key).getKeyStroke(),"none");
-			}
-		} else {
-			CovidCashier.frame.getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(movementStroke.getKeyStroke(),"none");
+		for (String key : movementMap.keySet()) {
+			CovidCashier.frame.getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(movementMap.get(key).getKeyStroke(),"none");
 		}
 	}
 
