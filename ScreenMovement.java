@@ -77,6 +77,14 @@ public abstract class ScreenMovement {
 			key = k;
 			action = a;
 		}
+		/**
+		  * Constructs a Movement object
+		  */
+		public Movement(String n, int k, AbstractAction a) {
+			name = prefix+n;
+			key = KeyStroke.getKeyStroke(k,0);
+			action = a;
+		}
 
 		/**
 		  * Fetches the name of the object
