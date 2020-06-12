@@ -155,15 +155,9 @@ public class Restaurant {
 		public RestaurantDrawing() {
 			super();
 
-
-			if (inTraining) {
-				stationList = new Checklist();
-			} else {
-				stationList = new OrderList();
-			}
+			stationList = inTraining ? new Checklist() : new OrderList();
 			stationList.activate();
 
-			for (Station stn : stations) stn.activate();
 			user.restaurantMovement.activate();
 		}
 
@@ -187,7 +181,8 @@ public class Restaurant {
 			System.out.println(topY);
 			
 
-			for (Boundary bnd : boundaries) bnd.draw(g);
+			// nothing to draw normally
+			// for (Boundary bnd : boundaries) bnd.draw(g);
 
 			stationList.draw(g);
 		}

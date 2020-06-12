@@ -13,7 +13,10 @@ import java.awt.*;
 import javax.swing.*;
 
 public class Station extends Boundary {
+	private Dialogue entryCard;
 	// private StationDrawing drawing;
+
+	private boolean deactivated;
 
 	/**
 	  * Constructs a station
@@ -26,39 +29,39 @@ public class Station extends Boundary {
 	  */
 	public Station(String name, int x, int y, int w, int h, char dir) {
 		super(x,y,w,h,dir);
-		this.name = name;
+		this.name = name.trim();
 
 		isClicked = false;
 		isHovered = false;
+		deactivated = false;
+
+		entryCard = new Dialogue(name,"Enter", false);
 	}
 
 	@Override
-	public void draw(Graphics g) {}
+	public void draw(Graphics g) {
+		// g.drawRect(x_coord,Restaurant.getYRelativeToFrame(y_coord),width,height);
+		if (isColliding(Restaurant.user)) {
+			entryCard.draw(g);
+			if (deactivated) activate();
+		} else if (!deactivated) {
+			deactivate();
+		}
+	}
 
-	/**
-	  * Activates click and hover listeners. 
-	  */
+	public boolean isEntered() {
+		return entryCard.isEntered();
+	}
+
 	public void activate() {
-		super.activate(true,false);
+		// super.activate(true,false);
+		entryCard.activate();
+		deactivated = false;
 	}
 
-	/**
-	  * Deativates click and hover listeners.
-	  */
 	public void deactivate() {
-		super.deactivate(true,false);
-	}
-
-	/**
-	  * Determines whether a given character is within the range of a station and facing it
-	  * @param figure the figure whose proximity to the station is to be checked
-	  * @return whether figure is within the range of a station
-	  */
-	@Override
-	public boolean isColliding(Character figure) {
-		return figure.getDirection() == requiredDir 
-			&& (requiredDir == 'N' || requiredDir == 'S' 
-			? figure.getX() >= x_coord && figure.getX() + figure.width <= x_coord + width && ((requiredDir == 'N' && figure.getY() >= y_coord && figure.getY() <= y_coord + height) || (requiredDir == 's' && figure.getY() + figure.height >= y_coord && figure.getY() + figure.height <= y_coord + height))
-			: figure.getY() >= y_coord && figure.getY() + figure.height <= y_coord + height && ((requiredDir == 'W' && figure.getX() >= x_coord && figure.getX() <= x_coord + width) || (requiredDir == 'e' && figure.getX() + figure.width >= x_coord && figure.getX() + figure.width <= x_coord + width)) ); 
+		// super.deactivate(true,false);
+		entryCard.deactivate();
+		deactivated = true;
 	}
 }
