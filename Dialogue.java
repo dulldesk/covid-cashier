@@ -150,6 +150,7 @@ public class Dialogue extends GraphicComponent {
 			movementMap.put("continue",new Movement("continue", KeyEvent.VK_ENTER, new AbstractAction() {
 				public void actionPerformed(ActionEvent e) {
 					isEntered = true;
+					CovidCashier.frame.repaint();
 				}
 			}));
 		}
