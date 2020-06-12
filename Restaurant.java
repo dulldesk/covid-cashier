@@ -183,6 +183,44 @@ public class Restaurant {
 
 			// nothing to draw normally
 			// for (Boundary bnd : boundaries) bnd.draw(g);
+			for (Station stn : stations) {
+				stn.draw(g);
+				if (stn.isEntered()) {
+					if (inTraining) {
+						switch (stn.getName()) {
+							case "fridge":
+								return;
+							case "covid counter":
+								return;
+							case "front counter": 
+								return;
+							case "pick up":
+								return ;
+							case "drop off":
+								return;
+						}
+					} else {
+						switch (stn.getName()) {
+							case "fridge":
+								new FridgeTiles(user);
+								return;
+							case "covid counter":
+								return;
+							case "front counter": 
+								return;
+							case "pick up":
+								return ;
+							case "drop off":
+								return;
+						}
+						/*
+							where:
+							------
+							new CashRun(user);
+						*/
+					}
+				}
+			}
 
 			stationList.draw(g);
 		}
