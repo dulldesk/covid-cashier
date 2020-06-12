@@ -4,7 +4,7 @@
 # once a whitespace newline is reached, the info for that station has ended
 
 &intro
-This is the training level of the game. Explore around and learn about the stations and how to protect yourself in this environment. When you see these placards and dialogue boxes, press the enter key 	 to continue.
+This is the training level of the game. Explore around and learn about the stations and how to protect yourself in this environment. When you see these placards and dialogue boxes, press the enter key to continue.
 At the bottom right corner is a checklist that will tell you what stations you haven't visited yet. You will need to visit all stations to exit the training level. 
 
 &fridge
