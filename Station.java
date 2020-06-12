@@ -30,8 +30,6 @@ public class Station extends Boundary {
 		super(x,y,w,h,dir);
 		this.name = name.trim();
 
-		isClicked = false;
-		isHovered = false;
 		deactivated = false;
 
 		entryCard = new Dialogue(name,"Enter", false);
@@ -53,13 +51,11 @@ public class Station extends Boundary {
 	}
 
 	public void activate() {
-		// super.activate(true,false);
 		entryCard.activate();
 		deactivated = false;
 	}
 
 	public void deactivate() {
-		// super.deactivate(true,false);
 		entryCard.deactivate();
 		deactivated = true;
 	}
