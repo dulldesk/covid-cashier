@@ -3,17 +3,17 @@
 # (x,y): top left corner
 # dir: direction to face in order to enter the station
 
-&fridge
+&Fridge
 77,134,149,26,N
 
-&covid counter
+&COVID Counter
 50,140,30,160,W
 
-&front counter
+&Front Counter
 214,525,159,26,S
 
-&pick up
+&Pick Up
 373,394,160,26,N
 
-&drop off
+&Drop Off
 480,525,106,26,S
