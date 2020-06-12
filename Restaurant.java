@@ -167,19 +167,7 @@ public class Restaurant {
 		  */
 		@Override
 		public void paintComponent(Graphics g) {
-			super.paintComponent(g);
-			
-			// background
-			g.drawImage(MAP,0,topY,null);
-			g.drawImage(LONG_COUNTER,210,getYRelativeToFrame(335),null);
-			g.drawImage(FRONT_COUNTER,0,getYRelativeToFrame(542),null);
-
-
-			user.draw(g, true);
-
-			System.out.println(user.getX() + " " + user.getY() + " ; " + getYRelativeToFrame(user.getY()));
-			System.out.println(topY);
-			
+			super.paintComponent(g);			
 
 			// nothing to draw normally
 			// for (Boundary bnd : boundaries) bnd.draw(g);
@@ -221,6 +209,17 @@ public class Restaurant {
 					}
 				}
 			}
+			
+			// background
+			g.drawImage(MAP,0,topY,null);
+			g.drawImage(LONG_COUNTER,210,getYRelativeToFrame(335),null);
+			g.drawImage(FRONT_COUNTER,0,getYRelativeToFrame(542),null);
+
+
+			user.draw(g, true);
+
+			System.out.println(user.getX() + " " + user.getY() + " ; " + getYRelativeToFrame(user.getY()));
+			System.out.println(topY);
 
 			stationList.draw(g);
 		}
