@@ -47,7 +47,7 @@ public class Station extends Boundary {
 	}
 
 	public boolean isEntered() {
-		return entryCard.isEntered();
+		return entryCard.canProceed();
 	}
 
 	public void activate() {

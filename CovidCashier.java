@@ -7,15 +7,16 @@
   * @since 		1.0
   */
 
-import javax.swing.JFrame;
+import javax.swing.*;
 import java.awt.*;
-import java.io.*;
 
 public final class CovidCashier  {	
 	/**
 	  * The program frame
 	  */
 	public static JFrame frame;
+
+	public static Container pastDrawing;
 
 	/**
 	  * Initializes the main frame of the program an Image object from a file
@@ -33,6 +34,7 @@ public final class CovidCashier  {
 	  */ 
 	public CovidCashier() {
 		initializeFrame();
+		pastDrawing = frame.getContentPane();
 
 		// new SplashScreen();
 		new PlayerSelect();

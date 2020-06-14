@@ -10,18 +10,22 @@
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
+import java.util.*;
 
 public class Dialogue extends GraphicComponent {
-	// private final String [] text_lines;
+	/**
+	  * The full text to be displaed
+	  */
+	private final String fullText;
 
-	// private final int text_length;
-
-	// private int nextIndex;
-
-	private String text;
-
+	/**
+	  * The image of the Dialogue box
+	  */
 	public static final Image BOX; 
 
+	/**
+	  * The face icon to be displayed
+	  */
 	private Image face;
 
 	/**
@@ -29,20 +33,38 @@ public class Dialogue extends GraphicComponent {
 	  */
 	private static final int FACE_SIZE = 75;
 
-	private static final int BOX_WIDTH = 448;
+	/**
+	  * The width of the box
+	  */
+	private static final int BOX_WIDTH = Utility.FRAME_WIDTH - 240;
 
-	private static final int BOX_HEIGHT = 120;
+	/**
+	  * The height of the box
+	  */
+	private static final int BOX_HEIGHT = 150;
 
-	private final int PADDING;
+	/**
+	  * The text padding of the box
+	  */
+	private static final int PADDING;
 
-	protected boolean isEntered;
+	/**
+	  * Whether the enter key has been pressed
+	  */
+	private boolean isEntered;
 
 	private EntryBinding enterKey;
 
-	// private Button next;
+	private Queue<String[]> textQueue;
+
+	/**
+	  * Whether all of the dialogue "screens" have been displayed
+	  */
+	private boolean canProceed;
 
 	static {
 		BOX = Utility.loadImage("Dialogue_Box.png",BOX_WIDTH,BOX_HEIGHT);
+		PADDING = (BOX_HEIGHT - FACE_SIZE)/2-20;
 	}
 
 	/**
@@ -69,73 +91,114 @@ public class Dialogue extends GraphicComponent {
 		height = BOX_HEIGHT;
 
 		x_coord = (Utility.FRAME_WIDTH - BOX_WIDTH) / 2;
-		y_coord = Utility.FRAME_HEIGHT - BOX_HEIGHT - 15;
+		y_coord = Utility.FRAME_HEIGHT - BOX_HEIGHT;
+		text_font = Utility.TEXT_FONT_SMALL;
 
 		if (!addFace) face = null;
-	
 
-		this.text = text;
-		// text_length = text.length();
-		// text_lines = new String[BOX_WIDTH];
+		fullText = text;
 
-		PADDING = (height - FACE_SIZE)/2;
-
+		canProceed = false;
 		isEntered = false;
 		enterKey = new EntryBinding();
 
-		// next = new Button(prompt,x_coord+width-20,y_coord+height-20,Utility.TEXT_FONT,Color.white,Color.grey);
+		textQueue = loadTextQueue();
 	}
 
 	public void activate() {
-		// next.activate();
 		isEntered = false;
+		canProceed = false;
 		enterKey.activate();
 	}
 
 	public void deactivate() {
-		// next.deactivate();
-		enterKey.deactivate();
 		isEntered = false;
-	}
-
-	@Override
-	public void draw(Graphics g) {
-		g.drawImage(BOX,x_coord,y_coord,null);
-		if (face != null) g.drawImage(face,x_coord + PADDING,y_coord + PADDING,null);
-
-		g.setColor(Color.white);
-		g.setFont(Utility.TEXT_FONT);
-		drawText(g);
-
-		// next.draw();
-		
-		// if (nextIndex != textArray.length) nextIndex++;
-	}
-
-	private void drawText(Graphics g) {
-		final int leftAlign =x_coord + PADDING+FACE_SIZE+20;
-		String line = "";
-		int row=1;
-		String [] words = text.split(" ");
-		for (String word : words) {
-			if (Utility.getStringWidth(line,g) > width) {
-				g.drawString(line,leftAlign,y_coord+(int)(row*1.5*Utility.TEXT_FONT.getSize()));
-				line = "";
-				row++;
-			} 
-			line += word+" ";
-
-			if (word.indexOf("\n") == word.length()-1) {
-				g.drawString(line.trim(),leftAlign,y_coord+(int)(row*1.5*Utility.TEXT_FONT.getSize()));
-				line = "";
-				row++; 
-			}
-		}
-		g.drawString(line,x_coord + PADDING+FACE_SIZE+10,y_coord+(int)(row*1.5*Utility.TEXT_FONT.getSize()));
+		canProceed = false;
+		enterKey.deactivate();
 	}
 
 	public boolean isEntered() {
 		return isEntered;
+	}
+
+	public boolean canProceed() {
+		return canProceed;
+	}
+
+	@Override
+	public void draw(Graphics g) {
+		if (canProceed) return;
+
+		System.out.println(textQueue.size());
+
+		g.drawImage(BOX,x_coord,y_coord,null);
+		if (face != null) g.drawImage(face,x_coord + PADDING-5,y_coord + PADDING+15,null);
+
+		g.setColor(Color.white);
+		g.setFont(text_font);
+		drawText(g);
+	}
+
+	private void drawText(Graphics g) {
+		final int leftAlign = x_coord + PADDING+FACE_SIZE;
+		String [] lines = textQueue.peek();
+
+		for (int row=1;row<=lines.length; row++) {
+			if (lines[row-1]==null) return;
+			g.drawString(lines[row-1].trim(),leftAlign,y_coord+PADDING+(int)(row*1.5*text_font.getSize()));
+		}
+	}
+
+	/**
+	  * Loads a queue 
+	  */
+	private Queue<String[]> loadTextQueue() {
+		final int MAX_ROW = 5;
+		// fullText
+		Queue<String[]> queue = new LinkedList<String[]>();
+		String [] lines = fullText.split("\n");
+
+		for (String ln : lines) {
+			String line = "";
+			String [] words = ln.split(" ");
+			int row=0;
+			String [] screenText = new String[MAX_ROW];
+
+			for (String word : words) {
+				boolean secondCondition = word.indexOf("\n") == word.length()-1;
+
+				if (Utility.getStringWidth(line,text_font) >= width-PADDING*2-FACE_SIZE-30 || secondCondition) {
+					if (secondCondition) {
+						line += word+" ";
+					}
+
+					screenText[row++] = line.trim();
+					line = "";
+
+					if (!secondCondition) {
+						line = word+" ";
+					} else {
+						row = MAX_ROW;
+					}
+
+					if (row >= MAX_ROW) {
+						queue.add(screenText);
+						screenText = new String[MAX_ROW];
+						row = 0;
+					}
+				} else {
+					line += word+" ";
+				}
+			}
+			if (!line.trim().equals(""))  {
+				screenText[row] = line.trim();
+				line = "";
+				row = 0;
+				queue.add(screenText);
+			}
+		}
+
+		return queue;
 	}
 
 	@Override
@@ -150,6 +213,12 @@ public class Dialogue extends GraphicComponent {
 			movementMap.put("continue",new Movement("continue", KeyEvent.VK_ENTER, new AbstractAction() {
 				public void actionPerformed(ActionEvent e) {
 					isEntered = true;
+
+					// only pop from the queue if the size is greater than 0
+					if (!canProceed) textQueue.poll();
+					canProceed = textQueue.size() == 0;
+					if (canProceed) System.out.println("can proceed");
+
 					CovidCashier.frame.repaint();
 				}
 			}));

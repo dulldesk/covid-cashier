@@ -69,6 +69,8 @@ public class Restaurant {
 		MAP = Utility.loadImage("Restaurant.png",Utility.FRAME_WIDTH,MAP_HEIGHT);
 		LONG_COUNTER = Utility.loadImage("Counter.png",590,90);
 		FRONT_COUNTER = Utility.loadImage("Front Counter.png",640,97);
+
+		TrainingLevel.loadInfoMap();
 	}
 
 	public static int topY;
@@ -149,11 +151,17 @@ public class Restaurant {
 	}
 
 	private class RestaurantDrawing extends JComponent {
+		private Dialogue intro;
+
 		/**
 		  * Constructor
 		  */
 		public RestaurantDrawing() {
 			super();
+
+			// change to coworker if available
+			if (inTraining) 
+				intro = new Dialogue(TrainingLevel.getInfo("intro"), "PlayerM");
 
 			stationList = inTraining ? new Checklist() : new OrderList();
 			stationList.activate();
@@ -169,47 +177,6 @@ public class Restaurant {
 		public void paintComponent(Graphics g) {
 			super.paintComponent(g);			
 
-			// nothing to draw normally
-			// for (Boundary bnd : boundaries) bnd.draw(g);
-			for (Station stn : stations) {
-				stn.draw(g);
-				if (stn.isEntered()) {
-					if (inTraining) {
-						switch (stn.getName()) {
-							case "fridge":
-								return;
-							case "covid counter":
-								return;
-							case "front counter": 
-								return;
-							case "pick up":
-								return ;
-							case "drop off":
-								return;
-						}
-					} else {
-						switch (stn.getName()) {
-							case "fridge":
-								new FridgeTiles(user);
-								return;
-							case "covid counter":
-								return;
-							case "front counter": 
-								return;
-							case "pick up":
-								return ;
-							case "drop off":
-								return;
-						}
-						/*
-							where:
-							------
-							new CashRun(user);
-						*/
-					}
-				}
-			}
-			
 			// background
 			g.drawImage(MAP,0,topY,null);
 			g.drawImage(LONG_COUNTER,210,getYRelativeToFrame(335),null);
@@ -218,8 +185,65 @@ public class Restaurant {
 
 			user.draw(g, true);
 
-			System.out.println(user.getX() + " " + user.getY() + " ; " + getYRelativeToFrame(user.getY()));
-			System.out.println(topY);
+			// System.out.println(user.getX() + " " + user.getY() + " ; " + getYRelativeToFrame(user.getY()));
+			// System.out.println(topY);
+
+			// nothing to draw normally
+			// for (Boundary bnd : boundaries) bnd.draw(g);
+
+			if (intro != null) {
+				if (intro.canProceed()) {
+					intro.deactivate();
+					intro = null;
+					repaint();
+				} else {
+					intro.activate();
+					intro.draw(g);
+				}
+			} else {
+				for (Station stn : stations) {
+					stn.draw(g);
+					if (stn.isEntered()) {
+						if (inTraining) {
+							switch (stn.getName().toLowerCase()) {
+								case "fridge":
+									new TrainingLevel("Fridge");
+									return;
+								case "covid counter":
+									new TrainingLevel("COVID Counter");
+									return;
+								case "front counter": 
+									new TrainingLevel("Front Counter");
+									return;
+								case "pick up counter":
+									new TrainingLevel("Pick Up");
+									return ;
+								case "drop off counter":
+									return;
+							}
+						} else {
+							switch (stn.getName().toLowerCase()) {
+								case "fridge":
+									new FridgeTiles(user);
+									return;
+								case "covid counter":
+									return;
+								case "front counter": 
+									return;
+								case "pick up counter":
+									return ;
+								case "drop off counter":
+									return;
+							}
+							/*
+								where:
+								------
+								new CashRun(user);
+							*/
+						}
+					}
+				}
+			}
 
 			stationList.draw(g);
 		}

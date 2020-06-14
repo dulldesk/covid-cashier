@@ -12,8 +12,8 @@
 &Front Counter
 214,525,159,26,S
 
-&Pick Up
+&Pick Up Counter
 373,394,160,26,N
 
-&Drop Off
+&Drop Off Counter
 480,525,106,26,S

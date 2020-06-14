@@ -81,7 +81,17 @@ public final class Utility {
 	  * @param drawing 		the component to be updated to
 	  */
 	public static void changeDrawing(JComponent drawing) {
+		CovidCashier.pastDrawing = CovidCashier.frame.getContentPane();
 		CovidCashier.frame.setContentPane(drawing);
+		CovidCashier.frame.revalidate();
+		CovidCashier.frame.repaint();
+	}
+
+	/**
+	  * Changes and updates the frame to the restauarant (which is assumed to be in pastDrawing)
+	  */
+	public static void backToRestaurant() {
+		CovidCashier.frame.setContentPane(CovidCashier.pastDrawing);
 		CovidCashier.frame.revalidate();
 		CovidCashier.frame.repaint();
 	}
