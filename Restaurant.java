@@ -44,8 +44,6 @@ public class Restaurant {
 	  */
 	public static int completedStations;
 
-	private TaskList stationList;
-
 	/**
 	  * List of enter-able stations
 	  */
@@ -55,6 +53,10 @@ public class Restaurant {
 	  * Boundaries that the user cannot move beyond
 	  */
 	public static ArrayList<Boundary> boundaries;
+
+	private Dialogue intro;
+	
+	private TaskList stationList;
 
 	public static final Image LONG_COUNTER;
 
@@ -75,6 +77,8 @@ public class Restaurant {
 
 	public static int topY;
 
+	private static java.util.List<String> trainingStationNames;
+
 	public Restaurant(boolean training) {
 		inTraining = training;
 
@@ -94,13 +98,19 @@ public class Restaurant {
 	  * Loads stations into its ArrayList
 	  */
 	private static void loadStations() {
+		trainingStationNames = new ArrayList<String>();
+
 		try {
 			BufferedReader br = Utility.getBufferedReader("stations.txt");
 
 			for (String nxt = br.readLine(); nxt != null; nxt = br.readLine()) {
 				if (nxt.startsWith("&")) {
 					String [] tokens = br.readLine().split(",");
-					stations.add(new Station(nxt.substring(1), Integer.parseInt(tokens[0]),Integer.parseInt(tokens[1]),Integer.parseInt(tokens[2]),Integer.parseInt(tokens[3]),tokens[4].charAt(0)));
+					String stnName = nxt.substring(1);
+
+						trainingStationNames.add(stnName);
+
+					stations.add(new Station(stnName, Integer.parseInt(tokens[0]),Integer.parseInt(tokens[1]),Integer.parseInt(tokens[2]),Integer.parseInt(tokens[3]),tokens[4].charAt(0)));
 				}
 			}
 		} 
@@ -126,7 +136,16 @@ public class Restaurant {
 	}
 
 	public void halt() {
+		if (intro != null) intro.deactivate();
+		if (stationList != null) stationList.deactivate();
+
 		for (Station stn : stations) stn.deactivate();
+	}
+
+	public void activate() {
+		stationList.activate();
+
+		user.restaurantMovement.activate();
 	}
 
 	public static int getCompletedStationsNo() {
@@ -150,8 +169,11 @@ public class Restaurant {
 		return y + topY;
 	}
 
+	public RestaurantDrawing getDrawing() {
+		return workplace;
+	}
+
 	private class RestaurantDrawing extends JComponent {
-		private Dialogue intro;
 
 		/**
 		  * Constructor
@@ -163,10 +185,9 @@ public class Restaurant {
 			if (inTraining) 
 				intro = new Dialogue(TrainingLevel.getInfo("intro"), "PlayerM");
 
-			stationList = inTraining ? new Checklist() : new OrderList();
-			stationList.activate();
+			stationList = inTraining ? new Checklist(trainingStationNames.toArray(new String[trainingStationNames.size()])) : new OrderList();
 
-			user.restaurantMovement.activate();
+			activate();
 		}
 
 		/**
@@ -181,7 +202,6 @@ public class Restaurant {
 			g.drawImage(MAP,0,topY,null);
 			g.drawImage(LONG_COUNTER,210,getYRelativeToFrame(335),null);
 			g.drawImage(FRONT_COUNTER,0,getYRelativeToFrame(542),null);
-
 
 			user.draw(g, true);
 
@@ -204,22 +224,29 @@ public class Restaurant {
 				for (Station stn : stations) {
 					stn.draw(g);
 					if (stn.isEntered()) {
+						halt();
+						CovidCashier.setPastRestaurant(Restaurant.this);
+						stn.resetDialogue();
+
 						if (inTraining) {
+							((Checklist)(stationList)).completeTask(stn.getName());
 							switch (stn.getName().toLowerCase()) {
-								case "fridge":
-									new TrainingLevel("Fridge");
-									return;
-								case "covid counter":
-									new TrainingLevel("COVID Counter");
-									return;
-								case "front counter": 
-									new TrainingLevel("Front Counter");
-									return;
-								case "pick up counter":
-									new TrainingLevel("Pick Up");
-									return ;
 								case "drop off counter":
 									return;
+								default:
+									new TrainingLevel(stn.getName());
+								// case "fridge":
+								// 	new TrainingLevel("Fridge");
+								// 	return;
+								// case "covid counter":
+								// 	new TrainingLevel("COVID Counter");
+								// 	return;
+								// case "front counter": 
+								// 	new TrainingLevel("Front Counter");
+								// 	return;
+								// case "pick up counter":
+								// 	new TrainingLevel("Pick Up");
+								// 	return ;
 							}
 						} else {
 							switch (stn.getName().toLowerCase()) {

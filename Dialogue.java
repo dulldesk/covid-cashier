@@ -51,16 +51,16 @@ public class Dialogue extends GraphicComponent {
 	/**
 	  * Whether the enter key has been pressed
 	  */
-	private boolean isEntered;
+	protected boolean isEntered;
 
 	private EntryBinding enterKey;
 
-	private Queue<String[]> textQueue;
+	protected Queue<String[]> textQueue;
 
 	/**
 	  * Whether all of the dialogue "screens" have been displayed
 	  */
-	private boolean canProceed;
+	protected boolean canProceed;
 
 	static {
 		BOX = Utility.loadImage("Dialogue_Box.png",BOX_WIDTH,BOX_HEIGHT);
@@ -100,9 +100,9 @@ public class Dialogue extends GraphicComponent {
 
 		canProceed = false;
 		isEntered = false;
-		enterKey = new EntryBinding();
-
 		textQueue = loadTextQueue();
+
+		enterKey = new EntryBinding();
 	}
 
 	public void activate() {
@@ -129,7 +129,7 @@ public class Dialogue extends GraphicComponent {
 	public void draw(Graphics g) {
 		if (canProceed) return;
 
-		System.out.println(textQueue.size());
+		// System.out.println(textQueue.size() + " "+ textQueue.hashCode());
 
 		g.drawImage(BOX,x_coord,y_coord,null);
 		if (face != null) g.drawImage(face,x_coord + PADDING-5,y_coord + PADDING+15,null);
@@ -140,7 +140,7 @@ public class Dialogue extends GraphicComponent {
 	}
 
 	private void drawText(Graphics g) {
-		final int leftAlign = x_coord + PADDING+FACE_SIZE;
+		final int leftAlign = x_coord + PADDING + (face != null ? FACE_SIZE : 10);
 		String [] lines = textQueue.peek();
 
 		for (int row=1;row<=lines.length; row++) {
@@ -167,7 +167,7 @@ public class Dialogue extends GraphicComponent {
 			for (String word : words) {
 				boolean secondCondition = word.indexOf("\n") == word.length()-1;
 
-				if (Utility.getStringWidth(line,text_font) >= width-PADDING*2-FACE_SIZE-30 || secondCondition) {
+				if (Utility.getStringWidth(line,text_font) >= width-PADDING*2-(face != null ? FACE_SIZE+60 : FACE_SIZE+30) || secondCondition) {
 					if (secondCondition) {
 						line += word+" ";
 					}
@@ -217,6 +217,7 @@ public class Dialogue extends GraphicComponent {
 					// only pop from the queue if the size is greater than 0
 					if (!canProceed) textQueue.poll();
 					canProceed = textQueue.size() == 0;
+					// if (canProceed) System.out.println("can proceed "+(textQueue.size() == 0)+" "+textQueue.size()+" "+textQueue.hashCode());
 					if (canProceed) System.out.println("can proceed");
 
 					CovidCashier.frame.repaint();

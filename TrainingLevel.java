@@ -85,7 +85,16 @@ public class TrainingLevel {
 		return infoMap.get(key).getInfo();
 	}
 
+	public void halt() {
+		infoCard.deactivate();
+	}
+
 	private class TrainingDrawing extends JComponent {
+
+		public TrainingDrawing() {
+			infoCard.activate();
+		}
+
 		/**
 		  * Paint method of JComponent
 		  * @param g 	the Graphics object to draw on
@@ -96,10 +105,12 @@ public class TrainingLevel {
 
 			// g.drawImage(background,0,0,null);
 
-			infoCard.draw(g);
 			if (infoCard.canProceed()) {
-				Utility.backToRestaurant();			
+				halt();
+				Utility.backToRestaurant();	
+				return;	
 			}
+			infoCard.draw(g);
 		}
 	}
 

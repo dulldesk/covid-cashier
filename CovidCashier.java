@@ -16,7 +16,18 @@ public final class CovidCashier  {
 	  */
 	public static JFrame frame;
 
-	public static Container pastDrawing;
+	/**
+	  * The past Restaurant level object
+	  */
+	private static Restaurant pastRestaurant;
+
+	public static void setPastRestaurant(Restaurant currRestaurant) {
+		pastRestaurant = currRestaurant;
+	}
+
+	public static Restaurant getPastRestaurant() {
+		return pastRestaurant;
+	}
 
 	/**
 	  * Initializes the main frame of the program an Image object from a file
@@ -34,7 +45,6 @@ public final class CovidCashier  {
 	  */ 
 	public CovidCashier() {
 		initializeFrame();
-		pastDrawing = frame.getContentPane();
 
 		// new SplashScreen();
 		new PlayerSelect();

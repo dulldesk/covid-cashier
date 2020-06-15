@@ -59,4 +59,8 @@ public class Station extends Boundary {
 		entryCard.deactivate();
 		deactivated = true;
 	}
+
+	public void resetDialogue() {
+		entryCard = new Dialogue(name,"Enter", false);
+	}
 }
