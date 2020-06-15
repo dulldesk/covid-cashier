@@ -108,6 +108,7 @@ public class Restaurant {
 					String [] tokens = br.readLine().split(",");
 					String stnName = nxt.substring(1);
 
+					if (!stnName.equalsIgnoreCase("exit"))
 						trainingStationNames.add(stnName);
 
 					stations.add(new Station(stnName, Integer.parseInt(tokens[0]),Integer.parseInt(tokens[1]),Integer.parseInt(tokens[2]),Integer.parseInt(tokens[3]),tokens[4].charAt(0)));
@@ -222,6 +223,17 @@ public class Restaurant {
 				}
 			} else {
 				for (Station stn : stations) {
+					if (stn.getName().equals("exit")) {
+						if (!inTraining) {
+							// for now
+							new MainMenu();
+							return;
+
+							// todo : implement order completion checking
+							// continue;
+						}
+					}
+
 					stn.draw(g);
 					if (stn.isEntered()) {
 						halt();
@@ -233,8 +245,12 @@ public class Restaurant {
 							switch (stn.getName().toLowerCase()) {
 								case "drop off counter":
 									return;
+								case "exit":
+									new MainMenu();
+									return;
 								default:
 									new TrainingLevel(stn.getName());
+									return;
 								// case "fridge":
 								// 	new TrainingLevel("Fridge");
 								// 	return;
@@ -246,7 +262,7 @@ public class Restaurant {
 								// 	return;
 								// case "pick up counter":
 								// 	new TrainingLevel("Pick Up");
-								// 	return ;
+								//	return;
 							}
 						} else {
 							switch (stn.getName().toLowerCase()) {
