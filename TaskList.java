@@ -37,7 +37,7 @@ public abstract class TaskList extends GraphicComponent {
 
 		bkgd = Utility.loadImage("checklist_temp.png",300,400);
 		icon = new ImageButton(Utility.FRAME_WIDTH - 100,Utility.FRAME_HEIGHT - 100,Utility.loadImage("Scroll_Icon.png",80,80));
-		back = new Button("<--", Utility.FRAME_WIDTH - 100,Utility.FRAME_HEIGHT - 50,Utility.TEXT_FONT,Color.black,Color.green);
+		back = new Button("<--", Utility.FRAME_WIDTH - 100,Utility.FRAME_HEIGHT - 50,Utility.TEXT_FONT);
 		// todo: change the above green hover colour
 
 		isClicked = false;

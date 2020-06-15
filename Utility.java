@@ -50,6 +50,16 @@ public final class Utility {
 	public static final Font TEXT_FONT_SMALL = loadFont("Inconsolata-Medium.ttf",15);
 
 	/**
+	  * Primary red shade of the graphics
+	  */
+	public static final Color RED = new Color(214, 0, 0);
+
+	/**
+	  * Primary cyan shade of the graphics
+	  */
+	public static final Color CYAN = new Color(233, 255, 251);
+
+	/**
 	  * Loads a final static Font object
 	  * @param name 	the name of the file, including the extension
 	  * @param size 	the desired font size
@@ -81,7 +91,6 @@ public final class Utility {
 	  * @param drawing 		the component to be updated to
 	  */
 	public static void changeDrawing(JComponent drawing) {
-		CovidCashier.pastDrawing = CovidCashier.frame.getContentPane();
 		CovidCashier.frame.setContentPane(drawing);
 		CovidCashier.frame.revalidate();
 		CovidCashier.frame.repaint();
@@ -91,9 +100,10 @@ public final class Utility {
 	  * Changes and updates the frame to the restauarant (which is assumed to be in pastDrawing)
 	  */
 	public static void backToRestaurant() {
-		CovidCashier.frame.setContentPane(CovidCashier.pastDrawing);
-		CovidCashier.frame.revalidate();
-		CovidCashier.frame.repaint();
+		try {
+			CovidCashier.getPastRestaurant().activate();
+			changeDrawing(CovidCashier.getPastRestaurant().getDrawing());
+		} catch (NullPointerException e) {}
 	}
 
 	/**
