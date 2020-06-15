@@ -91,7 +91,7 @@ public class Dialogue extends GraphicComponent {
 		height = BOX_HEIGHT;
 
 		x_coord = (Utility.FRAME_WIDTH - BOX_WIDTH) / 2;
-		y_coord = Utility.FRAME_HEIGHT - BOX_HEIGHT;
+		y_coord = Utility.FRAME_HEIGHT - BOX_HEIGHT - 20;
 		text_font = Utility.TEXT_FONT_SMALL;
 
 		if (!addFace) face = null;
