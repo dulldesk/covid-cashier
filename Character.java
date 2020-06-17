@@ -106,7 +106,7 @@ public abstract class Character {
 	  * @param clothing 	the clothing of the Character chosen
 	  * @param equipment	the protective equipement of the Character chosen
 	  */
-	  public Character(String name, String type, char gender, char clothing, String equipment) {
+	public Character(String name, String type, char gender, char clothing, String equipment) {
 		this.name = name;
 		this.gender = gender;
 		this.clothingType = clothing;
@@ -186,11 +186,20 @@ public abstract class Character {
 	/**
 	  * Draws the character to the window
 	  * @param g 	The Graphics object to draw on
-	  * @param step	The type of step that the character is taking
 	  */
 	public void draw(Graphics g) {
 		stepNo %= TOTAL_STEPS;
 		g.drawImage(getSprite(stepNo), x_coord, y_coord % Utility.FRAME_HEIGHT, null);
+	}
+
+	/** 
+	  * Draw the user relative to the restaurant's frame
+	  * @param g 				the Graphics object to draw on
+	  * @param atRestaurant 	additional parameter to distinguish between the overloaded methods
+	  */
+	public void draw(Graphics g, boolean atRestaurant) {
+		stepNo %= TOTAL_STEPS;
+		g.drawImage(getSprite(stepNo), x_coord, Restaurant.getYRelativeToFrame(y_coord), null);
 	}
 	
 	/** 

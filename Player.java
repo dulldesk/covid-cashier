@@ -119,9 +119,6 @@ public class Player extends Character {
 		return "Player" + gender + "_" + clothingType + (protectiveEquipment.equals("N") ? "" : "_" + protectiveEquipment);
 	}
 
-	public void draw(Graphics g, boolean atRestaurant) {
-		stepNo %= TOTAL_STEPS;
-		g.drawImage(getSprite(stepNo), x_coord, Restaurant.getYRelativeToFrame(y_coord), null);
 	}
 
 	public class FridgeTilesBindings extends ScreenMovement {
