@@ -1,7 +1,7 @@
 /**
   * Button with an image
   * 
-  * Last edit: 6/4/2020
+  * Last edit: 6/17/2020
   * @author 	Celeste, Eric
   * @version 	1.1
   * @since 		1.0
@@ -24,9 +24,19 @@ public class ImageButton extends Button {
 
 	/**
 	  * The difference in the icon dimensions between the regular size and the enlarged size.
+	  * The value must be even. 
+	  */
+	private static int enlargeDiff;
+
+	/**
+	  * The difference in the icon dimensions between the regular size and the enlarged size.
 	  * Prerequisite: the value is even. 
 	  */
-	private int enlargeDiff = 10;
+	private int delta_y_coord;
+
+	static {
+		enlargeDiff = 10;
+	}
 
 	/**
 	  * Constructs a Button object and activates its listeners
@@ -41,6 +51,7 @@ public class ImageButton extends Button {
 		super(lbl,x,y,fnt,lbl_c,hvr_c);
 		icon = img;
 		icon_enlarged = img.getScaledInstance(img.getWidth(null)+enlargeDiff, img.getHeight(null)+enlargeDiff, java.awt.Image.SCALE_SMOOTH);
+		delta_y_coord = 0;
 	}
 
 	/**
@@ -49,15 +60,27 @@ public class ImageButton extends Button {
 	  * @param x 		the Button's x-coordinate
 	  * @param y 		the Button's y-coordinate
 	  * @param fnt 		the Button's font`
-	  * @param lbl_c	the Button's label (text) colour
-	  * @param hvr_c	the Button's label (text) colour upon hovering
 	  * @param img		the Button's image
 	  */
 	public ImageButton(String lbl, int x, int y, Font fnt, Image img) {
+		this(lbl,x,y,fnt,img,0);
+	}
+
+	/**
+	  * Constructs a Button object with default colours. 
+	  * @param lbl 		the Button's label (name)
+	  * @param x 		the Button's x-coordinate
+	  * @param y 		the Button's y-coordinate
+	  * @param fnt 		the Button's font`
+	  * @param img		the Button's image
+	  * @param yDiff	the additional difference between the y-coordinates of the Image and text label
+	  */
+	public ImageButton(String lbl, int x, int y, Font fnt, Image img, int yDiff) {
 		super(lbl,x,y,fnt);
 
 		icon = img;
 		icon_enlarged = img.getScaledInstance(img.getWidth(null)+enlargeDiff, img.getHeight(null)+enlargeDiff, java.awt.Image.SCALE_SMOOTH);
+		delta_y_coord = yDiff;
 	}
 
 	/**
@@ -98,7 +121,7 @@ public class ImageButton extends Button {
 	    	// if label exists, draw it
 			if (!name.trim().equals("")) {
 				g.setColor(LABEL_COLOUR);
-				g.drawString(name,x_coord+icon.getWidth(null)/2-Utility.getStringWidth(name,g)/2,y_coord+icon.getHeight(null)+60);
+				g.drawString(name,x_coord+icon.getWidth(null)/2-Utility.getStringWidth(name,g)/2,y_coord+icon.getHeight(null)+60 + delta_y_coord);
 			}
 		} catch (Exception e) {}
 	}
