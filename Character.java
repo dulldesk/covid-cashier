@@ -170,6 +170,14 @@ public abstract class Character {
 		return direction;
 	}
 
+	public char getGender() {
+		return gender;
+	}
+
+	public String getPPE() {
+		return protectiveEquipment;
+	}
+
 	/**
 	  * @return the type of character (i.e. its image file name)
 	  */

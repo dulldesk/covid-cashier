@@ -122,4 +122,14 @@ public class Checklist extends TaskList {
 	public void completeTask(String task) {
 		tasks.put(task,true);
 	}
+
+	/**
+	  * @return whether all tasks have been completed
+	  */
+	public boolean isFinished() {
+		for (String key : tasks.keySet()) {
+			if (!tasks.get(key)) return false;
+		}
+		return true;
+	}
 }

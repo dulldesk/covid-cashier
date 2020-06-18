@@ -1,9 +1,9 @@
 /**
   * A minigame
   * 
-  * Last edit: 6/3/2020
+  * Last edit: 6/17/2020
   * @author 	Eric
-  * @version 	1.0
+  * @version 	1.1
   * @since 		1.0
   */
 
@@ -11,6 +11,11 @@ import java.awt.*;
 import javax.swing.*;
 
 public abstract class Minigame {
+    /**
+	  * Contains the minigame graphics / GUI
+	  */
+    protected MinigameDrawing drawing;
+
     /**
 	  * The score of the game
 	  */
@@ -55,15 +60,15 @@ public abstract class Minigame {
         public abstract void display(Graphics g);
 
         /**
-		  * Paint method of JComponent
-		  * @param g 	the Graphics object to draw on
-		  */
-		@Override
-		public void paintComponent(Graphics g) {
-			super.paintComponent(g);
-			try {
-				display(g);
-			} catch (Exception e) {}
-		}
+         * Paint method of JComponent
+         * @param g 	the Graphics object to draw on
+         */
+        @Override
+        public void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            try {
+                display(g);
+            } catch (Exception e) {}
+        }
     }
 }

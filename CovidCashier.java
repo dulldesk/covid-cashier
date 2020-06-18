@@ -7,15 +7,27 @@
   * @since 		1.0
   */
 
-import javax.swing.JFrame;
+import javax.swing.*;
 import java.awt.*;
-import java.io.*;
 
 public final class CovidCashier  {	
 	/**
 	  * The program frame
 	  */
 	public static JFrame frame;
+
+	/**
+	  * The past Restaurant level object
+	  */
+	private static Restaurant pastRestaurant;
+
+	public static void setPastRestaurant(Restaurant currRestaurant) {
+		pastRestaurant = currRestaurant;
+	}
+
+	public static Restaurant getPastRestaurant() {
+		return pastRestaurant;
+	}
 
 	/**
 	  * Initializes the main frame of the program an Image object from a file
@@ -37,7 +49,8 @@ public final class CovidCashier  {
 		// new SplashScreen();
 		//new PlayerSelect();
 		//new CashRun('M', "MG");
-		new FridgeTiles('M', "MG");
+		//new FridgeTiles('M', "MG");
+		new Disinfection();
 
 		// User.gender = 'M';
 		// User.name="edas";
