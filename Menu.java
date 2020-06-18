@@ -21,7 +21,7 @@ public abstract class Menu {
 	/**
 	  * The y-coordinate of the title
 	  */
-	protected int titleY = 120;
+	protected int titleY = 130;
 
 	/**
 	  * Deactivates any listeners on components on the screen
