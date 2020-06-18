@@ -201,10 +201,29 @@ public class Restaurant {
 
 			// background
 			g.drawImage(MAP,0,topY,null);
-			g.drawImage(LONG_COUNTER,210,getYRelativeToFrame(335),null);
-			g.drawImage(FRONT_COUNTER,0,getYRelativeToFrame(542),null);
 
-			user.draw(g, true);
+			final int longCounterY = 335;
+			final int frontCounterY = 542;
+			final int diffBehindCounter = 100;
+
+			boolean userDrawn = false;
+
+			// if statements allow for the user to go behind the counter
+			if (user.getY() < longCounterY && user.getY() > longCounterY - diffBehindCounter) {
+				user.draw(g, true);
+				userDrawn = true;
+			}
+			g.drawImage(LONG_COUNTER,210,getYRelativeToFrame(longCounterY),null);
+
+			if (user.getY() < frontCounterY && user.getY() > frontCounterY - diffBehindCounter) {
+				user.draw(g, true);
+				userDrawn = true;
+			}
+			g.drawImage(FRONT_COUNTER,0,getYRelativeToFrame(frontCounterY),null);
+
+			if (!userDrawn) 
+				user.draw(g, true);
+
 
 			// System.out.println(user.getX() + " " + user.getY() + " ; " + getYRelativeToFrame(user.getY()));
 			// System.out.println(topY);
