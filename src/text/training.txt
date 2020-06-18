@@ -18,7 +18,7 @@ wear gloves to prevent transferring the virus from hands to food and vice versa.
 Disinfectant is available here as well. Use it to clean and disinfect high-touch surfaces, as the virus may be on them; the virus can survive on stainless steel for 3-7 days. Avoid expired disinfectants. 
 
 &Front Counter
-The virus can survive on paper money for up to 4 days and plastic for 3-7 days. However, cashiers would have direct contact to a customer's paper cash, but not their credit card. Credit payment is preferred over paper money during this time. 
+The virus can survive on paper money for up to 4 days and plastic for 3-7 days. Cashiers would have direct contact to a customer's paper cash, but not their credit card. Credit payment is preferred over paper money during this time. 
 
 &Pick Up Counter
 Drop off the customer's food here. They will pick it up. 
