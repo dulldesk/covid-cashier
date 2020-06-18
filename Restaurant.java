@@ -139,6 +139,9 @@ public class Restaurant {
 		catch (NumberFormatException e) {}
 	}
 
+	/**
+	  * Halt restaurant component listeners
+	  */
 	public void halt() {
 		if (intro != null) intro.deactivate();
 		if (stationList != null) stationList.deactivate();
@@ -146,10 +149,22 @@ public class Restaurant {
 		for (Station stn : stations) stn.deactivate();
 	}
 
+	/**
+	  * Activate restaurant component listeners
+	  */
 	public void activate() {
 		stationList.activate();
 
 		user.restaurantMovement.activate();
+	}
+
+	/**
+	  * Gets the y coordinate relative to the frame as opposed to the map image
+	  * @param y the coordinate to use
+	  * @return the y coordinate relative to the frame 
+	  */
+	public static int getYRelativeToFrame(int y) {
+		return y + topY;
 	}
 
 	public int getCompletedStationsNo() {
@@ -171,15 +186,6 @@ public class Restaurant {
 
 	public Player getUser() {
 		return user;
-	}
-
-	/**
-	  * Gets the y coordinate relative to the frame as opposed to the map image
-	  * @param y the coordinate to use
-	  * @return the y coordinate relative to the frame 
-	  */
-	public static int getYRelativeToFrame(int y) {
-		return y + topY;
 	}
 
 	public RestaurantDrawing getDrawing() {
@@ -268,6 +274,8 @@ public class Restaurant {
 					stn.draw(g);
 					if (stn.isEntered()) {
 						halt();
+
+						// Uses the current restaurant object
 						CovidCashier.setPastRestaurant(Restaurant.this);
 						stn.resetDialogue();
 
@@ -297,6 +305,7 @@ public class Restaurant {
 						} else {
 							String currStn = stn.getName().toLowerCase();
 							if (!currStn.equals("covid counter") && !currStn.equals("exit")) user.checkHygiene(currStn);
+
 							switch (currStn) {
 								case "fridge":
 									new FridgeTiles(user);
