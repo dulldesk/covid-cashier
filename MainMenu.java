@@ -72,7 +72,7 @@ public class MainMenu extends Menu {
 			// System.out.println("main menu");
 			g.setFont(Utility.TITLE_FONT_SMALL);
 			g.setColor(Color.black);
-			centerAlignStr(g, "COVID Cashier", 545, titleY);
+			g.drawString("COVID Cashier", leftAlign, titleY);
 
 			drawReceipt(g);
 
