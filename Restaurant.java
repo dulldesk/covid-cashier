@@ -42,7 +42,7 @@ public class Restaurant {
 	/**
 	  * Number of completed stations
 	  */
-	public static int completedStations;
+	public int completedStations;
 
 	/**
 	  * List of enter-able stations
@@ -70,7 +70,6 @@ public class Restaurant {
 	private static java.util.List<String> trainingStationNames;
 
 	static {
-		completedStations = 0;
 		stations = new ArrayList<Station>();
 		boundaries = new ArrayList<Boundary>();
 		loadStations();
@@ -153,11 +152,16 @@ public class Restaurant {
 		user.restaurantMovement.activate();
 	}
 
-	public static int getCompletedStationsNo() {
+	public int getCompletedStationsNo() {
 		return completedStations;
 	}
 
-	public static void increaseCompletedStations() {
+	/**
+	  * Increase the number of completed stations and mark a station as complete
+	  * @param stationName the station that has been completed
+	  */
+	public void completeStation(String stationName) {
+		((Checklist)(stationList)).completeTask(stationName);
 		completedStations++;
 	}
 
@@ -268,7 +272,6 @@ public class Restaurant {
 						stn.resetDialogue();
 
 						if (inTraining) {
-							((Checklist)(stationList)).completeTask(stn.getName());
 							switch (stn.getName().toLowerCase()) {
 								case "drop off counter":
 									return;
