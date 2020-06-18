@@ -1,7 +1,7 @@
 /**
   * A checklist listing the to-be-completed stations for the training level
   * 
-  * Last edit: 6/4/2020
+  * Last edit: 6/18/2020
   * @author 	Celeste
   * @version 	1.0
   * @since 		1.1
@@ -37,7 +37,7 @@ public class Checklist extends TaskList {
 
 	/**
 	  * Constructs a Checklist
-	  * @param taskNames the tasks to be completed
+	  * @param taskNames the name of the tasks to be completed
 	  */
 	public Checklist(String [] taskNames) {
 		super();
@@ -46,6 +46,7 @@ public class Checklist extends TaskList {
 
 	/**
 	  * Constructs a Checklist without loading images
+	  * @param doNotLoad whether or not to load images (e.g. checklist background)
 	  */
 	public Checklist(boolean doNotLoad) {
 		this(true,null);
@@ -53,27 +54,39 @@ public class Checklist extends TaskList {
 
 	/**
 	  * Constructs a Checklist without loading images
+	  * @param doNotLoad whether or not to load images (e.g. checklist background)
+	  * @param taskNames the name of the tasks to be completed
 	  */
 	public Checklist(boolean doNotLoad, String [] taskNames) {
 		super(true);
 		initializeTasks(taskNames);
 	}
 
+	/**
+	  * Initialize the tasks to be completed and displayed in the Checklist
+	  * @param taskNames the name of the tasks to be completed
+	  */
 	private void initializeTasks(String [] taskNames) {
 		tasks = new TreeMap<String,Boolean>();
+		notInitialEmpty = true;
 
 		if (taskNames == null) {
-			String [] order = {"a","b","c"};
-			taskOrder = order;
+			taskOrder = new String[]{"a","b","c"};
 		} else {
 			taskOrder = taskNames;
 		}
 
-		loadTasks(taskOrder);
+		for (String tsk : taskNames) {
+			tasks.put(tsk,false);
+		}
 	}
 
+	/** 
+	  * Draws an opened task list (i.e. displays the tasks on screen)
+	  * @param g 	the Graphics object to draw on
+	  */
 	@Override
-	public void drawOpen(Graphics g) {
+	protected void drawOpen(Graphics g) {
 		int x = x_coord + 70;
 		int y = y_coord + 60;
 
@@ -90,8 +103,8 @@ public class Checklist extends TaskList {
 
 				// Loop thickens the line
 				for (int i=0;i<3;i++) {
-					g.drawLine(x_coord+30+i,y-15,x_coord+40+i,y);
-					g.drawLine(x_coord+40+i,y,x_coord+55+i,y-25);
+					g.drawLine(x-40+i,y-15,x-30+i,y);
+					g.drawLine(x-30+i,y,x-15+i,y-25);
 				}
 
 				g.setColor(Color.black);
@@ -102,17 +115,16 @@ public class Checklist extends TaskList {
 		}
 	}
 
+	/**
+	  * Draw the checklist title
+	  * @param g 	the Graphics object to draw on
+	  * @param x 	the x-coordinate of the title
+	  * @param y 	the y-coordinate of the title
+	  */
 	private void drawTitle(int x, int y, Graphics g) {
 		g.setFont(Utility.LABEL_FONT);
 		g.setColor(Color.black);
 		g.drawString("To Visit",x,y);
-	}
-
-
-	public void loadTasks(String [] taskNames) {
-		for (String tsk : taskNames) {
-			tasks.put(tsk,false);
-		}
 	}
 
 	/**

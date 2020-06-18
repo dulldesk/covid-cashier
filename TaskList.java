@@ -32,12 +32,19 @@ public abstract class TaskList extends GraphicComponent {
 	  */
 	protected Image bkgd;
 
+	/**
+	  * Whether the list has been added to at some point
+	  */
+	protected boolean notInitialEmpty;
+
 	public TaskList() {
 		this(true);
 
 		bkgd = Utility.loadImage("Checklist.png",300,400);
 		icon = new ImageButton(Utility.FRAME_WIDTH - 100, Utility.FRAME_HEIGHT - 100, Utility.loadImage("Scroll_Icon.png",80,80));
 		back = new ImageButton(Utility.FRAME_WIDTH - 100, Utility.FRAME_HEIGHT - 75, Utility.loadImage("ReturnArrow.png",45,45));
+
+		notInitialEmpty = false;
 
 		isClicked = false;
 		isHovered = false;
@@ -88,20 +95,44 @@ public abstract class TaskList extends GraphicComponent {
 		}
 	}
 
-	public abstract void drawOpen(Graphics g);
+	/** 
+	  * Draws an opened task list (i.e. displays the tasks on screen)
+	  * @param g 	the Graphics object to draw on
+	  */
+	protected abstract void drawOpen(Graphics g);
 
-	public void openActivate() {}
+	/** 
+	  * @return whether the entire TaskList has been completed
+	  */
+	public abstract boolean isFinished();
 
-	public void closeDeactivate() {}
+	/** 
+	  * Activate list opening listeners
+	  */
+	protected void openActivate() {}
 
+	/** 
+	  * Deactivate list opening listeners
+	  */
+	protected void closeDeactivate() {}
+
+	/** 
+	  * @return whether the list display is opened
+	  */
 	public boolean isOpened() {
 		return isOpened;
 	}
 
+	/** 
+	  * Closes the list display
+	  */
 	public void close() {
 		isOpened = false;
 	}
 
+	/** 
+	  * Opens the list display
+	  */
 	public void open() {
 		isOpened = true;
 	}
