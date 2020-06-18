@@ -87,7 +87,7 @@ public class CovidCounter extends TrainingLevel {
 	/**
 	  * Deactivate the listeners of any components of the level
 	  */
-	public void deactivate() {
+	public void halt() {
 		super.deactivate();
 		returnButton.deactivate();
 		gloveBox.deactivate();
@@ -164,7 +164,7 @@ public class CovidCounter extends TrainingLevel {
 				
 				updatePPE(sanitizer);
 			} else if (returnButton.isClicked()) {
-				deactivate();
+				halt();
 				Utility.backToRestaurant();	
 				return;	
 			}
