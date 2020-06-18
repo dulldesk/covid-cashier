@@ -1,9 +1,9 @@
 /**
   * The Fridge minigame
   * 
-  * Last edit: 6/17/2020
+  * Last edit: 6/5/2020
   * @author 	Eric
-  * @version 	1.2
+  * @version 	1.1
   * @since 		1.0
   */
 
@@ -15,6 +15,11 @@ import java.util.*;
 import java.io.*;
 
 public class FridgeTiles extends Minigame {
+    /**
+	  * Contains the minigame graphics / GUI
+	  */
+    private MinigameDrawing drawing;
+
     /**
 	  * Contains the gender of the player.
 	  */
@@ -89,7 +94,7 @@ public class FridgeTiles extends Minigame {
             player.fridgeTilesMovement.activate();
             obstacles = new ArrayList<Obstacle>();
             spacing = 0;
-            rand = 30;
+            rand = (int)(Math.random()*20);
             refresh = false;
         }
 
@@ -101,24 +106,21 @@ public class FridgeTiles extends Minigame {
 		public void display(Graphics g) {
             g.drawImage(Utility.loadImage("FridgeTiles_BG.png",Utility.FRAME_WIDTH,Utility.FRAME_HEIGHT),0,0,null);
             if(spacing > 15+rand) {
-                String[] names = {"Lettuce", "Onion", "Tomato", "Cheese", "Pickle", "Bacon", "Patty", "Ketchup", "Mustard"};
-                obstacles.add(new Obstacle(names[(int)(Math.random()*names.length)], 290+(int)(Math.random()*3)*80, -60, 480, 480));
+                String name = "Temp";
+                obstacles.add(new Obstacle(name, 290+(int)(Math.random()*3)*80, -100, 480, 480));
                 spacing = 0;
-                rand = (int)(Math.random()*20);
+                rand = (int)(Math.random()*15);
             }
             spacing++;
             for(int i = obstacles.size()-1; i >= 0; i--) {
                 Obstacle curr = obstacles.get(i);
                 curr.y_coord += 15;
                 curr.draw(g);
-                if(curr.isColliding(player)) {
-                    if(!curr.collided)
-                        score -= 10;
-                    curr.collided = true;
+                if(isColliding(player, curr)) {
+                    score -= 10;
                 }
-                if(!curr.withinFrame()) {
+                if(curr.y_coord > 500)
                     obstacles.remove(i);
-                }
             }
             if(refresh)
                 player.stepNo++;
@@ -140,6 +142,10 @@ public class FridgeTiles extends Minigame {
 			});
 			timer.setRepeats(false);
 			timer.start();
+        }
+        
+        public boolean isColliding(Player p, Obstacle o) {
+            return p.y_coord < o.y_coord+o.height && p.y_coord+p.height > o.y_coord && p.x_coord < o.x_coord+o.width && p.x_coord+p.width-20 > o.x_coord;
         }
     }
 }
