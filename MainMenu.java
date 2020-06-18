@@ -76,10 +76,11 @@ public class MainMenu extends Menu {
 							new Instructions();
 							break;
 						case "TRAIN": 
-							new Restaurant(true);
+							CovidCashier.setPastRestaurant(new Restaurant(true));
 							break;
 						case "PLAY": 
-							new Restaurant(false);
+							CovidCashier.setPastRestaurant(new Restaurant(false));
+							// new Restaurant(false);
 							break;
 						case "QUIT": 
 							new Quit();

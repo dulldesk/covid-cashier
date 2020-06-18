@@ -37,7 +37,7 @@ public class Restaurant {
 	/**
 	  * The user's player
 	  */
-	public static Player user;
+	private Player user;
 
 	/**
 	  * Number of completed stations
@@ -162,6 +162,10 @@ public class Restaurant {
 
 	public ArrayList<Boundary> getBoundaries() {
 		return boundaries;
+	}
+
+	public Player getUser() {
+		return user;
 	}
 
 	/**

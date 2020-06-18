@@ -144,23 +144,23 @@ public class CovidCounter extends TrainingLevel {
 				g.drawString(instruction, (Utility.FRAME_WIDTH - Utility.getStringWidth(instruction, g))/2, 100);
 
 				String message = "Your current PPE: ";
-				if (Restaurant.user.getPPE().startsWith("M")) message += "mask";
-				if (Restaurant.user.getPPE().endsWith("G")) message += (Restaurant.user.getPPE().length() == 2 ? ", " : "") + "gloves";
+				if (CovidCashier.getPastRestaurant().getUser().getPPE().startsWith("M")) message += "mask";
+				if (CovidCashier.getPastRestaurant().getUser().getPPE().endsWith("G")) message += (CovidCashier.getPastRestaurant().getUser().getPPE().length() == 2 ? ", " : "") + "gloves";
 				if (message.endsWith(" ")) message += "none";	
 
 				g.drawString(message, (Utility.FRAME_WIDTH - Utility.getStringWidth(message, g))/2, 130);
 			}
 
 			if (maskBox.isClicked()) {
-				Restaurant.user.putOnMask();
+				CovidCashier.getPastRestaurant().getUser().putOnMask();
 
 				updatePPE(maskBox);
 			} else if (gloveBox.isClicked()) {
-				Restaurant.user.putOnGloves();
+				CovidCashier.getPastRestaurant().getUser().putOnGloves();
 				
 				updatePPE(gloveBox);
 			} else if (sanitizer.isClicked()) {
-				Restaurant.user.cleanHands();
+				CovidCashier.getPastRestaurant().getUser().cleanHands();
 				
 				updatePPE(sanitizer);
 			} else if (returnButton.isClicked()) {
