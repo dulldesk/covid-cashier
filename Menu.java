@@ -8,7 +8,9 @@
   */
 
 import java.awt.*;
+import java.awt.event.*;
 import javax.swing.*;
+import java.util.*;
 
 public abstract class Menu {
 	/**
@@ -30,6 +32,15 @@ public abstract class Menu {
 	  * GUI of a menu
 	  */
 	public abstract class MenuDrawing extends JComponent {
+		/**
+		 * Timer for the receipt refresh 
+		 */
+		protected javax.swing.Timer timer;
+
+		/**
+		 * Temporary order number
+		 */
+		protected int orderNumber = (int)(Math.random()*1000000);
 
 		/**
 		  * Draw the actual display
@@ -93,6 +104,44 @@ public abstract class Menu {
 		
 		public void centerAlignStr(Graphics g, String phrase, int x, int y) {
 			g.drawString(phrase,x-Utility.getStringWidth(phrase,g)/2,y+g.getFontMetrics().getHeight()/2);
+		}
+
+		/**
+		  * Draws text on the main menu receipt
+		  * @param g 			the Graphics object for the drawing
+		  */
+		protected void drawReceipt(Graphics g) {
+			Calendar date = Calendar.getInstance();
+			String[] days = {"Sat", "Sun", "Mon", "Tues", "Wed", "Thurs", "Fri"};
+			g.setColor(new Color(50, 50, 50));
+			g.setFont(Utility.LABEL_FONT.deriveFont(18F));
+			centerAlignStr(g, "Wandi's", 200, 82);
+			g.setFont(Utility.LABEL_FONT.deriveFont(14F));
+			centerAlignStr(g, "222 Corona St.", 190, 98);
+			centerAlignStr(g, days[date.get(Calendar.DAY_OF_WEEK)]+" "+
+			String.format("%02d",date.get(Calendar.MONTH)+1)+"/"+String.format("%02d",date.get(Calendar.DATE))+"/"+date.get(Calendar.YEAR)+" "+
+			String.format("%02d",date.get(Calendar.HOUR))+":"+String.format("%02d",date.get(Calendar.MINUTE))+" "+
+			(date.get(Calendar.AM_PM)==0?"AM":"PM"), 180, 116);
+			centerAlignStr(g, "========================", 170, 132);
+			centerAlignStr(g, "** ORDER#: "+String.format("%06d",orderNumber)+" **", 170, 148);
+			g.drawString("1   PANDEMIC", 100, 180);
+			g.drawString("1   PANDEMIC", 100, 200);
+			g.drawString("SUBTOTAL", 100, 230);
+			centerAlignStr(g, "========================", 165, 238);
+			g.drawString("TOTAL", 100, 260);
+		}
+
+		public void refreshScreen() {
+			timer = new javax.swing.Timer(0, new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					repaint();
+				}
+			});
+			timer.setRepeats(true);
+			//Aprox. 60 FPS
+			timer.setDelay(17);
+			timer.start();
 		}
 	}
 }
