@@ -42,12 +42,23 @@ public class CovidCounter extends TrainingLevel {
 	private boolean showInstruction; 
 
 	/**
+	  * The last millisecond that the change message showed up
+	  */
+	private long lastUpdate;
+
+	/**
+	  * The PPE that was last changed by the user
+	  */
+	private String lastChanged;
+
+	/**
 	  * Constructs a station
 	  * @param inTraining 	whether the user is in a training level or not
 	  */
 	public CovidCounter(boolean inTraining) {
 		super("COVID Counter", false);
 		showInstruction = !inTraining;
+		lastUpdate = 0;
 
 		sanitizer = new ImageButton("sanitizer", 560, 175, Utility.TEXT_FONT, Utility.loadImage("Sanitizer.png", 100, 180), -21);
 		maskBox = new ImageButton("masks", 320, 253, Utility.TEXT_FONT, Utility.loadImage("MaskBox.png", 160, 80));
@@ -89,7 +100,17 @@ public class CovidCounter extends TrainingLevel {
 	  */
 	private class CounterDrawing extends JComponent {
 		public CounterDrawing() {
-			activate(!inTraining);
+			activate(showInstruction);
+		}
+
+		/** 
+		  * Updates the last changed PPE
+		  * @param btn 	the ImageButton of the selected PPE
+		  */
+		private void updatePPE(ImageButton btn) {
+			lastUpdate = System.currentTimeMillis();
+			lastChanged = btn.getName();
+			btn.resetClicked();
 		}
 
 		/**
@@ -121,24 +142,43 @@ public class CovidCounter extends TrainingLevel {
 				g.setColor(Color.black);
 				g.setFont(Utility.TEXT_FONT);
 				g.drawString(instruction, (Utility.FRAME_WIDTH - Utility.getStringWidth(instruction, g))/2, 100);
+
+				String message = "Your current PPE: ";
+				if (Restaurant.user.getPPE().startsWith("M")) message += "mask";
+				if (Restaurant.user.getPPE().endsWith("G")) message += (Restaurant.user.getPPE().length() == 2 ? ", " : "") + "gloves";
+				if (message.endsWith(" ")) message += "none";	
+
+				g.drawString(message, (Utility.FRAME_WIDTH - Utility.getStringWidth(message, g))/2, 130);
 			}
 
 			if (maskBox.isClicked()) {
 				Restaurant.user.putOnMask();
 
-				maskBox.resetClicked();
+				updatePPE(maskBox);
 			} else if (gloveBox.isClicked()) {
 				Restaurant.user.putOnGloves();
 				
-				gloveBox.resetClicked();
+				updatePPE(gloveBox);
 			} else if (sanitizer.isClicked()) {
 				Restaurant.user.cleanHands();
 				
-				sanitizer.resetClicked();
+				updatePPE(sanitizer);
 			} else if (returnButton.isClicked()) {
 				deactivate();
 				Utility.backToRestaurant();	
 				return;	
+			}
+
+			if (lastUpdate >= System.currentTimeMillis() - 5000) {
+				String message = "";
+
+				if (lastChanged.equals("sanitizer")) message = "You cleaned your hands";
+				else if (lastChanged.equals("gloves")) message = "You put on gloves";
+				else if (lastChanged.equals("masks")) message = "You put on a mask";
+
+				g.setColor(Color.black);
+				g.setFont(Utility.TEXT_FONT_SMALL);
+				g.drawString(message, (Utility.FRAME_WIDTH - Utility.getStringWidth(message, g))/2, Utility.FRAME_HEIGHT - 50);
 			}
 		}
 	}
