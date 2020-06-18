@@ -91,7 +91,7 @@ public class TrainingLevel {
 
 					// require: background images
 					// infoMap.put(name, new TrainingInfo(info.trim(), null));
-					infoMap.put(name, new TrainingInfo(info.trim(), Utility.loadImage(name.replace(" ","") + "Station.png", Utility.FRAME_WIDTH, Utility.FRAME_HEIGHT)));
+					infoMap.put(name, new TrainingInfo(info.trim(), Utility.loadImage(name.replace(" ","") + "BG.png", Utility.FRAME_WIDTH, Utility.FRAME_HEIGHT)));
 				}
 			}
 		} catch (Exception e) {}
