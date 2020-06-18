@@ -132,14 +132,12 @@ public class Player extends Character {
 		protected void loadKeyBindings() {
 			movementMap.put("left", new Movement("left", KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0), new AbstractAction() {
 				public void actionPerformed(ActionEvent e) {
-					System.out.println("left");
 					if(x_coord-80 > 280)
 						x_coord -= 80;
 				}
 			}));
 			movementMap.put("right", new Movement("right", KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0), new AbstractAction() {
 				public void actionPerformed(ActionEvent e) {
-					System.out.println("right");
 					if(x_coord+80 < 520)
 						x_coord += 80;
 				}
