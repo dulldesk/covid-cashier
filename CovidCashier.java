@@ -50,7 +50,8 @@ public final class CovidCashier  {
 		//new PlayerSelect();
 		//new CashRun('M', "MG");
 		//new FridgeTiles('M', "MG");
-		new Disinfection();
+		//new Disinfection();
+		new MemoryGame();
 
 		// User.gender = 'M';
 		// User.name="edas";

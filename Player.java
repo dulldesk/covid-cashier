@@ -154,7 +154,7 @@ public class Player extends Character {
 			movementMap.put("jump", new Movement("jump", KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0), new AbstractAction() {
 				public void actionPerformed(ActionEvent e) {
 					jumped = true;
-					speed = 52;
+					speed = 56;
 				}
 			}));
 		}

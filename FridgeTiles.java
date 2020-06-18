@@ -26,11 +26,17 @@ public class FridgeTiles extends Minigame {
     private String equipment;
 
     /**
+	  * Contains the "health" of the player in the minigame.
+	  */
+    private int health;
+
+    /**
 	  * Initializes and displays the drawing to the frame
 	  */
     public FridgeTiles(char gender, String equipment) {
         this.gender = gender;
         this.equipment = equipment;
+        health = 100;
         infoCard = new Dialogue("Fridge Tiles! It's important to only touch what you need in the fridge, to avoid spreading germs. Avoid all the food by using the left and right arrow keys. Good luck!", "Coworker_MG");
         drawing = new FridgeTilesDrawing();
         Utility.changeDrawing(drawing);
@@ -83,6 +89,11 @@ public class FridgeTiles extends Minigame {
         private int obstacleCount;
 
         /**
+         * ---
+         */
+        private int hit;
+
+        /**
 		  * Object constructor. Uses the superclass's constructor
 		  */
 		public FridgeTilesDrawing() {
@@ -98,7 +109,7 @@ public class FridgeTiles extends Minigame {
             rand = 100;
             refresh = false;
             obstacleCount = 0;
-            infoCard.activate();
+            hit = 0;
         }
 
         /**
@@ -107,6 +118,16 @@ public class FridgeTiles extends Minigame {
 		  */
 		@Override
 		public void display(Graphics g) {
+            g.setColor(Color.black);
+            g.fillRect(0, 0, Utility.FRAME_WIDTH, Utility.FRAME_HEIGHT);
+            Graphics2D g2d = (Graphics2D)g;
+            if(hit == 1) {
+                g2d.rotate(0.01, Utility.FRAME_WIDTH/2, Utility.FRAME_HEIGHT/2);
+                hit++;
+            } else if(hit == 2) {
+                g2d.rotate(-0.01, Utility.FRAME_WIDTH/2, Utility.FRAME_HEIGHT/2);
+                hit = 0;
+            }
             g.drawImage(Utility.loadImage("FridgeTiles_BG.png",Utility.FRAME_WIDTH,Utility.FRAME_HEIGHT),0,0,null);
             if(!end) {
                 if(spacing > 20+rand && obstacleCount < 30) {
@@ -122,11 +143,15 @@ public class FridgeTiles extends Minigame {
                     curr.y_coord += 15;
                     curr.draw(g);
                     if(curr.isColliding(player)) {
-                        if(!curr.collided)
-                            score -= 10;
+                        if(!curr.collided) {
+                            health -= 10;
+                            hit++;
+                        }
                         curr.collided = true;
                     }
                     if(!curr.withinFrame()) {
+                        if(!curr.collided)
+                            score += 10;
                         obstacles.remove(i);
                     }
                 }
@@ -137,17 +162,29 @@ public class FridgeTiles extends Minigame {
                     infoCard.draw(g);
                 } else {
                     start = false;
-                    infoCard.deactivate();
                 }  
-                if(obstacles.size() == 0 && obstacleCount == 30)
+                if(obstacles.size() == 0 && obstacleCount == 30 || health == 0) {
                     end = true;
+                    hit = 0;
+                    if(health > 0)
+                        infoCard = new Dialogue("Congratulations on completing Fridge Tiles! You finished with "+health+"% of your health, and a score of "+score+". Now get back to work!", "Coworker_MG");
+                    else
+                        infoCard = new Dialogue("You didn't complete Fridge Tiles. Now get back to work!", "Coworker_MG");
+                }
                 refresh = !refresh;
+                g.drawImage(Utility.loadImage("HealthBar.png", 400, 50), Utility.FRAME_WIDTH/2-200, 25, null);
+                g.setColor(new Color(214, 0, 0));
+                g.fillRect(Utility.FRAME_WIDTH/2-190, 35, 38*health/10, 30);
                 g.setColor(Color.black);
-                g.setFont(Utility.LABEL_FONT);
-                g.drawString("Score: "+String.format("%03.0f", score), Utility.FRAME_WIDTH/2-Utility.getStringWidth("Score: 000", Utility.LABEL_FONT)/2, 50);
+                g.setFont(Utility.TEXT_FONT);
+                g.drawString("Score: "+String.format("%03d", score), Utility.FRAME_WIDTH/2-Utility.getStringWidth("Score: 000", Utility.TEXT_FONT)/2, 100);
+                if(hit > 0) {
+                    g.setColor(new Color(214, 0, 0, 50));
+                    g.fillRect(0, 0, Utility.FRAME_WIDTH, Utility.FRAME_HEIGHT);
+                }
+            } else {
+                infoCard.draw(g);
             }
-            //try{Thread.sleep(17);}catch(Exception e){}
-            //repaint();
             refreshScreen();
         }
 
