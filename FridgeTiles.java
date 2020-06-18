@@ -31,6 +31,7 @@ public class FridgeTiles extends Minigame {
     public FridgeTiles(char gender, String equipment) {
         this.gender = gender;
         this.equipment = equipment;
+        infoCard = new Dialogue("Fridge Tiles! It's important to only touch what you need in the fridge, to avoid spreading germs. Avoid all the food by using the left and right arrow keys. Good luck!", "Coworker_MG");
         drawing = new FridgeTilesDrawing();
         Utility.changeDrawing(drawing);
     }
@@ -75,7 +76,12 @@ public class FridgeTiles extends Minigame {
          * ---
          */
         private boolean refresh;
-        
+
+        /**
+         * ---
+         */
+        private int obstacleCount;
+
         /**
 		  * Object constructor. Uses the superclass's constructor
 		  */
@@ -89,8 +95,10 @@ public class FridgeTiles extends Minigame {
             player.fridgeTilesMovement.activate();
             obstacles = new ArrayList<Obstacle>();
             spacing = 0;
-            rand = 30;
+            rand = 100;
             refresh = false;
+            obstacleCount = 0;
+            infoCard.activate();
         }
 
         /**
@@ -100,32 +108,44 @@ public class FridgeTiles extends Minigame {
 		@Override
 		public void display(Graphics g) {
             g.drawImage(Utility.loadImage("FridgeTiles_BG.png",Utility.FRAME_WIDTH,Utility.FRAME_HEIGHT),0,0,null);
-            if(spacing > 15+rand) {
-                String[] names = {"Lettuce", "Onion", "Tomato", "Cheese", "Pickle", "Bacon", "Patty", "Ketchup", "Mustard"};
-                obstacles.add(new Obstacle(names[(int)(Math.random()*names.length)], 290+(int)(Math.random()*3)*80, -60, 480, 480));
-                spacing = 0;
-                rand = (int)(Math.random()*20);
-            }
-            spacing++;
-            for(int i = obstacles.size()-1; i >= 0; i--) {
-                Obstacle curr = obstacles.get(i);
-                curr.y_coord += 15;
-                curr.draw(g);
-                if(curr.isColliding(player)) {
-                    if(!curr.collided)
-                        score -= 10;
-                    curr.collided = true;
+            if(!end) {
+                if(spacing > 20+rand && obstacleCount < 30) {
+                    String[] names = {"Lettuce", "Onion", "Tomato", "Cheese", "Pickle", "Bacon", "Patty", "Ketchup", "Mustard"};
+                    obstacles.add(new Obstacle(names[(int)(Math.random()*names.length)], 290+(int)(Math.random()*3)*80, -60, 480, 480));
+                    spacing = 0;
+                    rand = (int)(Math.random()*20);
+                    obstacleCount++;
                 }
-                if(!curr.withinFrame()) {
-                    obstacles.remove(i);
+                spacing++;
+                for(int i = obstacles.size()-1; i >= 0; i--) {
+                    Obstacle curr = obstacles.get(i);
+                    curr.y_coord += 15;
+                    curr.draw(g);
+                    if(curr.isColliding(player)) {
+                        if(!curr.collided)
+                            score -= 10;
+                        curr.collided = true;
+                    }
+                    if(!curr.withinFrame()) {
+                        obstacles.remove(i);
+                    }
                 }
+                if(refresh)
+                    player.stepNo++;
+                player.draw(g);
+                if(spacing < rand && start) {
+                    infoCard.draw(g);
+                } else {
+                    start = false;
+                    infoCard.deactivate();
+                }  
+                if(obstacles.size() == 0 && obstacleCount == 30)
+                    end = true;
+                refresh = !refresh;
+                g.setColor(Color.black);
+                g.setFont(Utility.LABEL_FONT);
+                g.drawString("Score: "+String.format("%03.0f", score), Utility.FRAME_WIDTH/2-Utility.getStringWidth("Score: 000", Utility.LABEL_FONT)/2, 50);
             }
-            if(refresh)
-                player.stepNo++;
-            player.draw(g);
-            refresh = !refresh;
-            g.drawString("Score: "+score, 10, 15);
-            g.setColor(Color.blue);
             //try{Thread.sleep(17);}catch(Exception e){}
             //repaint();
             refreshScreen();

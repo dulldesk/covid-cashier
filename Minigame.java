@@ -12,14 +12,29 @@ import javax.swing.*;
 
 public abstract class Minigame {
     /**
-	  * Contains the minigame graphics / GUI
-	  */
+	    * Contains the minigame graphics / GUI
+	    */
     protected MinigameDrawing drawing;
 
     /**
-	  * The score of the game
-	  */
+	    * The score of the game
+	    */
     protected double score = 0;
+
+    /**
+	    * The score of the game
+	    */
+    protected boolean start = true;
+
+    /**
+	    * The score of the game
+	    */
+    protected boolean end = false;
+
+    /**
+     * Info box
+     */
+    protected Dialogue infoCard;
 
     /**
       * Increase the score by an amount
@@ -38,16 +53,16 @@ public abstract class Minigame {
     }
 
     /**
-     * Reset the score to zero
-     */
+      * Reset the score to zero
+      */
     protected void clear() {
         score = 0;
     }
 
     /**
-     * Get the current score
-     * @return score
-     */
+      * Get the current score
+      * @return score
+      */
     protected double getScore() {
         return score;
     }
