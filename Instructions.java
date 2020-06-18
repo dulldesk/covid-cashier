@@ -44,7 +44,7 @@ public class Instructions extends Menu {
 		} catch (Exception e) {System.out.println(e);}
 
 
-		back = new Button("<--",100,Utility.FRAME_HEIGHT-100,Utility.TEXT_FONT);
+		back = new ReturnButton(100,Utility.FRAME_HEIGHT-100);
 
 		drawing = new InstructionsDrawing();
 		Utility.changeDrawing(drawing);
