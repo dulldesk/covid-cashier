@@ -1,7 +1,7 @@
 /**
   * The Restaurant workplace. This is where both the training level and the live level take place
   * 
-  * Last edit: 6/12/2020
+  * Last edit: 6/18/2020
   * @author 	Celeste
   * @version 	1.1
   * @since 		1.0
@@ -61,9 +61,13 @@ public class Restaurant {
 	
 	private TaskList stationList;
 
-	public static final Image LONG_COUNTER;
+	private static final Image LONG_COUNTER;
 
-	public static final Image FRONT_COUNTER;
+	private static final Image FRONT_COUNTER;
+
+	public static int topY;
+
+	private static java.util.List<String> trainingStationNames;
 
 	static {
 		completedStations = 0;
@@ -78,10 +82,6 @@ public class Restaurant {
 		TrainingLevel.loadInfoMap();
 	}
 
-	public static int topY;
-
-	private static java.util.List<String> trainingStationNames;
-
 	public Restaurant(boolean training) {
 		inTraining = training;
 
@@ -90,6 +90,7 @@ public class Restaurant {
 		// initial position
 		user = new Player(User.name, User.gender);
 		user.setCoordinates(5,375);
+		System.out.println(user);
 
 		topY = user.getY() - Utility.FRAME_HEIGHT - user.height/2;
 
@@ -222,7 +223,7 @@ public class Restaurant {
 			}
 			g.drawImage(LONG_COUNTER,210,getYRelativeToFrame(longCounterY),null);
 
-			if (user.getY() < frontCounterY && user.getY() > frontCounterY - diffBehindCounter) {
+			if (!userDrawn && user.getY() < frontCounterY && user.getY() > frontCounterY - diffBehindCounter) {
 				user.draw(g, true);
 				userDrawn = true;
 			}

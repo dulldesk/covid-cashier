@@ -1,7 +1,7 @@
 /**
   * The main menu screen
   * 
-  * Last edit: 5/29/2020
+  * Last edit: 6/18/2020
   * @author 	Celeste, Eric
   * @version 	1.1
   * @since 		1.0

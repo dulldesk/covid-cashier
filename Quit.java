@@ -1,7 +1,7 @@
 /**
   * The instructions screen
   * 
-  * Last edit: 5/28/2020
+  * Last edit: 6/18/2020
   * @author 	Celeste
   * @version 	1.0
   * @since 		1.0

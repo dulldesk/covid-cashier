@@ -1,7 +1,7 @@
 /**
   * A player character
   * 
-  * Last edit: 6/5/2020
+  * Last edit: 6/17/2020
   * @author 	Celeste, Eric
   * @version 	1.1
   * @since 		1.0
@@ -45,8 +45,14 @@ public class Player extends Character {
 	 */
 	public int speed;
 
+	/**
+	  * Keeps track of the player's hygiene throughout the game
+	  */
 	private HygieneTracker hygienicTracker;
 
+	/**
+	  * Keeps track of the player's "failures" to prevent infection from the virus
+	  */
 	public java.util.List<String> failures;
 
 	/**
@@ -156,7 +162,8 @@ public class Player extends Character {
 
 	/** 
 	  * Checks the user's hygiene and updates the tracker. 
-	  * This method is intended to be called in between stations
+	  * This method is intended to be called in between stations.
+	  * @param nextStn 	the next station that the user is about to go to
 	  */
 	public void checkHygiene(String nextStn) {
 		if (hygienicTracker.getLastTask("masks").equals("")) {
@@ -166,7 +173,7 @@ public class Player extends Character {
 		if (!hygienicTracker.getLastTask().equals(nextStn) && !hygienicTracker.getLastTask("gloves").equals(hygienicTracker.getLastTask())) {
 			failures.add("You did not change your gloves prior to a task");
 		}
-		System.out.println("failures "+ failures.size());
+		// System.out.println("failures "+ failures.size());
 
 		hygienicTracker.setLastTask(nextStn);
 	}
