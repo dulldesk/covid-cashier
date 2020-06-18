@@ -24,19 +24,10 @@ public class MainMenu extends Menu {
 	private final String [] OPTIONS = {"Instructions", "Train", "Play", "Quit"};
 
 	/**
-	  * Holds the buttons displayed on the screen
-	  */
-	private ArrayList<Button> buttons;
-
-	/**
 	  * Initializes and displays the drawing to the frame
 	  */
 	public MainMenu() {
-		buttons = new ArrayList<Button>(OPTIONS.length);
-
-		for (int i=0;i<OPTIONS.length;i++) {
-			buttons.add(new Button(OPTIONS[i], leftAlign, titleY + 15 + (int)((i+1)*1.2*Utility.LABEL_FONT.getSize()), Utility.LABEL_FONT));
-		}
+		loadButtons(OPTIONS);
 
 		drawing = new MainMenuDrawing();
 		Utility.changeDrawing(drawing);

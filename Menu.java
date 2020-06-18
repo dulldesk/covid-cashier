@@ -24,9 +24,26 @@ public abstract class Menu {
 	protected int titleY = 130;
 
 	/**
+	  * Holds the buttons displayed on the screen
+	  */
+	protected ArrayList<Button> buttons;
+
+	/**
 	  * Deactivates any listeners on components on the screen
 	  */
 	public abstract void halt();
+
+	/**
+	  * Loads buttons aligned to the screen of the cash register
+	  * @param options	the options to be displayed
+	  */
+	protected void loadButtons(String [] options) {
+		buttons = new ArrayList<Button>(options.length);
+
+		for (int i=0;i<options.length;i++) {
+			buttons.add(new Button(options[i], leftAlign, titleY + 5 + (int)((i+1)*1.2*Utility.LABEL_FONT.getSize()), Utility.LABEL_FONT));
+		}		
+	}
 		
 	/**
 	  * GUI of a menu
@@ -102,6 +119,14 @@ public abstract class Menu {
 			g.drawString(phrase,Utility.FRAME_WIDTH/2-Utility.getStringWidth(phrase,g)/2,getTitleY() + (int)((row*1.55+0.5)*g.getFontMetrics().getHeight()));
 		}
 		
+
+		/**
+		  * Draws a centre aligned String onto the given Graphics object
+		  * @param g 			the Graphics object for the drawing
+		  * @param phrase 		the String to be drawn
+		  * @param x 			the x-coordinate of the middle of the string
+		  * @param y 			the y-coordinate of the middle of the string
+		  */
 		public void centerAlignStr(Graphics g, String phrase, int x, int y) {
 			g.drawString(phrase,x-Utility.getStringWidth(phrase,g)/2,y+g.getFontMetrics().getHeight()/2);
 		}
