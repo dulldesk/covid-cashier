@@ -95,7 +95,7 @@ public abstract class Character {
 	  * @param gender 	the gender of the Character chosen
 	  */
 	public Character(String name, String type, char gender) {
-		this(name,type,gender,'C',"N");
+		this(name,type,gender,'W',"N");
 	}
 
 	/**
@@ -136,8 +136,10 @@ public abstract class Character {
 	  * @return the corresponding sprite for the current character's step movement
 	  */
 	protected Image getSprite(int step) {
-		width = steps.get(direction+"-"+(step+1)+"-"+clothingType+"-"+protectiveEquipment).getWidth(null);
-		return steps.get(direction+"-"+(step+1)+"-"+clothingType+"-"+protectiveEquipment);
+		String key = direction+"-"+(step+1)+"-"+clothingType+"-"+protectiveEquipment;
+		// System.out.println(key);
+		width = steps.get(key).getWidth(null);
+		return steps.get(key);
 	}
 
 	/**
