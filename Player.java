@@ -15,23 +15,19 @@ import java.io.*;
 import javax.swing.*;
 
 public class Player extends Character {
-
-	public final RestaurantBindings restaurantMovement;
 	/**
 	  * Contains key bindings for moving the player around
 	  */
-	// private Map<String,Movement> restaurantMovement;
+	public final RestaurantBindings restaurantMovement;
 
 	/**
 	  * Key bindings for player jumping
 	  */
-	// private Movement cashRunMovement;
 	public final CashRunBindings cashRunMovement;
 
 	/**
 	  * Contains key bindings for moving the player around
 	  */
-	// private Map<String,Movement> fridgeTilesMovement;
 	public final FridgeTilesBindings fridgeTilesMovement;
 
 	/**
@@ -60,14 +56,8 @@ public class Player extends Character {
 		jumped = false;
 		// activated = false;
 		restaurantMovement = new RestaurantBindings();
-		// restaurantMovement = new HashMap<String, Movement>();
-		// fridgeTilesMovement = new HashMap<String, Movement>();
 		fridgeTilesMovement = new FridgeTilesBindings();
 		cashRunMovement = new CashRunBindings();
-
-		// loadRestaurantMovement();
-		// loadCashRunMovement();
-		// loadFridgeTilesMovement();
 	}
 
 	/**

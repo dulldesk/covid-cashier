@@ -38,8 +38,6 @@ public abstract class TaskList extends GraphicComponent {
 		bkgd = Utility.loadImage("Checklist.png",300,400);
 		icon = new ImageButton(Utility.FRAME_WIDTH - 100, Utility.FRAME_HEIGHT - 100, Utility.loadImage("Scroll_Icon.png",80,80));
 		back = new ImageButton(Utility.FRAME_WIDTH - 100, Utility.FRAME_HEIGHT - 75, Utility.loadImage("ReturnArrow.png",45,45));
-		// back = new Button("<--", ,Utility.TEXT_FONT);
-		// todo: change the above green hover colour
 
 		isClicked = false;
 		isHovered = false;
