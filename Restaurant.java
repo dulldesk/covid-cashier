@@ -54,6 +54,9 @@ public class Restaurant {
 	  */
 	public static ArrayList<Boundary> boundaries;
 
+	/**
+	  * Introductory dialogue to appear on the training level
+	  */
 	private Dialogue intro;
 	
 	private TaskList stationList;
