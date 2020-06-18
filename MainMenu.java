@@ -10,7 +10,6 @@
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import javax.swing.Timer;
 import java.util.*;
 
 public class MainMenu extends Menu {
@@ -25,19 +24,10 @@ public class MainMenu extends Menu {
 	private final String [] OPTIONS = {"Instructions", "Train", "Play", "Quit"};
 
 	/**
-	  * Holds the buttons displayed on the screen
-	  */
-	private ArrayList<Button> buttons;
-
-	/**
 	  * Initializes and displays the drawing to the frame
 	  */
 	public MainMenu() {
-		buttons = new ArrayList<Button>(OPTIONS.length);
-
-		for (int i=0;i<OPTIONS.length;i++) {
-			buttons.add(new Button(OPTIONS[i], leftAlign, titleY + 15 + (int)((i+1)*1.2*Utility.LABEL_FONT.getSize()), Utility.LABEL_FONT));
-		}
+		loadButtons(OPTIONS);
 
 		drawing = new MainMenuDrawing();
 		Utility.changeDrawing(drawing);
@@ -56,16 +46,6 @@ public class MainMenu extends Menu {
 	  */
 	public class MainMenuDrawing extends MenuDrawing {
 		/**
-		 * Temporary order number
-		 */
-		int orderNumber = (int)(Math.random()*1000000);
-
-		/**
-		 * Timer
-		 */
-		Timer timer;
-
-		/**
 		  * Object constructor. Uses the superclass's constructor
 		  */
 		public MainMenuDrawing() {
@@ -83,7 +63,7 @@ public class MainMenu extends Menu {
 			// System.out.println("main menu");
 			g.setFont(Utility.TITLE_FONT_SMALL);
 			g.setColor(Color.black);
-			centerAlignStr(g, "COVID Cashier", 545, titleY);
+			g.drawString("COVID Cashier", leftAlign, titleY);
 
 			drawReceipt(g);
 
@@ -113,49 +93,12 @@ public class MainMenu extends Menu {
 		}
 
 		/**
-		  * Draws text on the main menu receipt
-		  */
-		public void drawReceipt(Graphics g) {
-			Calendar date = Calendar.getInstance();
-			String[] days = {"Sat", "Sun", "Mon", "Tues", "Wed", "Thurs", "Fri"};
-			g.setColor(new Color(50, 50, 50));
-			g.setFont(Utility.LABEL_FONT.deriveFont(18F));
-			centerAlignStr(g, "Wandi's", 200, 82);
-			g.setFont(Utility.LABEL_FONT.deriveFont(14F));
-			centerAlignStr(g, "222 Corona St.", 190, 98);
-			centerAlignStr(g, days[date.get(Calendar.DAY_OF_WEEK)]+" "+
-					String.format("%02d",date.get(Calendar.MONTH)+1)+"/"+String.format("%02d",date.get(Calendar.DATE))+"/"+date.get(Calendar.YEAR)+" "+
-					String.format("%02d",date.get(Calendar.HOUR))+":"+String.format("%02d",date.get(Calendar.MINUTE))+" "+
-					(date.get(Calendar.AM_PM)==0?"AM":"PM"), 180, 116);
-			centerAlignStr(g, "========================", 170, 132);
-			centerAlignStr(g, "** ORDER#: "+String.format("%06d",orderNumber)+" **", 170, 148);
-			g.drawString("1   PANDEMIC", 100, 180);
-			g.drawString("1   PANDEMIC", 100, 200);
-			g.drawString("SUBTOTAL", 100, 230);
-			centerAlignStr(g, "========================", 165, 238);
-			g.drawString("TOTAL", 100, 260);
-		}
-
-		/**
 		  * Returns the y-coordinate of the title
 		  * @return the MainMenuDrawing object's titleY attribute
 		  */
 		@Override
 		public int getTitleY() {
 			return titleY;
-		}
-
-		public void refreshScreen() {
-			timer = new Timer(0, new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					repaint();
-				}
-			});
-			timer.setRepeats(true);
-			//Aprox. 60 FPS
-			timer.setDelay(17);
-			timer.start();
 		}
 	}
 }

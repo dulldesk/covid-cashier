@@ -20,18 +20,10 @@ public class Quit extends Menu {
 	private MenuDrawing drawing;
 
 	/**
-	  * Holds the buttons displayed on the screen
-	  */
-	private ArrayList<Button> buttons;
-
-	/**
 	  * Initializes and displays the drawing to the frame
 	  */
 	public Quit() {
-		buttons = new ArrayList<Button>(2);
-
-		buttons.add(new Button("yes",leftAlign,titleY+(int)(1.5*Utility.LABEL_FONT.getSize()),Utility.LABEL_FONT));
-		buttons.add(new Button("no",leftAlign,titleY+(int)(2*1.5*Utility.LABEL_FONT.getSize()),Utility.LABEL_FONT));
+		loadButtons(new String[]{"yes", "no"});
 
 		drawing = new QuitDrawing();
 		Utility.changeDrawing(drawing);
@@ -80,6 +72,9 @@ public class Quit extends Menu {
 					}
 				} 
 			}
+
+			drawReceipt(g);
+			refreshScreen();
 		}
 
 		/**
