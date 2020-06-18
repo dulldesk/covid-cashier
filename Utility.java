@@ -27,12 +27,12 @@ public final class Utility {
 	/**
 	  * Font for titles
 	  */
-	public static final Font TITLE_FONT = loadFont("8-BIT_WONDER.ttf",42);
+	public static final Font TITLE_FONT = loadFont("8-BIT_WONDER.TTF",42);
 
 	/**
 	  * Smaller font for titles
 	  */
-	public static final Font TITLE_FONT_SMALL = loadFont("8-BIT_WONDER.ttf",32);
+	public static final Font TITLE_FONT_SMALL = loadFont("8-BIT_WONDER.TTF",32);
 
 	/**
 	  * Font for labels, headings, and the like
@@ -50,6 +50,16 @@ public final class Utility {
 	public static final Font TEXT_FONT_SMALL = loadFont("Inconsolata-Medium.ttf",15);
 
 	/**
+	  * Primary red shade of the graphics
+	  */
+	public static final Color RED = new Color(214, 0, 0);
+
+	/**
+	  * Primary cyan shade of the graphics
+	  */
+	public static final Color CYAN = new Color(233, 255, 251);
+
+	/**
 	  * Loads a final static Font object
 	  * @param name 	the name of the file, including the extension
 	  * @param size 	the desired font size
@@ -57,7 +67,7 @@ public final class Utility {
 	  */
 	private static final Font loadFont(String name, float size) {
 		try {
-			return Font.createFont(Font.TRUETYPE_FONT, Utility.class.getResourceAsStream("src/fonts/"+name)).deriveFont(size);
+			return Font.createFont(Font.TRUETYPE_FONT, Utility.class.getResourceAsStream("/src/fonts/"+name)).deriveFont(size);
 		} catch (Exception e) {}
 		return null;
 	}
@@ -72,7 +82,7 @@ public final class Utility {
 	public static final Image loadImage(String name, int width, int height) {
 		try {
 			return ImageIO.read(Utility.class.getResourceAsStream("src/img/"+name)).getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH);
-		} catch (IOException e) {}
+		} catch (Exception e) {}
 		return null;
 	}
 
@@ -84,6 +94,16 @@ public final class Utility {
 		CovidCashier.frame.setContentPane(drawing);
 		CovidCashier.frame.revalidate();
 		CovidCashier.frame.repaint();
+	}
+
+	/**
+	  * Changes and updates the frame to the restauarant (which is assumed to be in pastDrawing)
+	  */
+	public static void backToRestaurant() {
+		try {
+			CovidCashier.getPastRestaurant().activate();
+			changeDrawing(CovidCashier.getPastRestaurant().getDrawing());
+		} catch (NullPointerException e) {}
 	}
 
 	/**
@@ -106,7 +126,7 @@ public final class Utility {
 	  * @return a BufferedReader object of the given file
 	  */
 	public static BufferedReader getBufferedReader(String name) {
-		return new BufferedReader(new InputStreamReader(Utility.class.getResourceAsStream("src/text/" + name)));
+		return new BufferedReader(new InputStreamReader(Utility.class.getResourceAsStream("/src/text/" + name)));
 	}
 
 	/**

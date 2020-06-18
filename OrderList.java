@@ -45,8 +45,8 @@ public class OrderList extends TaskList {
 		orders = new ArrayList<Checklist>();
 		headerBtns = new ArrayList<Button>();
 
-		addOrder(null);
-		addOrder(null);
+		// addOrder(null);
+		// addOrder(null);
 	}
 
 	@Override

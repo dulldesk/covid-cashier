@@ -96,6 +96,8 @@ public class PlayerSelect extends Menu {
 
 			if (stage.equals("name")) nameInput(g);
 			else if (stage.equals("character")) charInput(g);
+
+			// (new Dialogue("covid counter","PlayerM")).draw(g);
 		}
 
 		/**

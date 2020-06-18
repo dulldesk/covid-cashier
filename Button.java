@@ -48,7 +48,7 @@ public class Button extends GraphicComponent {
 	  * @param fnt 		the Button's font`
 	  */
 	public Button(String lbl, int x, int y, Font fnt) {
-		this(lbl,x,y,fnt,Color.black,Color.blue);
+		this(lbl, x, y, fnt, Color.black, Utility.RED);
 	}
 
 	/**
