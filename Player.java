@@ -81,30 +81,32 @@ public class Player extends Character {
 	  */
 	public void putOnMask() {
 		if (protectiveEquipment.indexOf("M") == -1)  
-			protectiveEquipment = "M" + protectiveEquipment;
+			protectiveEquipment = "M" + protectiveEquipment.replace("N","");
 	}
 
 	/**
 	  * Removes a mask from the player's PPE, if present
 	  */
 	public void takeOffMask() {
-		if (protectiveEquipment.indexOf("M") != -1)  
+		if (protectiveEquipment.indexOf("M") != -1) {
 			protectiveEquipment = protectiveEquipment.substring(1);
+			if (protectiveEquipment.length() == 0) protectiveEquipment = "N";
+		}
 	}
 
 	/**
 	  * Adds gloves to the player's PPE, if not already present
 	  */
 	public void putOnGloves() {
-		if (protectiveEquipment.indexOf("M") == -1)  
-			protectiveEquipment += "G";
+		if (protectiveEquipment.indexOf("G") == -1) 
+			protectiveEquipment = protectiveEquipment.replace("N","") + "G";
 	}
 
 	/**
 	  * Removes gloves from the player's PPE, if present
 	  */
 	public void takeOffGloves() {
-		protectiveEquipment = protectiveEquipment.charAt(0) == 'M' ? "M" : "";
+		protectiveEquipment = protectiveEquipment.charAt(0) == 'M' ? "M" : "N";
 	}
 
 	/**
