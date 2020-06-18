@@ -330,7 +330,16 @@ public class Player extends Character {
 								direction = origDir;
 								return;
 							}
-							if (index < 2) Restaurant.topY -= DELTA_DIST* (dirs[index] == 'N' ? -1 : 1);
+
+							if (index < 2) {
+								setClothing(y_coord > 595 ? 'C' : 'W');
+
+								int changeY = Restaurant.topY - DELTA_DIST* (dirs[index] == 'N' ? -1 : 1);
+								
+								if ((index == 0 && changeY < 0 && y_coord < Restaurant.MAP_HEIGHT - Utility.FRAME_HEIGHT/2 - height/2) || 
+									(index == 1 && y_coord > (Utility.FRAME_HEIGHT - height)/2 && changeY > -Restaurant.MAP_HEIGHT + Utility.FRAME_HEIGHT))
+										Restaurant.topY = changeY;
+							}
 
 							stepNo++;
 							CovidCashier.frame.repaint();
