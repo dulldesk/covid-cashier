@@ -153,11 +153,13 @@ public class CovidCounter extends TrainingLevel {
 
 			if (maskBox.isClicked()) {
 				CovidCashier.getPastRestaurant().getUser().putOnMask();
-
+				
+				SoundFX.play("gloveBox",300);
 				updatePPE(maskBox);
 			} else if (gloveBox.isClicked()) {
 				CovidCashier.getPastRestaurant().getUser().putOnGloves();
 				
+				SoundFX.play("gloveBox",300);
 				updatePPE(gloveBox);
 			} else if (sanitizer.isClicked()) {
 				CovidCashier.getPastRestaurant().getUser().cleanHands();
