@@ -3,7 +3,7 @@
   * 
   * Last edit: 6/17/2020
   * @author 	Eric
-  * @version 	1.0
+  * @version 	1.1
   * @since 		1.0
   */
 
@@ -16,9 +16,15 @@ import java.io.*;
 
 public class Disinfection extends Minigame {
     /**
+	  * Contains the "health" of the player in the minigame.
+	  */
+    private int health;
+
+    /**
 	  * Initializes and displays the drawing to the frame
 	  */
     public Disinfection() {
+        health = 100;
         infoCard = new Dialogue("Disinfection! It is important to regularly disinfect surfaces. Shoot the virus down with disinfectant by clicking your mouse. Good luck!", "Coworker_MG");
         drawing = new DisinfectionDrawing();
         Utility.changeDrawing(drawing);
@@ -59,6 +65,11 @@ public class Disinfection extends Minigame {
         private int obstacleCount;
 
         /**
+         * ---
+         */
+        private int hit;
+
+        /**
 		  * Object constructor. Uses the superclass's constructor
 		  */
 		public DisinfectionDrawing() {
@@ -68,7 +79,7 @@ public class Disinfection extends Minigame {
             spacing = 0;
             rand = 100;
             obstacleCount = 0;
-            infoCard.activate();
+            hit = 0;
         }
 
         /**
@@ -77,6 +88,16 @@ public class Disinfection extends Minigame {
 		  */
 		@Override
 		public void display(Graphics g) {
+            g.setColor(Color.black);
+            g.fillRect(0, 0, Utility.FRAME_WIDTH, Utility.FRAME_HEIGHT);
+            Graphics2D g2d = (Graphics2D)g;
+            if(hit == 1) {
+                g2d.rotate(0.01, Utility.FRAME_WIDTH/2, Utility.FRAME_HEIGHT/2);
+                hit++;
+            } else if(hit == 2) {
+                g2d.rotate(-0.01, Utility.FRAME_WIDTH/2, Utility.FRAME_HEIGHT/2);
+                hit = 0;
+            }
             g.drawImage(Utility.loadImage("Disinfection_BG.png",Utility.FRAME_WIDTH,Utility.FRAME_HEIGHT),0,0,null);
             if(!end) {
                 if(spacing > 20+rand && obstacleCount < 15) {
@@ -99,7 +120,8 @@ public class Disinfection extends Minigame {
                     }
                     if(!curr.withinFrame()) {
                         obstacles.remove(i);
-                        score -= 10;
+                        health -= 10;
+                        hit++;
                     } else if(!collideIndex.isEmpty()) {
                         obstacles.remove(i);
                         for(Integer index : collideIndex)
@@ -112,13 +134,27 @@ public class Disinfection extends Minigame {
                     infoCard.draw(g);
                 } else {
                     start = false;
-                    infoCard.deactivate();
                 }
-                if(obstacles.size() == 0 && obstacleCount == 15)
+                if(obstacles.size() == 0 && obstacleCount == 15 || health == 0) {
                     end = true;
+                    hit = 0;
+                    if(health > 0)
+                        infoCard = new Dialogue("Congratulations on completing Disinfection! You finished with "+health+"% of your health, and a score of "+score+". Now get back to work!", "Coworker_MG");
+                    else
+                        infoCard = new Dialogue("You didn't complete Disinfection. Now get back to work!", "Coworker_MG");
+                }
+                g.drawImage(Utility.loadImage("HealthBar.png", 400, 50), Utility.FRAME_WIDTH/2-200, 25, null);
+                g.setColor(new Color(214, 0, 0));
+                g.fillRect(Utility.FRAME_WIDTH/2-190, 35, 38*health/10, 30);
                 g.setColor(Color.black);
-                g.setFont(Utility.LABEL_FONT);
-                g.drawString("Score: "+String.format("%03.0f", score), Utility.FRAME_WIDTH/2-Utility.getStringWidth("Score: 000", Utility.LABEL_FONT)/2, 50);
+                g.setFont(Utility.TEXT_FONT);
+                g.drawString("Score: "+String.format("%03d", score), Utility.FRAME_WIDTH/2-Utility.getStringWidth("Score: 000", Utility.TEXT_FONT)/2, 100);
+                if(hit > 0) {
+                    g.setColor(new Color(214, 0, 0, 50));
+                    g.fillRect(0, 0, Utility.FRAME_WIDTH, Utility.FRAME_HEIGHT);
+                }
+            } else {
+                infoCard.draw(g);
             }
             refreshScreen();
         }
@@ -229,8 +265,9 @@ class Shooter implements MouseListener, MouseMotionListener {
 
     public void mouseDragged(MouseEvent e) {}
     public void mouseMoved(MouseEvent e) {
-        double x = x_coord-e.getXOnScreen();
-        double y = y_coord-height+36/4-e.getYOnScreen();
+        Point pnt = CovidCashier.frame.getMousePosition();
+        double x = x_coord-pnt.x;
+        double y = y_coord-height+36/4-pnt.y;
         angle = Math.toDegrees(Math.atan(x/y));
         if(y < 0) angle -= 180;
     }

@@ -19,7 +19,7 @@ public abstract class Minigame {
     /**
 	    * The score of the game
 	    */
-    protected double score = 0;
+    protected int score = 0;
 
     /**
 	    * The score of the game
@@ -48,7 +48,7 @@ public abstract class Minigame {
       * Set the score to an amount
       * @param set      
 	  */
-      protected void set(double amount) {
+      protected void set(int amount) {
         score = amount;
     }
 
