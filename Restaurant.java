@@ -287,7 +287,9 @@ public class Restaurant {
 								//	return;
 							}
 						} else {
-							switch (stn.getName().toLowerCase()) {
+							String currStn = stn.getName().toLowerCase();
+							if (!currStn.equals("covid counter") && !currStn.equals("exit")) user.checkHygiene(currStn);
+							switch (currStn) {
 								case "fridge":
 									new FridgeTiles(user);
 									return;

@@ -45,6 +45,10 @@ public class Player extends Character {
 	 */
 	public int speed;
 
+	private HygieneTracker hygienicTracker;
+
+	public java.util.List<String> failures;
+
 	/**
 	  * Constructs a Character object and loads the appropriate sprites into the steps map
 	  * @param name 	the Character's name, as chosen by the user
@@ -55,6 +59,10 @@ public class Player extends Character {
 		speed = 0;
 		jumped = false;
 		// activated = false;
+
+		hygienicTracker = new HygieneTracker();
+		failures = new ArrayList<String>();
+
 		restaurantMovement = new RestaurantBindings();
 		fridgeTilesMovement = new FridgeTilesBindings();
 		cashRunMovement = new CashRunBindings();
@@ -80,6 +88,7 @@ public class Player extends Character {
 	  * Adds a mask to the player's PPE, if not already present
 	  */
 	public void putOnMask() {
+		hygienicTracker.update("mask");
 		if (protectiveEquipment.indexOf("M") == -1)  
 			protectiveEquipment = "M" + protectiveEquipment.replace("N","");
 	}
@@ -98,6 +107,7 @@ public class Player extends Character {
 	  * Adds gloves to the player's PPE, if not already present
 	  */
 	public void putOnGloves() {
+		hygienicTracker.update("gloves");
 		if (protectiveEquipment.indexOf("G") == -1) 
 			protectiveEquipment = protectiveEquipment.replace("N","") + "G";
 	}
@@ -113,7 +123,7 @@ public class Player extends Character {
 	  * Cleans the users hands (i.e. updates the hand cleaning tracker)
 	  */
 	public void cleanHands() {
-		
+		hygienicTracker.update("clean hands");
 	}
 
 	/**
@@ -144,11 +154,100 @@ public class Player extends Character {
 		}
 	}
 
+	/** 
+	  * Checks the user's hygiene and updates the tracker. 
+	  * This method is intended to be called in between stations
+	  */
+	public void checkHygiene(String nextStn) {
+		if (hygienicTracker.getLastTask("masks").equals("")) {
+			failures.add("You did not wear a mask prior to a task");
+		}
+
+		if (!hygienicTracker.getLastTask().equals(nextStn) && !hygienicTracker.getLastTask("gloves").equals(hygienicTracker.getLastTask())) {
+			failures.add("You did not change your gloves prior to a task");
+		}
+		System.out.println("failures "+ failures.size());
+
+		hygienicTracker.setLastTask(nextStn);
+	}
+
 	@Override
 	public String getType() {
 		return "Player" + gender + "_" + clothingType + (protectiveEquipment.equals("N") ? "" : "_" + protectiveEquipment);
 	}
 
+	/** 
+	  * Keeps track of the frequency and/or presence of the player's hygienic practices
+	  */
+	private class HygieneTracker {
+		/** 
+		  * The last time, relative to the system time, that the player performed a "change" of some sort (the key, e.g. glove changing)
+		  */
+		private Map<String, Long> lastChangeTime; 
+
+		/** 
+		  * The last task performed prior to changing a PPE
+		  */
+		private Map<String, String> lastChangeTask; 
+
+		/** 
+		  * The last task that the user performed
+		  */
+		private String lastTask;
+
+		public HygieneTracker() {
+			lastChangeTime = new HashMap<String, Long>();
+			lastChangeTask = new HashMap<String, String>();
+			lastTask = "entry";
+		}
+
+		/** 
+		  * Set the last change time of a given key to be the current moment
+		  */
+		public void update(String key) {
+			System.out.println("update "+key);
+
+			if (key.equals("clean hands")) {
+				if (!getLastTask("gloves").equals(lastTask)) {
+					failures.add("You must sanitize your hands in between glove changing (before grabbing a new pair of gloves)");
+					System.out.println("failures "+ failures.size());
+				}
+			}
+
+			lastChangeTime.put(key, System.currentTimeMillis());
+			lastChangeTask.put(key, lastTask);
+		}
+
+		/** 
+		  * @return the last time a given key word was changed, or -1 if it was never changed
+		  */
+		public long getLastUpdate(String key) {
+			return lastChangeTime.getOrDefault(key, -1l);
+		}
+
+		/** 
+		  * @return the last task prior to a given key word was changed, or "" if it was never changed
+		  */
+		public String getLastTask(String key) {
+			return lastChangeTask.getOrDefault(key, "");
+		}
+
+		public String getLastTask() {
+			return lastTask;
+		}
+
+		public void setLastTask(String task) {
+			lastTask = task;
+		}
+
+		/*
+			to-do: 
+			- check if user is wearing ppe before each station [&]
+			- check if user changes gloves in between stations [&]
+			- check if user sanitizes hands when changing gloves 
+
+			[&] method called in between minigames --> checkHygiene()
+		*/
 	}
 
 	public class FridgeTilesBindings extends ScreenMovement {
