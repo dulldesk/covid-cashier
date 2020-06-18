@@ -19,6 +19,7 @@ public class Disinfection extends Minigame {
 	  * Initializes and displays the drawing to the frame
 	  */
     public Disinfection() {
+        infoCard = new Dialogue("Disinfection! It is important to regularly disinfect surfaces. Shoot the virus down with disinfectant by clicking your mouse. Good luck!", "Coworker_MG");
         drawing = new DisinfectionDrawing();
         Utility.changeDrawing(drawing);
     }
@@ -53,6 +54,11 @@ public class Disinfection extends Minigame {
         private int spacing;
 
         /**
+         * ---
+         */
+        private int obstacleCount;
+
+        /**
 		  * Object constructor. Uses the superclass's constructor
 		  */
 		public DisinfectionDrawing() {
@@ -60,7 +66,9 @@ public class Disinfection extends Minigame {
             shooter = new Shooter(Utility.FRAME_WIDTH/2, Utility.FRAME_HEIGHT, 180, 360);
             obstacles = new ArrayList<Obstacle>();
             spacing = 0;
-            rand = 30;
+            rand = 100;
+            obstacleCount = 0;
+            infoCard.activate();
         }
 
         /**
@@ -70,36 +78,48 @@ public class Disinfection extends Minigame {
 		@Override
 		public void display(Graphics g) {
             g.drawImage(Utility.loadImage("Disinfection_BG.png",Utility.FRAME_WIDTH,Utility.FRAME_HEIGHT),0,0,null);
-            if(spacing > 20+rand) {
-                String name = "Virus";
-                obstacles.add(new Obstacle(name, 100+(int)(Math.random()*600), -50, 400, 400, (int)(Math.random()*3)*90));
-                spacing = 0;
-                rand = (int)(Math.random()*20);
-            }
-            spacing++;
-            for(int i = obstacles.size()-1; i >= 0; i--) {
-                Obstacle curr = obstacles.get(i);
-                ArrayList<Integer> collideIndex = new ArrayList<>();
-                curr.y_coord += 5;
-                curr.draw(g);
-                for(int j = shooter.projectiles.size()-1; j >= 0; j--) {
-                    Projectile p = shooter.projectiles.get(j);
-                    if(curr.isColliding(p))
-                        collideIndex.add(j);
+            if(!end) {
+                if(spacing > 20+rand && obstacleCount < 15) {
+                    String name = "Virus";
+                    obstacles.add(new Obstacle(name, 100+(int)(Math.random()*600), -50, 400, 400, (int)(Math.random()*3)*90));
+                    spacing = 0;
+                    rand = (int)(Math.random()*20);
+                    obstacleCount++;
                 }
-                if(!curr.withinFrame()) {
-                    obstacles.remove(i);
-                    score -= 10;
-                } else if(!collideIndex.isEmpty()) {
-                    obstacles.remove(i);
-                    for(Integer index : collideIndex)
-                        shooter.projectiles.remove(index.intValue());
-                    score += 10;
+                spacing++;
+                for(int i = obstacles.size()-1; i >= 0; i--) {
+                    Obstacle curr = obstacles.get(i);
+                    ArrayList<Integer> collideIndex = new ArrayList<>();
+                    curr.y_coord += 5;
+                    curr.draw(g);
+                    for(int j = shooter.projectiles.size()-1; j >= 0; j--) {
+                        Projectile p = shooter.projectiles.get(j);
+                        if(curr.isColliding(p))
+                            collideIndex.add(j);
+                    }
+                    if(!curr.withinFrame()) {
+                        obstacles.remove(i);
+                        score -= 10;
+                    } else if(!collideIndex.isEmpty()) {
+                        obstacles.remove(i);
+                        for(Integer index : collideIndex)
+                            shooter.projectiles.remove(index.intValue());
+                        score += 10;
+                    }
                 }
+                shooter.draw(g);
+                if(spacing < rand && start) {
+                    infoCard.draw(g);
+                } else {
+                    start = false;
+                    infoCard.deactivate();
+                }
+                if(obstacles.size() == 0 && obstacleCount == 15)
+                    end = true;
+                g.setColor(Color.black);
+                g.setFont(Utility.LABEL_FONT);
+                g.drawString("Score: "+String.format("%03.0f", score), Utility.FRAME_WIDTH/2-Utility.getStringWidth("Score: 000", Utility.LABEL_FONT)/2, 50);
             }
-            shooter.draw(g);
-            g.setColor(Color.black);
-            g.drawString("Score: "+score, 10, 15);
             refreshScreen();
         }
 
