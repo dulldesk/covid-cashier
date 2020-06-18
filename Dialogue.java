@@ -127,7 +127,7 @@ public class Dialogue extends GraphicComponent {
 
 	@Override
 	public void draw(Graphics g) {
-		if (canProceed) return;
+		if (canProceed || textQueue.size() == 0) return;
 
 		// System.out.println(textQueue.size() + " "+ textQueue.hashCode());
 

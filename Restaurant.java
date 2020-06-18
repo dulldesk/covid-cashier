@@ -248,14 +248,14 @@ public class Restaurant {
 								case "exit":
 									new MainMenu();
 									return;
+								case "covid counter":
+									new CovidCounter(inTraining);
+									return;
 								default:
 									new TrainingLevel(stn.getName());
 									return;
 								// case "fridge":
 								// 	new TrainingLevel("Fridge");
-								// 	return;
-								// case "covid counter":
-								// 	new TrainingLevel("COVID Counter");
 								// 	return;
 								// case "front counter": 
 								// 	new TrainingLevel("Front Counter");
@@ -270,6 +270,7 @@ public class Restaurant {
 									new FridgeTiles(user);
 									return;
 								case "covid counter":
+									new CovidCounter(inTraining);
 									return;
 								case "front counter": 
 									return;

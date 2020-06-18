@@ -77,6 +77,44 @@ public class Player extends Character {
 	}
 
 	/**
+	  * Adds a mask to the player's PPE, if not already present
+	  */
+	public void putOnMask() {
+		if (protectiveEquipment.indexOf("M") == -1)  
+			protectiveEquipment = "M" + protectiveEquipment;
+	}
+
+	/**
+	  * Removes a mask from the player's PPE, if present
+	  */
+	public void takeOffMask() {
+		if (protectiveEquipment.indexOf("M") != -1)  
+			protectiveEquipment = protectiveEquipment.substring(1);
+	}
+
+	/**
+	  * Adds gloves to the player's PPE, if not already present
+	  */
+	public void putOnGloves() {
+		if (protectiveEquipment.indexOf("M") == -1)  
+			protectiveEquipment += "G";
+	}
+
+	/**
+	  * Removes gloves from the player's PPE, if present
+	  */
+	public void takeOffGloves() {
+		protectiveEquipment = protectiveEquipment.charAt(0) == 'M' ? "M" : "";
+	}
+
+	/**
+	  * Cleans the users hands (i.e. updates the hand cleaning tracker)
+	  */
+	public void cleanHands() {
+		
+	}
+
+	/**
 	  * Loads the image files into the steps HashMap for each character subclass
 	  */
 	@Override
