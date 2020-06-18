@@ -80,6 +80,9 @@ public class Quit extends Menu {
 					}
 				} 
 			}
+
+			drawReceipt(g);
+			refreshScreen();
 		}
 
 		/**
