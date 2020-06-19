@@ -53,8 +53,20 @@ public class Dialogue extends GraphicComponent {
 	  */
 	protected boolean isEntered;
 
+	/**
+	  * Listens for the enter key
+	  */
 	private EntryBinding enterKey;
 
+	/**
+	  * Stores the lines to appear on each dialogue box
+	  * <p> 
+	  * The dialogue to be shown may require more than one box in order to show the full content.
+	  * Each element in the queue represents one "box" of dialogue
+	  * To move onto the next box, the user presses the enter key
+	  * Each String of the String [] element represents one row of the box's text
+	  * Queue elements are in order of display
+	  */
 	protected Queue<String[]> textQueue;
 
 	/**
@@ -69,7 +81,7 @@ public class Dialogue extends GraphicComponent {
 
 	/**
 	  * Constructs a Dialogue object
-	  * @param text		x-coordinate (top-left corner)
+	  * @param text		the entire text to be displayed by the dialogue
 	  * @param charType	the type of character (used for the face)
 	  */
 	public Dialogue(String text, String charType) {
@@ -81,33 +93,17 @@ public class Dialogue extends GraphicComponent {
 
 	/**
 	  * Constructs a Dialogue object
-	  * @param text		x-coordinate (top-left corner)
+	  * @param text		the entire text to be displayed by the dialogue
 	  * @param prompt	the prompt to be used to go to the next box or exit the dialogue
+	  * @param addFace 	whether to add a face onto the dialogue or not. Primary purpose is to distinguish between overloaded methods
 	  */
 	public Dialogue(String text, String prompt, boolean addFace) {
-		// default values 
-		// from super class
-		width = BOX_WIDTH;
-		height = BOX_HEIGHT;
-
-		x_coord = (Utility.FRAME_WIDTH - BOX_WIDTH) / 2;
-		y_coord = Utility.FRAME_HEIGHT - BOX_HEIGHT - 20;
-		text_font = Utility.TEXT_FONT_SMALL;
-
-		if (!addFace) face = null;
-
-		fullText = text;
-
-		canProceed = false;
-		isEntered = false;
-		textQueue = loadTextQueue();
-
-		enterKey = new EntryBinding();
+		this(text);
 	}
 
 	/**
 	  * Constructs a Dialogue object
-	  * @param text		x-coordinate (top-left corner)
+	  * @param text		the entire text to be displayed by the dialogue
 	  */
 	public Dialogue(String text) {
 		// default values 
@@ -130,12 +126,18 @@ public class Dialogue extends GraphicComponent {
 		enterKey = new EntryBinding();
 	}
 
+	/** 
+	  * Activates listeners and the like for the object
+	  */
 	public void activate() {
 		isEntered = false;
 		canProceed = false;
 		enterKey.activate();
 	}
 
+	/** 
+	  * Deactivates listeners and the like for the object
+	  */
 	public void deactivate() {
 		isEntered = false;
 		canProceed = false;
@@ -164,6 +166,10 @@ public class Dialogue extends GraphicComponent {
 		drawText(g);
 	}
 
+	/** 
+	  * Draws the text for the current dialogue "page" onto the screen
+	  * @param g the Graphics object to be drawn on
+	  */
 	private void drawText(Graphics g) {
 		final int leftAlign = x_coord + PADDING + (face != null ? FACE_SIZE : 10);
 		String [] lines = textQueue.peek();
@@ -175,7 +181,8 @@ public class Dialogue extends GraphicComponent {
 	}
 
 	/**
-	  * Loads a queue 
+	  * Loads a queue holding a String array of the boxes to be shown (i.e. the textQueue)
+	  * @return a queue storing an array of Strings representing each Dialogue "box"/screen to be displayed
 	  */
 	private Queue<String[]> loadTextQueue() {
 		final int MAX_ROW = 5;
@@ -226,6 +233,9 @@ public class Dialogue extends GraphicComponent {
 		return queue;
 	}
 
+	/**
+	  * @return whether the object has nothing to display
+	  */
 	public boolean isEmpty() {
 		return fullText.equals("");
 	}
@@ -233,11 +243,15 @@ public class Dialogue extends GraphicComponent {
 	@Override
 	protected boolean withinCoordinates() {return false;}
 
+	/**
+	  * Key binding object to detect the enter key
+	  */
 	private class EntryBinding extends ScreenMovement {
 		public EntryBinding() {
 			super("dialogue");
 		}
 
+		@Override
 		protected void loadKeyBindings() {
 			movementMap.put("continue",new Movement("continue", KeyEvent.VK_ENTER, new AbstractAction() {
 				public void actionPerformed(ActionEvent e) {
@@ -246,7 +260,7 @@ public class Dialogue extends GraphicComponent {
 					// only pop from the queue if the size is greater than 0
 					if (!canProceed) textQueue.poll();
 					canProceed = textQueue.size() == 0;
-					// if (canProceed) System.out.println("can proceed "+(textQueue.size() == 0)+" "+textQueue.size()+" "+textQueue.hashCode());
+
 					if (canProceed) System.out.println("can proceed");
 
 					CovidCashier.frame.repaint();
