@@ -407,7 +407,10 @@ public class Restaurant {
 							}
 						} else {
 							user.checkHygiene(currStn);
-							if (!initialLiveTask && !currStn.equals("covid counter")) completeStation(stn.getName());
+							if (!initialLiveTask && !currStn.equals("covid counter")) {
+								completeStation(stn.getName());
+								openedStations.put(stn.getName(), false);
+							}
 
 							switch (currStn) {
 								case "fridge":
