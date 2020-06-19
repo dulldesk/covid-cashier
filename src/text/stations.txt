@@ -12,8 +12,11 @@
 &Front Counter
 214,525,159,26,S
 
+&Long Counter
+373,394,160,26,N
+
 &Exit
 -50,343,100,140,W
 
 &Don't worry, this is my station! Go back to work!
-300,110,30,260,E 
+300,110,30,260,E
