@@ -204,7 +204,6 @@ public class Restaurant {
 	}
 
 	private class RestaurantDrawing extends JComponent {
-
 		/**
 		  * Constructor
 		  */
@@ -220,17 +219,7 @@ public class Restaurant {
 			activate();
 		}
 
-		/**
-		  * Paint method of JComponent
-		  * @param g 	the Graphics object to draw on
-		  */
-		@Override
-		public void paintComponent(Graphics g) {
-			super.paintComponent(g);
-
-			// background
-			g.drawImage(MAP,0,topY,null);
-
+		private void drawInLayeringOrder(Graphics g) {
 			final int longCounterY = 335;
 			final int frontCounterY = 542;
 			final int diffBehindCounter = 100;
@@ -252,14 +241,26 @@ public class Restaurant {
 
 			if (!userDrawn)
 				user.draw(g, true);
+		}
+
+		/**
+		  * Paint method of JComponent
+		  * @param g 	the Graphics object to draw on
+		  */
+		@Override
+		public void paintComponent(Graphics g) {
+			super.paintComponent(g);
+
+			// background
+			g.drawImage(MAP,0,topY,null);
 
 
 			if (inTraining && User.hasTrained) {
 				g.drawImage(LEFT_ARROW, 10, getYRelativeToFrame(470), null);
 			}
 
-			// nothing to draw normally
-			// for (Boundary bnd : boundaries) bnd.draw(g);
+			// Draw the counters and characters based on the layering order
+			drawInLayeringOrder(g);
 
 			// check if user has fully trained
 			if (inTraining && !User.hasTrained && listIsCompleted()) {
@@ -312,7 +313,7 @@ public class Restaurant {
 							return;
 						}
 						if (inTraining) {
-							if (!currStn.equals("exit")) user.checkHygiene(currStn);
+							user.checkHygiene(currStn);
 							completeStation(stn.getName());
 							switch (currStn) {
 								case "covid counter":
@@ -321,18 +322,9 @@ public class Restaurant {
 								default:
 									new TrainingLevel(stn.getName());
 									return;
-								// case "fridge":
-								// 	new TrainingLevel("Fridge");
-								// 	return;
-								// case "front counter":
-								// 	new TrainingLevel("Front Counter");
-								// 	return;
-								// case "pick up counter":
-								// 	new TrainingLevel("Pick Up");
-								//	return;
 							}
 						} else {
-							if (!currStn.equals("exit")) user.checkHygiene(currStn);
+							user.checkHygiene(currStn);
 
 							switch (currStn) {
 								case "fridge":
@@ -342,10 +334,6 @@ public class Restaurant {
 									new CovidCounter(inTraining);
 									return;
 								case "front counter":
-									return;
-								case "pick up counter":
-									return ;
-								case "drop off counter":
 									return;
 							}
 							/*
