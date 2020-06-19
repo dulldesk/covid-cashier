@@ -68,6 +68,8 @@ public class CovidCounter extends TrainingLevel {
 
 		training = new CounterDrawing();
 		Utility.changeDrawing(training);
+		bgm = new BGM("station");
+		bgm.play();
 	}
 
 	/**
@@ -168,6 +170,7 @@ public class CovidCounter extends TrainingLevel {
 				updatePPE(sanitizer);
 			} else if (returnButton.isClicked()) {
 				halt();
+				bgm.stop();
 				Utility.backToRestaurant();	
 				return;	
 			}

@@ -81,6 +81,8 @@ public class Restaurant {
 
 	private static java.util.List<String> trainingStationNames;
 
+	public BGM bgm;
+
 	static {
 		stations = new ArrayList<Station>();
 		boundaries = new ArrayList<Boundary>();
@@ -112,6 +114,8 @@ public class Restaurant {
 
 		workplace = new RestaurantDrawing();
 		Utility.changeDrawing(workplace);
+		bgm = new BGM("restaurant");
+		bgm.play();
 	}
 
 	/**
@@ -291,6 +295,7 @@ public class Restaurant {
 			// check whether the live level has been completed
 			if (!inTraining && listIsCompleted()) {
 				halt();
+				bgm.stop();
 				new LiveEnd(user.failures);
 				return;
 			}
@@ -326,7 +331,7 @@ public class Restaurant {
 						stn.resetDialogue();
 
 						String currStn = stn.getName().toLowerCase();
-
+						bgm.pause();
 						if (currStn.equals("exit")) {
 							new MainMenu();
 							return;
@@ -358,6 +363,9 @@ public class Restaurant {
 										new CashRun(user);
 									else
 										new MemoryGame();
+									return;
+								case "long counter":
+									new Disinfection();
 									return;
 							}
 							/*

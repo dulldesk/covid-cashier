@@ -33,6 +33,8 @@ public abstract class Menu {
 	  */
 	public abstract void halt();
 
+	public BGM bgm;
+
 	/**
 	  * Loads buttons aligned to the screen of the cash register
 	  * @param options	the options to be displayed

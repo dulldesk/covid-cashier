@@ -37,6 +37,8 @@ public class MainMenu extends Menu {
 
 		drawing = new MainMenuDrawing();
 		Utility.changeDrawing(drawing);
+		bgm = new BGM("menus");
+		bgm.play();
 	}
 
 	/**
@@ -91,8 +93,9 @@ public class MainMenu extends Menu {
 					}
 
 					halt();
+					bgm.stop();
 					switch (btn.getName().toUpperCase()) {
-						case "INSTRUCTIONS": 
+						case "INSTRUCTIONS":
 							new Instructions();
 							break;
 						case "TRAIN": 

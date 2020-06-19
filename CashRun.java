@@ -45,7 +45,8 @@ public class CashRun extends Minigame {
         infoCard = new Dialogue("Cash Run! Germs can survive on paper money for a long time. Jump over all the paper bills with the space bar and collect credit cards by running through them. Good luck!", "Coworker");
         drawing = new CashRunDrawing();
         Utility.changeDrawing(drawing);
-        BGM.play("cashrun");
+        bgm = new BGM("cashrun");
+        bgm.play();
     }
 
     public CashRun(Character user) {
@@ -113,6 +114,7 @@ public class CashRun extends Minigame {
             refresh = false;
             obstacleCount = 0;
             hit = 0;
+            infoCard.activate();
         }
 
         /**
@@ -185,21 +187,25 @@ public class CashRun extends Minigame {
                 player.draw(g);
                 if(spacing < rand && start) {
                     infoCard.draw(g);
+                    if(infoCard.canProceed) {
+                        spacing = rand-1;
+                    }
                     player.cashRunMovement.deactivate();
                 } else {
                     start = false;
                     player.cashRunMovement.activate();
+                    infoCard.deactivate();
                 }
                 if(obstacles.size() == 0 && obstacleCount == 25 || health == 0) {
                     end = true;
                     hit = 0;
                     player.cashRunMovement.deactivate();
-                    //BGM.fadeOut();
                     player.stepNo = 0;
                     if(health > 0)
                         infoCard = new Dialogue("Congratulations on completing Cash Run! You finished with "+health+"% of your health, and a score of "+score+". Now get back to work!", "Coworker");
                     else
                         infoCard = new Dialogue("You didn't complete Cash Run. Now get back to work!", "Coworker");
+                    infoCard.activate();
                 }
                 refresh = !refresh;
                 g.drawImage(Utility.loadImage("HealthBar.png", 400, 50), Utility.FRAME_WIDTH/2-200, 25, null);
@@ -211,12 +217,15 @@ public class CashRun extends Minigame {
                 if(hit > 0) {
                     g.setColor(new Color(214, 0, 0, 50));
                     g.fillRect(0, 0, Utility.FRAME_WIDTH, Utility.FRAME_HEIGHT);
-                    if(hit == 1)
-                        SoundFX.play("hit", 250);
                 }
             } else {
                 player.draw(g);
                 infoCard.draw(g);
+                if(infoCard.canProceed) {
+                    bgm.stop();
+                    Utility.backToRestaurant();
+                    return;
+                }
             }
             refreshScreen();
         }

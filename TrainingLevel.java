@@ -43,6 +43,8 @@ public class TrainingLevel {
 	  */
 	protected JComponent training;
 
+	public BGM bgm;
+
 	/**
 	  * Constructs a training level station
 	  * @param name 	the name of the station; should match the one in training.txt and stations.txt
@@ -52,6 +54,8 @@ public class TrainingLevel {
 
 		training = new TrainingDrawing();
 		Utility.changeDrawing(training);
+		bgm = new BGM("station");
+		bgm.play();
 	}
 
 	/**
@@ -155,6 +159,7 @@ public class TrainingLevel {
 			// (i.e. all of the information has been read)
 			if (infoCard.canProceed()) {
 				deactivate();
+				bgm.stop();
 				Utility.backToRestaurant();	
 				return;	
 			}

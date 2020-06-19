@@ -27,6 +27,8 @@ public class Quit extends Menu {
 
 		drawing = new QuitDrawing();
 		Utility.changeDrawing(drawing);
+		bgm = new BGM("menus");
+		bgm.play();
 	}
 
 	/**
@@ -62,6 +64,7 @@ public class Quit extends Menu {
 			for (Button btn : buttons) {
 				btn.draw(g);
 				if (btn.isClicked()) {
+					bgm.stop();
 					if (btn.getName().equals("no")) {
 						halt();
 						new MainMenu();

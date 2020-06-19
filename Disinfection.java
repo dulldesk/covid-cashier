@@ -28,6 +28,8 @@ public class Disinfection extends Minigame {
         infoCard = new Dialogue("Disinfection! It is important to regularly disinfect surfaces. Shoot the virus down with disinfectant by clicking your mouse. Good luck!", "Coworker");
         drawing = new DisinfectionDrawing();
         Utility.changeDrawing(drawing);
+        bgm = new BGM("disinfection");
+        bgm.play();
     }
 
     /**
@@ -80,6 +82,7 @@ public class Disinfection extends Minigame {
             rand = 100;
             obstacleCount = 0;
             hit = 0;
+            infoCard.activate();
         }
 
         /**
@@ -132,10 +135,14 @@ public class Disinfection extends Minigame {
                 shooter.draw(g);
                 if(spacing < rand && start) {
                     infoCard.draw(g);
+                    if(infoCard.canProceed) {
+                        spacing = rand-1;
+                    }
                     shooter.deactivate();
                 } else {
                     start = false;
                     shooter.activate();
+                    infoCard.deactivate();
                 }
                 if(obstacles.size() == 0 && obstacleCount == 15 || health == 0) {
                     end = true;
@@ -145,6 +152,7 @@ public class Disinfection extends Minigame {
                         infoCard = new Dialogue("Congratulations on completing Disinfection! You finished with "+health+"% of your health, and a score of "+score+". Now get back to work!", "Coworker");
                     else
                         infoCard = new Dialogue("You didn't complete Disinfection. Now get back to work!", "Coworker");
+                    infoCard.activate();
                 }
                 g.drawImage(Utility.loadImage("HealthBar.png", 400, 50), Utility.FRAME_WIDTH/2-200, 25, null);
                 g.setColor(new Color(214, 0, 0));
@@ -158,6 +166,11 @@ public class Disinfection extends Minigame {
                 }
             } else {
                 infoCard.draw(g);
+                if(infoCard.canProceed) {
+                    bgm.stop();
+                    Utility.backToRestaurant();
+                    return;
+                }
             }
             refreshScreen();
         }

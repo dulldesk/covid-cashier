@@ -22,6 +22,8 @@ public class MemoryGame extends Minigame {
         infoCard = new Dialogue("Memory! As a cashier, you must be able to remember customers' orders. Click cards to flip over and match pairs. Good luck!", "Coworker");
         drawing = new MemoryGameDrawing();
         Utility.changeDrawing(drawing);
+        bgm = new BGM("memory");
+        bgm.play();
     }
 
     /**
@@ -84,6 +86,7 @@ public class MemoryGame extends Minigame {
                 }
                 System.out.println();
             }
+            infoCard.activate();
         }
 
         /**
@@ -134,6 +137,9 @@ public class MemoryGame extends Minigame {
             if(spacing < delay && start) {
                 spacing++;
                 infoCard.draw(g);
+                if(infoCard.canProceed) {
+                    spacing = delay;
+                }
                 for(int i = 0; i < 2; i++) {
                     for(int j = 0; j < 5; j++) {
                         cards[j][i].deactivate();
@@ -147,6 +153,7 @@ public class MemoryGame extends Minigame {
                         cards[j][i].activate();
                     }
                 }
+                infoCard.deactivate();
             }
             if(score == 5) {
                 end = true;
@@ -156,9 +163,16 @@ public class MemoryGame extends Minigame {
                     }
                 }
                 infoCard = new Dialogue("Congratulations on completing Memory! It's helpful to have a good memory, no matter what you do. Now get back to work!", "Coworker");
+                infoCard.activate();
             }
-            if(end)
+            if(end) {
                 infoCard.draw(g);
+                if(infoCard.canProceed) {
+                    bgm.stop();
+                    Utility.backToRestaurant();
+                    return;
+                }
+            }
             else {
                 g.setColor(Color.black);
                 g.setFont(Utility.LABEL_FONT);

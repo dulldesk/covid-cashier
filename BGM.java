@@ -1,29 +1,39 @@
 import java.io.*;
 import javax.sound.sampled.*;
 
-public class BGM extends Thread {
+public class BGM {
     Clip clip;
     AudioInputStream audioInputStream;
-    static FloatControl gainControl;
-
-    private BGM(String name) {
+    Long currentFrame;
+    String name;
+    public BGM(String name) {
+        this.name = name;
         try {
             audioInputStream = AudioSystem.getAudioInputStream(this.getClass().getResource("/src/bgm/"+name+".wav"));
-        } catch(Exception e) {}
-    }
-    public static void play(String name) {
-        new BGM(name).start();
-    }
-
-    @Override
-    public void run() {
-        try {
             clip = AudioSystem.getClip();
             clip.open(audioInputStream);
             clip.loop(Clip.LOOP_CONTINUOUSLY);
-            gainControl = (FloatControl)clip.getControl(FloatControl.Type.VOLUME);
         } catch(Exception e) {}
     }
-    public static void fadeOut() {
+    public void play() {
+        clip.start();
+    }
+    public void pause() {
+        this.currentFrame = this.clip.getMicrosecondPosition();
+        clip.stop();
+    }
+    public void resume() {
+        clip.close();
+        try {
+            audioInputStream = AudioSystem.getAudioInputStream(this.getClass().getResource("/src/bgm/"+name+".wav"));
+            clip.open(audioInputStream); 
+            clip.loop(Clip.LOOP_CONTINUOUSLY);
+        } catch(Exception e) {System.out.println("Resume");}
+        clip.setMicrosecondPosition(currentFrame);
+        clip.start();
+    }
+    public void stop() {
+        clip.stop();
+        clip.close();
     }
 }

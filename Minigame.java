@@ -37,6 +37,11 @@ public abstract class Minigame {
     protected Dialogue infoCard;
 
     /**
+	    * The BGM of the game
+	    */
+    protected BGM bgm;
+
+    /**
       * Increase the score by an amount
       * @param add
 	  */

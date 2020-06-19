@@ -45,6 +45,8 @@ public class FridgeTiles extends Minigame {
         infoCard = new Dialogue("Fridge Tiles! It's important to only touch what you need in the fridge, to avoid spreading germs. Avoid all the food by using the left and right arrow keys. Good luck!", "Coworker");
         drawing = new FridgeTilesDrawing();
         Utility.changeDrawing(drawing);
+        bgm = new BGM("fridgetiles");
+        bgm.play();
     }
 
     /**
@@ -114,6 +116,7 @@ public class FridgeTiles extends Minigame {
             refresh = false;
             obstacleCount = 0;
             hit = 0;
+            infoCard.activate();
         }
 
         /**
@@ -164,10 +167,14 @@ public class FridgeTiles extends Minigame {
                 player.draw(g);
                 if(spacing < rand && start) {
                     infoCard.draw(g);
+                    if(infoCard.canProceed) {
+                        spacing = rand-1;
+                    }
                     player.fridgeTilesMovement.deactivate();
                 } else {
                     start = false;
                     player.fridgeTilesMovement.activate();
+                    infoCard.deactivate();
                 }
                 if(obstacles.size() == 0 && obstacleCount == 30 || health == 0) {
                     end = true;
@@ -177,6 +184,7 @@ public class FridgeTiles extends Minigame {
                         infoCard = new Dialogue("Congratulations on completing Fridge Tiles! You finished with "+health+"% of your health, and a score of "+score+". Now get back to work!", "Coworker");
                     else
                         infoCard = new Dialogue("You didn't complete Fridge Tiles. Now get back to work!", "Coworker");
+                    infoCard.activate();
                 }
                 refresh = !refresh;
                 g.drawImage(Utility.loadImage("HealthBar.png", 400, 50), Utility.FRAME_WIDTH/2-200, 25, null);
@@ -191,6 +199,11 @@ public class FridgeTiles extends Minigame {
                 }
             } else {
                 infoCard.draw(g);
+                if(infoCard.canProceed) {
+                    bgm.stop();
+                    Utility.backToRestaurant();
+                    return;
+                }
             }
             refreshScreen();
         }

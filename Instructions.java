@@ -48,6 +48,8 @@ public class Instructions extends Menu {
 
 		drawing = new InstructionsDrawing();
 		Utility.changeDrawing(drawing);
+		bgm = new BGM("menus");
+		bgm.play();
 	}
 
 	/**
@@ -114,6 +116,7 @@ public class Instructions extends Menu {
 			back.draw(g);
 			if (back.isClicked()) {
 				halt();
+				bgm.stop();
 				new MainMenu();
 			}
 		}
