@@ -64,7 +64,16 @@ public class Obstacle {
 	  * Draws the character to the window
 	  * @param g 	The Graphics object to draw on
 	  */
-	public void draw(Graphics g) {
-		g.drawImage(obstacle, x_coord, y_coord, null);
-	}
+    public void draw(Graphics g) {
+        g.drawImage(obstacle, x_coord, y_coord, null);
+    }
+    public boolean isColliding(Player p) {
+        return p.y_coord < y_coord+height && p.y_coord+p.height > y_coord && p.x_coord < x_coord+width && p.x_coord+p.width > x_coord;
+    }
+    public boolean isColliding(Projectile p) {
+        return p.y_coord < y_coord+height && p.y_coord+p.height > y_coord && p.x_coord < x_coord+width && p.x_coord+p.width > x_coord;
+    }
+    public boolean withinFrame() {
+        return x_coord < Utility.FRAME_WIDTH && x_coord+width > 0 && y_coord < Utility.FRAME_HEIGHT && y_coord+height > 0;
+    }
 }
