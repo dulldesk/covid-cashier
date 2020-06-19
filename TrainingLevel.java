@@ -129,6 +129,7 @@ public class TrainingLevel {
 	  */
 	public void deactivate() {
 		infoCard.deactivate();
+		bgm.stop();
 	}
 
 	/**
@@ -158,8 +159,8 @@ public class TrainingLevel {
 			// Return to the restaurant once the training for that station has been completed
 			// (i.e. all of the information has been read)
 			if (infoCard.canProceed()) {
+				System.out.println("back");
 				deactivate();
-				bgm.stop();
 				Utility.backToRestaurant();	
 				return;	
 			}

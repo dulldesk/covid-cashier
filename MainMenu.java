@@ -103,13 +103,11 @@ public class MainMenu extends Menu {
 							break;
 						case "PLAY": 
 							CovidCashier.setPastRestaurant(new Restaurant(false));
-							// new Restaurant(false);
 							break;
 						case "QUIT": 
 							new Quit();
 							break;
 					}
-					// System.out.println("here "+btn.getName());
 					return;
 				} 
 			}

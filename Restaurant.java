@@ -108,7 +108,6 @@ public class Restaurant {
 		coworker.setCoordinates(600, 250);
 		int randCustomer = (int)(Math.random()*2);
 		customer = new Customer((randCustomer==0?"Will":"Lauren"), (randCustomer==0?'M':'F'), (randCustomer==0?"N":"M"));
-		System.out.println(user);
 
 		topY = -user.getY() + Utility.FRAME_HEIGHT/2 - user.height/2;
 
@@ -345,30 +344,31 @@ public class Restaurant {
 							switch (currStn) {
 								case "covid counter":
 									new CovidCounter(inTraining);
-									return;
+									break;
 								default:
 									new TrainingLevel(stn.getName());
-									return;
+									break;
 							}
 						} else {
 							user.checkHygiene(currStn);
+							completeStation(stn.getName());
 
 							switch (currStn) {
 								case "fridge":
 									new FridgeTiles(user);
-									return;
+									break;
 								case "covid counter":
 									new CovidCounter(inTraining);
-									return;
+									break;
 								case "front counter": 
 									if(((OrderList)stationList).orders.get(0).tasks.get("Front Counter"))
 										new CashRun(user);
 									else
 										new MemoryGame();
-									return;
+									break;
 								case "long counter":
 									new Disinfection();
-									return;
+									break;
 							}
 							/*
 								where:
