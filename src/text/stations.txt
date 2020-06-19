@@ -15,8 +15,8 @@
 &Long Counter
 373,394,160,26,N
 
-&Exit
+&*Exit
 -50,343,100,140,W
 
-&Don't worry, this is my station! Go back to work!
+&*Don't worry, this is my station! Go back to work!
 300,110,30,260,E

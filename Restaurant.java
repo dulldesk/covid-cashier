@@ -128,8 +128,11 @@ public class Restaurant {
 					String [] tokens = br.readLine().split(",");
 					String stnName = nxt.substring(1);
 
-					if (!stnName.equalsIgnoreCase("exit"))
+					if (stnName.startsWith("*")) {
+						stnName = stnName.substring(1);
+					} else {
 						trainingStationNames.add(stnName);
+					}
 
 					stations.add(new Station(stnName, Integer.parseInt(tokens[0]),Integer.parseInt(tokens[1]),Integer.parseInt(tokens[2]),Integer.parseInt(tokens[3]),tokens[4].charAt(0)));
 				}
@@ -331,6 +334,7 @@ public class Restaurant {
 						if (inTraining) {
 							user.checkHygiene(currStn);
 							completeStation(stn.getName());
+
 							switch (currStn) {
 								case "covid counter":
 									new CovidCounter(inTraining);
