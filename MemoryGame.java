@@ -153,7 +153,7 @@ public class MemoryGame extends Minigame {
                         cards[j][i].activate();
                     }
                 }
-                infoCard.deactivate();
+                if (!end) infoCard.deactivate();
             }
             if(score == 5 && !end) {
                 end = true;
@@ -162,13 +162,11 @@ public class MemoryGame extends Minigame {
                         cards[j][i].deactivate();
                     }
                 }
-                System.out.println("here");
                 infoCard = new Dialogue("Congratulations on completing Memory! It's helpful to have a good memory, no matter what you do. Now get back to work!", "Coworker");
                 infoCard.activate();
             }
             if(end) {
                 infoCard.draw(g);
-                System.out.println(infoCard.isEntered() + " " + infoCard.canProceed());
                 if(infoCard.isEntered()) {
                     // bgm.stop();
                     infoCard.deactivate();
