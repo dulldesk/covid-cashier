@@ -120,7 +120,7 @@ public class LiveEnd {
 		}
 
 		private void viewFailures(Graphics g) {
-			if (true || failures.size() > 1) {
+			if (failures.size() > 1) {
 				leftButton.draw(g);
 				rightButton.draw(g);
 
