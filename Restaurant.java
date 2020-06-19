@@ -65,6 +65,8 @@ public class Restaurant {
 
 	private static final Image FRONT_COUNTER;
 
+	private static final Image LEFT_ARROW;
+
 	public static int topY;
 
 	private static java.util.List<String> trainingStationNames;
@@ -77,6 +79,7 @@ public class Restaurant {
 		MAP = Utility.loadImage("Restaurant.png",Utility.FRAME_WIDTH,MAP_HEIGHT);
 		LONG_COUNTER = Utility.loadImage("Counter.png",590,90);
 		FRONT_COUNTER = Utility.loadImage("Front Counter.png",640,97);
+		LEFT_ARROW = Utility.loadImage("LeftArrow.png",72,50);
 
 		TrainingLevel.loadInfoMap();
 	}
@@ -181,6 +184,13 @@ public class Restaurant {
 		completedStations++;
 	}
 
+	/**
+	  * @return whether the list of orders / stations to be visited has been completed
+	  */
+	private boolean listIsCompleted() {
+		return (inTraining ? ((Checklist)stationList) : ((OrderList)stationList)).isFinished();
+	}
+
 	public ArrayList<Boundary> getBoundaries() {
 		return boundaries;
 	}
@@ -244,17 +254,26 @@ public class Restaurant {
 				user.draw(g, true);
 
 
-			// System.out.println(user.getX() + " " + user.getY() + " ; " + getYRelativeToFrame(user.getY()));
-			// System.out.println(topY);
+			if (inTraining && User.hasTrained) {
+				g.drawImage(LEFT_ARROW, 10, getYRelativeToFrame(470), null);
+			}
 
 			// nothing to draw normally
 			// for (Boundary bnd : boundaries) bnd.draw(g);
 
 			// check if user has fully trained
-			if (inTraining && ((Checklist)stationList).isFinished()) {
+			if (inTraining && !User.hasTrained && listIsCompleted()) {
 				User.hasTrained = true;
+				intro = new Dialogue("You've finished the training! Go to the arrow (and face in that direction) to exit the restaurant");
+				repaint();
 			}
 
+			// check whether the live level has been completed
+			if (!inTraining && listIsCompleted()) {
+				halt();
+				new LiveEnd(user.failures);
+				return;
+			}
 
 			if (intro != null) {
 				if (intro.canProceed()) {
@@ -267,17 +286,15 @@ public class Restaurant {
 				}
 			} else {
 				for (Station stn : stations) {
-					if (stn.getName().equals("exit")) {
-						// if (!inTraining) {
-							// for now
-							// new MainMenu();
-							// return;
+					if (stn.getName().equalsIgnoreCase("exit")) {
+						if (!inTraining) {
 
 							// todo : implement order completion checking
 							// continue;
-						// } else {
-
-						// }
+						} else if (!User.hasTrained) {
+							// do not allow exiting
+							continue;
+						} 
 					}
 
 					stn.draw(g);
