@@ -23,5 +23,3 @@ The virus can survive on paper money for up to 4 days and plastic for 3-7 days. 
 &Long Counter
 It is important to disinfect surfaces often to ensure that the virus doesn't spread, as the virus can survive on surfaces such as stainless steel for 3-7 days.
 
-&end
-You have visited all the stations! Press the enter key to exit the training level. 
