@@ -131,14 +131,16 @@ public class Restaurant {
 				if (nxt.startsWith("&")) {
 					String [] tokens = br.readLine().split(",");
 					String stnName = nxt.substring(1);
+					boolean flag = true;
 
 					if (stnName.startsWith("*")) {
 						stnName = stnName.substring(1);
+						flag = false;
 					} else {
 						trainingStationNames.add(stnName);
 					}
 
-					stations.add(new Station(stnName, Integer.parseInt(tokens[0]),Integer.parseInt(tokens[1]),Integer.parseInt(tokens[2]),Integer.parseInt(tokens[3]),tokens[4].charAt(0)));
+					stations.add(new Station(stnName, Integer.parseInt(tokens[0]),Integer.parseInt(tokens[1]),Integer.parseInt(tokens[2]),Integer.parseInt(tokens[3]),tokens[4].charAt(0), flag));
 				}
 			}
 		}
@@ -323,7 +325,7 @@ public class Restaurant {
 					}
 
 					stn.draw(g);
-					if (stn.isEntered()) {
+					if (stn.isEntered() && (stn.canTrain() || stn.getName().equalsIgnoreCase("exit"))) {
 						halt();
 
 						// Uses the current restaurant object

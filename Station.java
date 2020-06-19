@@ -17,6 +17,8 @@ public class Station extends Boundary {
 
 	private boolean deactivated;
 
+	private boolean canTrain;
+
 	/**
 	  * Constructs a station
 	  * @param name 	the name of the station
@@ -25,10 +27,12 @@ public class Station extends Boundary {
 	  * @param w 		width of the station
 	  * @param h 		height of the station 
 	  * @param dir 		the direction that a character must face in order to enter the station
+	  * @param canTrain	whether the station has training information
 	  */
-	public Station(String name, int x, int y, int w, int h, char dir) {
+	public Station(String name, int x, int y, int w, int h, char dir, boolean canTrain) {
 		super(x,y,w,h,dir);
 		this.name = name.trim();
+		this.canTrain = canTrain;
 
 		deactivated = false;
 		if(name.contains("Don't"))
@@ -64,5 +68,9 @@ public class Station extends Boundary {
 
 	public void resetDialogue() {
 		entryCard = new Dialogue(name,"Enter", false);
+	}
+
+	public boolean canTrain() {
+		return canTrain;
 	}
 }
