@@ -30,6 +30,22 @@ public class Instructions extends Menu {
 	private Button back;
 
 	/**
+	  * No. of lines that can be displayed at once on the Register_Screen
+	  */
+	private static final int MAX_LINES = 7;
+
+	private java.util.List<String[]> slides;
+
+	private int pageNo;
+
+	private KeyBindings arrowKeys;
+	
+	/**
+	  * Width of the information box
+	  */
+	private static final int nodeWidth =  Utility.FRAME_WIDTH-270;
+
+	/**
 	  * Initializes and displays the drawing to the frame
 	  */
 	public Instructions() {
@@ -45,8 +61,11 @@ public class Instructions extends Menu {
 			br.close();
 		} catch (Exception e) {System.out.println(e);}
 
+		slides = loadSlides();
+		pageNo = 0;
 
 		back = new ReturnButton(100,Utility.FRAME_HEIGHT-100);
+		arrowKeys = new KeyBindings();
 
 		drawing = new InstructionsDrawing();
 		Utility.changeDrawing(drawing);
@@ -55,11 +74,61 @@ public class Instructions extends Menu {
 	}
 
 	/**
+	  * Activates listeners
+	  */
+	public void activate() {
+		back.activate();
+		arrowKeys.activate();
+	}
+
+	/**
 	  * Removes the drawing
 	  */ 
 	public void halt() {
 		CovidCashier.frame.remove(drawing);
 		back.deactivate();
+		arrowKeys.deactivate();
+	}
+
+	/**
+	  * Generates a List where each element is the lines to be displayed on the instructions screen at once
+	  * @return a List with the instructions split up per screen 
+	  */
+	private java.util.List<String[]> loadSlides() {
+		java.util.List<String[]> slides = new ArrayList<String[]>();
+		String [] lines = new String[MAX_LINES];
+
+		String line = "";
+		int row=0;
+		String [] words = info.split(" ");
+		for (String word : words) {
+			if (Utility.getStringWidth(line,Utility.TEXT_FONT) > nodeWidth) {
+				lines[row++] = line;
+				line = "";
+				if (row == MAX_LINES) {
+					row = 0;
+					slides.add(lines);
+					lines = new String[MAX_LINES];
+				}
+			} 
+			line += word+" ";
+
+			if (word.indexOf("\n") == word.length()-1) {
+				lines[row++] = line;
+				line = "";
+				if (row == MAX_LINES) {
+					row = 0;
+					slides.add(lines);
+					lines = new String[MAX_LINES];
+				}
+			}
+		}
+		if (row != 0 || !line.trim().equals("")) {
+			lines[row] = line;
+			slides.add(lines);
+		}
+
+		return slides;
 	}
 
 	/**
@@ -76,13 +145,7 @@ public class Instructions extends Menu {
 		  */
 		protected int leftAlign = 90;
 
-		/**
-		  * Width of the information box
-		  */
-		private int nodeWidth;
-
-
-		// private boolean firstTime;
+		// private boolean firstTime;c
 
 		/**
 		  * Object constructor. Uses the superclass's constructor
@@ -90,8 +153,7 @@ public class Instructions extends Menu {
 		public InstructionsDrawing() {
 			super();
 
-			nodeWidth =  Utility.FRAME_WIDTH-270;
-			back.activate();
+			activate();
 			// firstTime = true;
 		}
 
@@ -115,6 +177,12 @@ public class Instructions extends Menu {
 			g.setFont(Utility.TEXT_FONT);
 			drawInfo(g);
 
+			String note = "Use your arrow keys to flip between the";
+			g.setFont(Utility.TEXT_FONT_SMALL);
+			g.drawString(note, Utility.FRAME_WIDTH-50-Utility.getStringWidth(note, g), 435);
+			note = "pages of the instructions";
+			g.drawString(note, Utility.FRAME_WIDTH-50-Utility.getStringWidth(note, g), 455);
+
 			back.draw(g);
 			if (back.isClicked()) {
 				halt();
@@ -123,31 +191,21 @@ public class Instructions extends Menu {
 			}
 		}
 
-
 		/**
 		  * Draws the instructions onto the screen
 		  * @param g 	the Graphics object to draw on
 		  */
 		private void drawInfo(Graphics g) {
-			String line = "";
-			int row=1;
-			String [] words = info.split(" ");
-			for (String word : words) {
-				if (Utility.getStringWidth(line,g) > nodeWidth) {
-					g.drawString(line,leftAlign,titleY+(int)(row*1.5*Utility.TEXT_FONT.getSize()));
-					line = "";
-					row++;
-				} 
-				line += word+" ";
+			String [] lines = slides.get(pageNo);
 
-				if (word.indexOf("\n") == word.length()-1) {
-					g.drawString(line.trim(),leftAlign,titleY+(int)(row*1.5*Utility.TEXT_FONT.getSize()));
-					line = "";
-					row++; 
-				}
+			int row = 1;
+			for (String line : lines) {
+				if (line == null) return;
+				g.drawString(line,leftAlign,titleY+20+(int)(row*1.5*Utility.TEXT_FONT.getSize()));
+				row++;
 			}
-			g.drawString(line,leftAlign,titleY+(int)(row*1.5*Utility.TEXT_FONT.getSize()));
 		}
+
 
 		/**
 		  * Returns the y-coordinate of the title
@@ -156,6 +214,35 @@ public class Instructions extends Menu {
 		@Override
 		public int getTitleY() {
 			return titleY;
+		}
+	}
+
+	private class KeyBindings extends ScreenMovement {
+		public KeyBindings() {
+			super("instructions");
+		}
+
+		@Override
+		protected void loadKeyBindings() {
+			String [] keys = {"left", "right"};
+			int [] strokes = {KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT};
+
+			for (int i=0; i<keys.length; i++) {
+				final int index = i;
+				movementMap.put(keys[index], new Movement(keys[index], KeyStroke.getKeyStroke(strokes[index], 0), new AbstractAction() {
+					public void actionPerformed(ActionEvent e) {
+						if (keys[index].equalsIgnoreCase("right")) {
+							pageNo++;
+							if (pageNo >= slides.size()) pageNo = 0;
+						} else {
+							pageNo--;
+							if (pageNo < 0) pageNo = slides.size()-1;
+						}
+						CovidCashier.frame.repaint();
+					}
+				}));
+			}
+
 		}
 	}
 }
