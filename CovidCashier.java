@@ -47,15 +47,17 @@ public final class CovidCashier  {
 		initializeFrame();
 
 		// new SplashScreen();
-		new PlayerSelect();
-		//new CashRun('M', "MG");
+		//new PlayerSelect();
+		// new CashRun('M', "MG");
 		//new FridgeTiles('M', "MG");
 		//new Disinfection();
-		//new MemoryGame();
+		// new MemoryGame();
+		// new MainMenu();
 
 		// User.gender = 'M';
 		// User.name="edas";
 		// setPastRestaurant(new Restaurant(true));
+		new LiveEnd(new HashMap<String, Integer>());
 
 		frame.setVisible(true);
 	}

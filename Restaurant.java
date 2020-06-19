@@ -1,6 +1,6 @@
 /**
   * The Restaurant workplace. This is where both the training level and the live level take place
-  * 
+  *
   * Last edit: 6/18/2020
   * @author 	Celeste
   * @version 	1.1
@@ -23,7 +23,7 @@ public class Restaurant {
 	  * The map height
 	  */
 	public final static int MAP_HEIGHT = 1040;
-	
+
 	/**
 	  * Whether the user has selected the training level
 	  */
@@ -58,7 +58,7 @@ public class Restaurant {
 	  * Introductory dialogue to appear on the training level
 	  */
 	private Dialogue intro;
-	
+
 	private TaskList stationList;
 
 	private static final Image LONG_COUNTER;
@@ -117,7 +117,7 @@ public class Restaurant {
 					stations.add(new Station(stnName, Integer.parseInt(tokens[0]),Integer.parseInt(tokens[1]),Integer.parseInt(tokens[2]),Integer.parseInt(tokens[3]),tokens[4].charAt(0)));
 				}
 			}
-		} 
+		}
 		catch (IOException e) {}
 		catch (NumberFormatException e) {}
 	}
@@ -134,7 +134,7 @@ public class Restaurant {
 				if (nxt.startsWith("#") || tokens.length != 5) continue;
 				boundaries.add(new Boundary(Integer.parseInt(tokens[0]),Integer.parseInt(tokens[1]),Integer.parseInt(tokens[2]),Integer.parseInt(tokens[3]),tokens[4].charAt(0)));
 			}
-		} 
+		}
 		catch (IOException e) {}
 		catch (NumberFormatException e) {}
 	}
@@ -161,7 +161,7 @@ public class Restaurant {
 	/**
 	  * Gets the y coordinate relative to the frame as opposed to the map image
 	  * @param y the coordinate to use
-	  * @return the y coordinate relative to the frame 
+	  * @return the y coordinate relative to the frame
 	  */
 	public static int getYRelativeToFrame(int y) {
 		return y + topY;
@@ -202,7 +202,7 @@ public class Restaurant {
 			super();
 
 			// change to coworker if available
-			if (inTraining) 
+			if (inTraining)
 				intro = new Dialogue(TrainingLevel.getInfo("intro"), "PlayerM");
 
 			stationList = inTraining ? new Checklist(trainingStationNames.toArray(new String[trainingStationNames.size()])) : new OrderList();
@@ -216,7 +216,7 @@ public class Restaurant {
 		  */
 		@Override
 		public void paintComponent(Graphics g) {
-			super.paintComponent(g);			
+			super.paintComponent(g);
 
 			// background
 			g.drawImage(MAP,0,topY,null);
@@ -240,7 +240,7 @@ public class Restaurant {
 			}
 			g.drawImage(FRONT_COUNTER,0,getYRelativeToFrame(frontCounterY),null);
 
-			if (!userDrawn) 
+			if (!userDrawn)
 				user.draw(g, true);
 
 
@@ -308,7 +308,7 @@ public class Restaurant {
 								// case "fridge":
 								// 	new TrainingLevel("Fridge");
 								// 	return;
-								// case "front counter": 
+								// case "front counter":
 								// 	new TrainingLevel("Front Counter");
 								// 	return;
 								// case "pick up counter":
@@ -325,7 +325,7 @@ public class Restaurant {
 								case "covid counter":
 									new CovidCounter(inTraining);
 									return;
-								case "front counter": 
+								case "front counter":
 									return;
 								case "pick up counter":
 									return ;
