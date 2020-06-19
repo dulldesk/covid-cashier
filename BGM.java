@@ -9,7 +9,7 @@ public class BGM {
     public BGM(String name) {
         this.name = name;
         try {
-            audioInputStream = AudioSystem.getAudioInputStream(this.getClass().getResource("/src/bgm/"+name+".wav"));
+            audioInputStream = AudioSystem.getAudioInputStream(this.getClass().getResource(Utility.RES_NAME + "/bgm/"+name+".wav"));
             clip = AudioSystem.getClip();
             clip.open(audioInputStream);
             clip.loop(Clip.LOOP_CONTINUOUSLY);
@@ -25,7 +25,7 @@ public class BGM {
     public void resume() {
         clip.close();
         try {
-            audioInputStream = AudioSystem.getAudioInputStream(this.getClass().getResource("/src/bgm/"+name+".wav"));
+            audioInputStream = AudioSystem.getAudioInputStream(this.getClass().getResource(Utility.RES_NAME + "/bgm/"+name+".wav"));
             clip.open(audioInputStream); 
             clip.loop(Clip.LOOP_CONTINUOUSLY);
         } catch(Exception e) {System.out.println("Resume");}
