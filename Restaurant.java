@@ -284,7 +284,7 @@ public class Restaurant {
 
 						String currStn = stn.getName().toLowerCase();
 
-						if (stn.getName().equals("exit")) {
+						if (currStn.equals("exit")) {
 							new MainMenu();
 							return;
 						}
