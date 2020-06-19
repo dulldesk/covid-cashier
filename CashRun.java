@@ -179,12 +179,15 @@ public class CashRun extends Minigame {
                 player.draw(g);
                 if(spacing < rand && start) {
                     infoCard.draw(g);
+                    player.cashRunMovement.deactivate();
                 } else {
                     start = false;
+                    player.cashRunMovement.activate();
                 }
                 if(obstacles.size() == 0 && obstacleCount == 25 || health == 0) {
                     end = true;
                     hit = 0;
+                    player.cashRunMovement.deactivate();
                     player.stepNo = 0;
                     if(health > 0)
                         infoCard = new Dialogue("Congratulations on completing Cash Run! You finished with "+health+"% of your health, and a score of "+score+". Now get back to work!", "Coworker_MG");
