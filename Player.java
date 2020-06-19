@@ -177,7 +177,7 @@ public class Player extends Character {
 
 	/** 
 	  * Checks the user's hygiene and updates the tracker. 
-	  * This method is intended to be called in between stations.
+	  * <p> This method is intended to be called in between stations.
 	  * @param nextStn 	the next station that the user is about to go to
 	  */
 	public void checkHygiene(String nextStn) {
@@ -195,6 +195,10 @@ public class Player extends Character {
 		hygienicTracker.setLastTask(nextStn);
 	}
 
+	/** 
+	  * Updates the list of improper preventative measures taken
+	  * @param failure the failure to be updated
+	  */
 	public void addFailure(String failure) {
 		failures.put(failure, failures.getOrDefault(failure, 0) + 1);
 	}
@@ -223,6 +227,9 @@ public class Player extends Character {
 		  */
 		private String lastTask;
 
+		/** 
+		  * Default constructor
+		  */
 		public HygieneTracker() {
 			lastChangeTime = new HashMap<String, Long>();
 			lastChangeTask = new HashMap<String, String>();
@@ -231,6 +238,7 @@ public class Player extends Character {
 
 		/** 
 		  * Set the last change time of a given key to be the current moment
+		  * @param key the key to be updated
 		  */
 		public void update(String key) {
 			System.out.println("update "+key);
@@ -269,11 +277,15 @@ public class Player extends Character {
 		}
 	}
 
+	/** 
+	  * Manages key bindings for the fridge tiles minigame
+	  */
 	public class FridgeTilesBindings extends ScreenMovement {
 		public FridgeTilesBindings() {
 			super("fridge");
 		}
 		
+		@Override
 		protected void loadKeyBindings() {
 			movementMap.put("left", new Movement("left", KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0), new AbstractAction() {
 				public void actionPerformed(ActionEvent e) {
@@ -292,11 +304,15 @@ public class Player extends Character {
 		}
 	}
 
+	/** 
+	  * Manages key bindings for the cash run minigame
+	  */
 	public class CashRunBindings extends ScreenMovement {
 		public CashRunBindings() {
 			super("cash");
 		}
 
+		@Override
 		protected void loadKeyBindings() {
 			movementMap.put("jump", new Movement("jump", KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0), new AbstractAction() {
 				public void actionPerformed(ActionEvent e) {
@@ -307,11 +323,15 @@ public class Player extends Character {
 		}
 	}
 
+	/** 
+	  * Manages key bindings for the restaurant
+	  */
 	public class RestaurantBindings extends ScreenMovement {
 		public RestaurantBindings() {
 			super("rest");
 		}
 
+		@Override
 		protected void loadKeyBindings() {
 			final int DELTA_DIST = 10;
 
