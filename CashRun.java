@@ -45,6 +45,7 @@ public class CashRun extends Minigame {
         infoCard = new Dialogue("Cash Run! Germs can survive on paper money for a long time. Jump over all the paper bills with the space bar and collect credit cards by running through them. Good luck!", "Coworker_MG");
         drawing = new CashRunDrawing();
         Utility.changeDrawing(drawing);
+        BGM.play("cashrun");
     }
 
     public CashRun(Character user) {
@@ -193,6 +194,7 @@ public class CashRun extends Minigame {
                     end = true;
                     hit = 0;
                     player.cashRunMovement.deactivate();
+                    //BGM.fadeOut();
                     player.stepNo = 0;
                     if(health > 0)
                         infoCard = new Dialogue("Congratulations on completing Cash Run! You finished with "+health+"% of your health, and a score of "+score+". Now get back to work!", "Coworker_MG");
@@ -209,6 +211,8 @@ public class CashRun extends Minigame {
                 if(hit > 0) {
                     g.setColor(new Color(214, 0, 0, 50));
                     g.fillRect(0, 0, Utility.FRAME_WIDTH, Utility.FRAME_HEIGHT);
+                    if(hit == 1)
+                        SoundFX.play("hit", 250);
                 }
             } else {
                 player.draw(g);

@@ -88,10 +88,10 @@ public class Restaurant {
 
 		// initial position
 		user = new Player(User.name, User.gender);
-		user.setCoordinates(5,375);
+		user.setCoordinates(100,800);
 		System.out.println(user);
 
-		topY = user.getY() - Utility.FRAME_HEIGHT - user.height/2;
+		topY = -user.getY() + Utility.FRAME_HEIGHT/2 - user.height/2;
 
 		workplace = new RestaurantDrawing();
 		Utility.changeDrawing(workplace);
@@ -268,16 +268,16 @@ public class Restaurant {
 			} else {
 				for (Station stn : stations) {
 					if (stn.getName().equals("exit")) {
-						if (!inTraining) {
+						// if (!inTraining) {
 							// for now
-							new MainMenu();
-							return;
+							// new MainMenu();
+							// return;
 
 							// todo : implement order completion checking
 							// continue;
-						} else {
+						// } else {
 
-						}
+						// }
 					}
 
 					stn.draw(g);
@@ -290,6 +290,10 @@ public class Restaurant {
 
 						String currStn = stn.getName().toLowerCase();
 
+						if (currStn.equals("exit")) {
+							new MainMenu();
+							return;
+						}
 						if (inTraining) {
 							if (!currStn.equals("exit")) user.checkHygiene(currStn);
 							switch (currStn) {
