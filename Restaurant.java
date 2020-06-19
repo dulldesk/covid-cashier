@@ -96,6 +96,10 @@ public class Restaurant {
 		TrainingLevel.loadInfoMap();
 	}
 
+	/**
+	  * Constructor
+	  * @param training whether the Restaurant is a part of a training level
+	  */
 	public Restaurant(boolean training) {
 		inTraining = training;
 
@@ -241,6 +245,10 @@ public class Restaurant {
 			activate();
 		}
 
+		/**
+		  * Draw counters and the user, layered properly (i.e. the user is not on top of a counter)
+		  * @param g 	the Graphics object to draw on
+		  */
 		private void drawInLayeringOrder(Graphics g) {
 			final int longCounterY = 335;
 			final int frontCounterY = 542;
