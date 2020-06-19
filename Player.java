@@ -55,6 +55,12 @@ public class Player extends Character {
 	  */
 	public java.util.List<String> failures;
 
+
+	/**
+	  * The y-coordinate that divides the kitchen floor and the public space floor
+	  */
+	private static int KITCHEN_LINE = 595;
+
 	/**
 	  * Constructs a Character object and loads the appropriate sprites into the steps map
 	  * @param name 	the Character's name, as chosen by the user
@@ -130,6 +136,16 @@ public class Player extends Character {
 	  */
 	public void cleanHands() {
 		hygienicTracker.update("clean hands");
+	}
+
+	/**
+	  * Set player coordinates and change outfit as necessary
+	  * @param x 	the x coordinate
+	  * @param y 	the y coordinate
+	  */
+	public void setCoordinates(int x, int y) {
+		super.setCoordinates(x, y);
+		setClothing(y > KITCHEN_LINE ? 'C' : 'W');
 	}
 
 	/**
@@ -334,7 +350,7 @@ public class Player extends Character {
 							}
 
 							if (index < 2) {
-								setClothing(y_coord > 595 ? 'C' : 'W');
+								setClothing(y_coord > KITCHEN_LINE ? 'C' : 'W');
 
 								int changeY = Restaurant.topY - DELTA_DIST* (dirs[index] == 'N' ? -1 : 1);
 								
