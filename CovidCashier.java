@@ -47,15 +47,20 @@ public final class CovidCashier  {
 		initializeFrame();
 
 		// new SplashScreen();
-		new PlayerSelect();
-		//new CashRun('M', "MG");
+		//new PlayerSelect();
+		// new CashRun('M', "MG");
 		//new FridgeTiles('M', "MG");
 		//new Disinfection();
-		//new MemoryGame();
+		// new MemoryGame();
+		// new MainMenu();
 
-		// User.gender = 'M';
-		// User.name="edas";
 		// setPastRestaurant(new Restaurant(true));
+
+		// java.util.Map<String, Integer> a = new java.util.HashMap<String, Integer>();
+		// a.put("You did not wear a mask prior to a task",10);
+		// a.put("You did not change your gloves in between tasks",1);
+		// a.put("You did not clean your hands before changing gloves",5);
+		// new LiveEnd(a);
 
 		frame.setVisible(true);
 	}
