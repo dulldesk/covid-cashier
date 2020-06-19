@@ -11,6 +11,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.util.*;
 import javax.imageio.*;
 
 public final class Utility {
@@ -65,6 +66,11 @@ public final class Utility {
 	public static final String RES_NAME = "/src";
 
 	/**
+	  * Caches loaded images
+	  */
+	public static final Map<String, Image> imageLibrary = new HashMap<String, Image>();
+
+	/**
 	  * Loads a final static Font object
 	  * @param name 	the name of the file, including the extension
 	  * @param size 	the desired font size
@@ -85,8 +91,13 @@ public final class Utility {
 	  * @return an Image object of the given specifications, or null if an IOException was thrown
 	  */
 	public static final Image loadImage(String name, int width, int height) {
+		String key = name+"-"+width+"-"+height;
+		if (imageLibrary.containsKey(key)) return imageLibrary.get(key);
+
 		try {
-			return ImageIO.read(Utility.class.getResourceAsStream(RES_NAME+"/img/"+name)).getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH);
+			Image ret = ImageIO.read(Utility.class.getResourceAsStream(RES_NAME+"/img/"+name)).getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH);
+			imageLibrary.put(key, ret);
+			return ret;
 		} catch (Exception e) {}
 		return null;
 	}
