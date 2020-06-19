@@ -110,6 +110,11 @@ public class Restaurant {
 	  */
 	private javax.swing.Timer timer;
 
+	/**
+	  * The y-coordinate that divides the kitchen floor and the public space floor
+	  */
+	public static int KITCHEN_LINE = 595;
+
 	static {
 		stations = new ArrayList<Station>();
 		boundaries = new ArrayList<Boundary>();
@@ -134,7 +139,7 @@ public class Restaurant {
 
 		// initial position
 		user = new Player(User.name, User.gender);
-		user.setCoordinates(100,700);
+		user.setCoordinates(100,800);
 		coworker = new Coworker("Kym");
 		coworker.setCoordinates(600, 250);
 		int randCustomer = (int)(Math.random()*2);
@@ -142,7 +147,8 @@ public class Restaurant {
 		customer.setCoordinates(-50,590);
 
 		topY = -user.getY() + Utility.FRAME_HEIGHT/2 - user.height/2;
-
+		adjustTopY();
+		
 		openedStations = new HashMap<String, Boolean>();
 		openedStations.put("COVID Counter", true);
 		openedStations.put("Front Counter", true);
@@ -162,6 +168,14 @@ public class Restaurant {
 		Utility.changeDrawing(workplace);
 		bgm = new BGM("restaurant");
 		bgm.play();
+	}
+
+	private void adjustTopY() {
+		if (user.getY() > KITCHEN_LINE) {
+			topY = Math.max(topY, -Restaurant.MAP_HEIGHT + Utility.FRAME_HEIGHT + user.height/2);
+		} else {
+			topY = Math.min(topY, 0);
+		}
 	}
 
 	/**

@@ -34,10 +34,19 @@ public class Instructions extends Menu {
 	  */
 	private static final int MAX_LINES = 7;
 
+	/**
+	  * Pages of the instructions
+	  */
 	private java.util.List<String[]> slides;
 
+	/**
+	  * Current instruction page being displayed
+	  */
 	private int pageNo;
 
+	/**
+	  * Arrow key bindings
+	  */
 	private KeyBindings arrowKeys;
 	
 	/**
@@ -145,8 +154,6 @@ public class Instructions extends Menu {
 		  */
 		protected int leftAlign = 90;
 
-		// private boolean firstTime;c
-
 		/**
 		  * Object constructor. Uses the superclass's constructor
 		  */
@@ -154,7 +161,6 @@ public class Instructions extends Menu {
 			super();
 
 			activate();
-			// firstTime = true;
 		}
 
 		/**
@@ -163,11 +169,6 @@ public class Instructions extends Menu {
 		  */
 		@Override
 		public void display(Graphics g) {
-			// if (firstTime) {
-			// 	// transition
-			// 	firstTime = false;
-			// }
-
 			g.drawImage(Utility.loadImage("Register_Screen.png",Utility.FRAME_WIDTH,Utility.FRAME_HEIGHT),0,0,null);
 
 			g.setColor(Color.black);
@@ -217,6 +218,9 @@ public class Instructions extends Menu {
 		}
 	}
 
+	/**
+	  * Manages arrow key bindings
+	  */
 	private class KeyBindings extends ScreenMovement {
 		public KeyBindings() {
 			super("instructions");

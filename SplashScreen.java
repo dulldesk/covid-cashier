@@ -83,20 +83,21 @@ public class SplashScreen {
 			logoAlpha += 0.1 * (alphaIncrease ? 1 : -1);
 
 			if (logoAlpha > 1) {
-				loadForCache();
+				preloadImages();
 				alphaIncrease = false;
 			}
 			refreshScreen();
 		}
 
 		/**
-		  * Load images to cache them
+		  * Preload images to prevent future lag
 		  */
-		private void loadForCache() {
+		private void preloadImages() {
 			Utility.loadImage("Restaurant.png", Utility.FRAME_WIDTH, Restaurant.MAP_HEIGHT);
 			Utility.loadImage("Dialogue_Box.png", Utility.FRAME_WIDTH, Utility.FRAME_HEIGHT);
 			Utility.loadImage("Dialogue_Box.png", Dialogue.BOX_WIDTH, Dialogue.BOX_HEIGHT);
 			Utility.loadImage("Menu_BG.png", Utility.FRAME_WIDTH, Utility.FRAME_HEIGHT);
+			Utility.loadImage("Cash_Register.png", Utility.FRAME_WIDTH, Utility.FRAME_HEIGHT);
 			Utility.loadImage("Cash_Register.png", Utility.FRAME_WIDTH, Utility.FRAME_HEIGHT);
 
 			Player.maleSteps = Player.loadSprites('M');
