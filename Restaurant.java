@@ -176,7 +176,8 @@ public class Restaurant {
 	  * @param stationName the station that has been completed
 	  */
 	public void completeStation(String stationName) {
-		((Checklist)(stationList)).completeTask(stationName);
+		if (inTraining) ((Checklist)stationList).completeTask(stationName);
+		else ((OrderList)stationList).completeTask(((OrderList)stationList).pageNo, stationName);
 		completedStations++;
 	}
 
@@ -268,6 +269,8 @@ public class Restaurant {
 
 							// todo : implement order completion checking
 							// continue;
+						} else {
+
 						}
 					}
 
@@ -279,12 +282,12 @@ public class Restaurant {
 						CovidCashier.setPastRestaurant(Restaurant.this);
 						stn.resetDialogue();
 
+						String currStn = stn.getName().toLowerCase();
+
 						if (inTraining) {
-							switch (stn.getName().toLowerCase()) {
+							if (!currStn.equals("exit")) user.checkHygiene(currStn);
+							switch (currStn) {
 								case "drop off counter":
-									return;
-								case "exit":
-									new MainMenu();
 									return;
 								case "covid counter":
 									new CovidCounter(inTraining);
@@ -303,8 +306,7 @@ public class Restaurant {
 								//	return;
 							}
 						} else {
-							String currStn = stn.getName().toLowerCase();
-							if (!currStn.equals("covid counter") && !currStn.equals("exit")) user.checkHygiene(currStn);
+							if (!currStn.equals("exit")) user.checkHygiene(currStn);
 
 							switch (currStn) {
 								case "fridge":

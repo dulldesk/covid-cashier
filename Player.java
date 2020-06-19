@@ -1,7 +1,7 @@
 /**
   * A player character
   * 
-  * Last edit: 6/17/2020
+  * Last edit: 6/18/2020
   * @author 	Celeste, Eric
   * @version 	1.1
   * @since 		1.0
@@ -48,7 +48,7 @@ public class Player extends Character {
 	/**
 	  * Keeps track of the player's hygiene throughout the game
 	  */
-	private HygieneTracker hygienicTracker;
+	public HygieneTracker hygienicTracker;
 
 	/**
 	  * Keeps track of the player's "failures" to prevent infection from the virus
@@ -166,14 +166,16 @@ public class Player extends Character {
 	  * @param nextStn 	the next station that the user is about to go to
 	  */
 	public void checkHygiene(String nextStn) {
-		if (hygienicTracker.getLastTask("masks").equals("")) {
-			failures.add("You did not wear a mask prior to a task");
-		}
+		if (!nextStn.equals("covid counter")) {
+			if (hygienicTracker.getLastTask("masks").equals("")) {
+				failures.add("You did not wear a mask prior to a task");
+			}
 
-		if (!hygienicTracker.getLastTask().equals(nextStn) && !hygienicTracker.getLastTask("gloves").equals(hygienicTracker.getLastTask())) {
-			failures.add("You did not change your gloves prior to a task");
+			if (!hygienicTracker.getLastTask().equals(nextStn) && !hygienicTracker.getLastTask("gloves").equals(hygienicTracker.getLastTask()) && !hygienicTracker.getLastTask("gloves").equals("covid counter")) {
+				failures.add("You did not change your gloves in between tasks");
+			}
+			System.out.println("failures "+ failures.size());
 		}
-		// System.out.println("failures "+ failures.size());
 
 		hygienicTracker.setLastTask(nextStn);
 	}
@@ -214,8 +216,8 @@ public class Player extends Character {
 		public void update(String key) {
 			System.out.println("update "+key);
 
-			if (key.equals("clean hands")) {
-				if (!getLastTask("gloves").equals(lastTask)) {
+			if (key.equals("gloves")) {
+				if (!getLastTask("clean hands").equals(lastTask)) {
 					failures.add("You must sanitize your hands in between glove changing (before grabbing a new pair of gloves)");
 					System.out.println("failures "+ failures.size());
 				}
