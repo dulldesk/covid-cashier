@@ -30,6 +30,15 @@ public class Customer extends Character {
       */
 	private boolean isPresent;
 
+    /**
+      * Current action in the Restaurant
+      */
+	private String currentAction;
+
+	private int xTarget;
+
+	public boolean hasAppeared;
+
 	static {
 		maleSteps = new HashMap<String, Image>();
 		femaleSteps = new HashMap<String, Image>();
@@ -43,6 +52,8 @@ public class Customer extends Character {
 	public Customer(String name, char gender, String equipment) {
 		super(name,"customer",gender,'C',equipment);
 		isPresent = false;
+		hasAppeared = false;
+		currentAction =  "off screen";
     }
 
     /**
@@ -95,5 +106,21 @@ public class Customer extends Character {
 
 	public void setPresence(boolean present) {
 		isPresent = present;
+	}
+
+	public String getCurrentAction() {
+		return currentAction;
+	}
+
+	public void setCurrentAction(String action) {
+		currentAction = action;
+	}
+
+	public int getXTarget() {
+		return xTarget;
+	}
+
+	public void setXTarget(int x) {
+		xTarget = x;
 	}
 }

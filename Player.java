@@ -365,8 +365,6 @@ public class Player extends Character {
 
 		@Override
 		protected void loadKeyBindings() {
-			final int DELTA_DIST = 10;
-
 			final String [] keys = {"up", "down", "left", "right"};
 			final char [] dirs = "NSWE".toCharArray();
 			final int [] strokes = {KeyEvent.VK_UP, KeyEvent.VK_DOWN, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT};

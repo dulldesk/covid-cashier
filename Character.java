@@ -83,6 +83,11 @@ public abstract class Character {
 	protected static final int TOTAL_STEPS = 4;
 
 	/**
+	  * The number of units moved per step
+	  */
+	protected static final int DELTA_DIST = 10;
+
+	/**
 	  * Holds the last time that the character's drawing was repainted. "Slows down" the movement of the character. 
 	  * <p> For more information, see the declaration of LastTrigger
 	  */
@@ -178,6 +183,38 @@ public abstract class Character {
 
 	public String getPPE() {
 		return protectiveEquipment;
+	}
+
+	public void moveLeft() {
+		if (lastMvTime.compareNow('W')) {
+			direction = 'W';
+			x_coord -= DELTA_DIST;
+			stepNo++;
+		}
+	}
+
+	public void moveRight() {
+		if (lastMvTime.compareNow('E')) {
+			direction = 'E';
+			x_coord += DELTA_DIST;
+			stepNo++;
+		}
+	}
+
+	public void moveUp() {
+		if (lastMvTime.compareNow('N')) {
+			direction = 'N';
+			y_coord -= DELTA_DIST;
+			stepNo++;
+		}
+	}
+
+	public void moveDown() {
+		if (lastMvTime.compareNow('S')) {
+			direction = 'S';
+			y_coord += DELTA_DIST;
+			stepNo++;
+		}
 	}
 
 	/**

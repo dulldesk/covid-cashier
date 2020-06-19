@@ -47,7 +47,7 @@ public class Restaurant {
 	/**
 	  * The customer
 	  */
-	private Customer customer;
+	private Character customer;
 
 	/**
 	  * Number of completed stations
@@ -105,6 +105,11 @@ public class Restaurant {
 	  */
 	private boolean initialLiveTask;
 
+	/**
+	  * Timer to control screen refresh
+	  */
+	private javax.swing.Timer timer;
+
 	static {
 		stations = new ArrayList<Station>();
 		boundaries = new ArrayList<Boundary>();
@@ -129,11 +134,12 @@ public class Restaurant {
 
 		// initial position
 		user = new Player(User.name, User.gender);
-		user.setCoordinates(100,800);
+		user.setCoordinates(100,700);
 		coworker = new Coworker("Kym");
 		coworker.setCoordinates(600, 250);
 		int randCustomer = (int)(Math.random()*2);
 		customer = new Customer((randCustomer==0?"Will":"Lauren"), (randCustomer==0?'M':'F'), (randCustomer==0?"N":"M"));
+		customer.setCoordinates(-50,590);
 
 		topY = -user.getY() + Utility.FRAME_HEIGHT/2 - user.height/2;
 
@@ -316,6 +322,57 @@ public class Restaurant {
 				user.draw(g, true);
 		}
 
+		private void drawCustomer(Graphics g) {
+			Customer castedCustomer = ((Customer)customer);
+			if (!castedCustomer.hasAppeared && castedCustomer.isPresent() && castedCustomer.getCurrentAction().equals("off screen")) {
+				castedCustomer.setXTarget(400);
+				castedCustomer.setCurrentAction("walk right");
+			} else if (castedCustomer.getCurrentAction().equals("walk right")) {
+				if (customer.getX() < castedCustomer.getXTarget()) customer.moveRight();
+				else {
+					castedCustomer.setCurrentAction("standing");
+					castedCustomer.setDirection('N');
+					takeOrder();
+				}
+			} else if (castedCustomer.getCurrentAction().equals("walk left")) {
+				if (customer.getX() > castedCustomer.getXTarget()) customer.moveLeft();
+				else {
+					castedCustomer.setCurrentAction("off screen");
+					castedCustomer.setPresence(false);
+					castedCustomer.hasAppeared = true;
+				}
+			} else if (castedCustomer.getCurrentAction().equals("order") && intro.canProceed()) {
+				addGenericOrder();
+				castedCustomer.setXTarget(-50);
+				castedCustomer.setCurrentAction("walk left");
+			} else if (castedCustomer.getCurrentAction().equals("order") || castedCustomer.getCurrentAction().equals("standing")) { // cannot procesd
+				; 
+				// left here for clarity
+			} else {
+				// prevent unnecessary repaint
+				return;
+			}
+
+			customer.draw(g, true);
+
+			refreshScreen();
+		}
+
+		private void takeOrder() {
+			javax.swing.Timer timer = new javax.swing.Timer(1000, new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					String customerDialogue = "hello world. here is my order. ";
+					intro = new Dialogue(customerDialogue, customer.getType());
+					((Customer)customer).setCurrentAction("order");
+					openedStations.put("Front Counter", true);
+					refreshScreen();
+				}
+			});
+			timer.setRepeats(false);
+			timer.start();			
+		}
+
 		/**
 		  * Paint method of JComponent
 		  * @param g 	the Graphics object to draw on
@@ -342,10 +399,11 @@ public class Restaurant {
 				repaint();
 			}
 
-			if (!customer.isPresent() && !initialLiveTask) {
-				customer.setPresence(true);
-				addGenericOrder();
+			if (!((Customer)customer).isPresent() && !initialLiveTask) {
+				((Customer)customer).setPresence(true);
 			}
+
+			drawCustomer(g);
 
 			// check whether the live level has been completed
 			if (!inTraining && listIsCompleted()) {
@@ -410,6 +468,9 @@ public class Restaurant {
 							if (!initialLiveTask && !currStn.equals("covid counter")) {
 								completeStation(stn.getName());
 								openedStations.put(stn.getName(), false);
+							} 
+							if (initialLiveTask) {
+								openedStations.put(stn.getName(), false);
 							}
 
 							switch (currStn) {
@@ -431,17 +492,26 @@ public class Restaurant {
 									new Disinfection();
 									break;
 							}
-							/*
-								where:
-								------
-								new CashRun(user);
-							*/
 						}
 					}
 				}
 			}
 
 			stationList.draw(g);
+		}
+
+		/**
+		  * Regularly refreshes the screen to update the receipt
+		  */
+		private void refreshScreen() {
+			timer = new javax.swing.Timer(200, new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					repaint();
+				}
+			});
+			timer.setRepeats(false);
+			timer.start();
 		}
 	}
 }
