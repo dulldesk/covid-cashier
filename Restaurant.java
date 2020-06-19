@@ -296,9 +296,8 @@ public class Restaurant {
 						}
 						if (inTraining) {
 							if (!currStn.equals("exit")) user.checkHygiene(currStn);
+							completeStation(stn.getName());
 							switch (currStn) {
-								case "drop off counter":
-									return;
 								case "covid counter":
 									new CovidCounter(inTraining);
 									return;
