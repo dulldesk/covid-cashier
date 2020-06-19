@@ -192,7 +192,7 @@ public class Dialogue extends GraphicComponent {
 			for (String word : words) {
 				boolean secondCondition = word.indexOf("\n") == word.length()-1;
 
-				if (Utility.getStringWidth(line,text_font) >= width-PADDING*2-(face != null ? FACE_SIZE+60 : FACE_SIZE+30) || secondCondition) {
+				if (Utility.getStringWidth(line + word + " ",text_font) >= width-PADDING*2-(face != null ? FACE_SIZE+60 : FACE_SIZE+30) || secondCondition) {
 					if (secondCondition) {
 						line += word+" ";
 					}

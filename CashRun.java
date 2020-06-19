@@ -1,6 +1,6 @@
 /**
   * The Cash Run minigame
-  * 
+  *
   * Last edit: 6/5/2020
   * @author 	Eric
   * @version 	1.1
@@ -19,16 +19,21 @@ public class CashRun extends Minigame {
 	  * Contains the minigame graphics / GUI
 	  */
     private MinigameDrawing drawing;
-    
+
     /**
 	  * Contains the gender of the player.
 	  */
     private char gender;
-    
+
     /**
 	  * Contains the type of protective equipment the player was wearing in the restaurant.
 	  */
     private String equipment;
+
+    /**
+	  * Contains the "health" of the player in the minigame.
+	  */
+    private int health;
 
     /**
 	  * Initializes and displays the drawing to the frame
@@ -36,6 +41,8 @@ public class CashRun extends Minigame {
     public CashRun(char gender, String equipment) {
         this.gender = gender;
         this.equipment = equipment;
+        health = 100;
+        infoCard = new Dialogue("Cash Run! Germs can survive on paper money for a long time. Jump over all the paper bills with the space bar and collect credit cards by running through them. Good luck!", "Coworker_MG");
         drawing = new CashRunDrawing();
         Utility.changeDrawing(drawing);
     }
@@ -77,7 +84,17 @@ public class CashRun extends Minigame {
          * ---
          */
         private boolean refresh;
-        
+
+        /**
+         * ---
+         */
+        private int obstacleCount;
+
+        /**
+         * ---
+         */
+        private int hit;
+
         /**
 		  * Object constructor. Uses the superclass's constructor
 		  */
@@ -91,8 +108,10 @@ public class CashRun extends Minigame {
             player.cashRunMovement.activate();
             obstacles = new ArrayList<Obstacle>();
             spacing = 0;
-            rand = (int)(Math.random()*20);
+            rand = 100;
             refresh = false;
+            obstacleCount = 0;
+            hit = 0;
         }
 
         /**
@@ -101,48 +120,100 @@ public class CashRun extends Minigame {
 		  */
 		@Override
 		public void display(Graphics g) {
+            g.setColor(Color.black);
+            g.fillRect(0, 0, Utility.FRAME_WIDTH, Utility.FRAME_HEIGHT);
+            Graphics2D g2d = (Graphics2D)g;
+            if(hit == 1) {
+                g2d.rotate(0.01, Utility.FRAME_WIDTH/2, Utility.FRAME_HEIGHT/2);
+                hit++;
+            } else if(hit == 2) {
+                g2d.rotate(-0.01, Utility.FRAME_WIDTH/2, Utility.FRAME_HEIGHT/2);
+                hit = 0;
+            }
             g.drawImage(Utility.loadImage("CashRun_BG.png",Utility.FRAME_WIDTH,Utility.FRAME_HEIGHT),0,0,null);
-            if(spacing > 20+rand) {
-                String name = (Math.random()<0.5?"Cash":"Card");
-                obstacles.add(new Obstacle(name, 800, 247, (name.equals("Cash")?288:320), 480));
-                spacing = 0;
-                rand = (int)(Math.random()*20);
-            }
-            spacing++;
-            for(int i = obstacles.size()-1; i >= 0; i--) {
-                Obstacle curr = obstacles.get(i);
-                curr.x_coord -= 15;
-                curr.draw(g);
-                if(isColliding(player, curr)) {
-                    if(curr.name.equals("Cash")) score -= 10;
-                    else score += 10;
+            if(!end) {
+                if(spacing > 20+rand && obstacleCount < 25) {
+                    String name = (Math.random()<0.5?"Cash":"Card");
+                    obstacles.add(new Obstacle(name, 800, 250, (name.equals("Cash")?288:320), 480));
+                    spacing = 0;
+                    rand = (int)(Math.random()*20);
+                    obstacleCount++;
                 }
-                if(curr.x_coord < -50)
-                    obstacles.remove(i);
-            }
-            if(!player.jumped) {
-                // if(!player.activated)
-                player.cashRunMovement.activate();
-                if(refresh)
-                    player.stepNo++;
-            } else {
-                player.cashRunMovement.deactivate();
-                player.stepNo = 1;
-                if(player.speed > -44) {
-                    player.speed-=8;
-                    //System.out.println(player.speed);
+                spacing++;
+                for(int i = obstacles.size()-1; i >= 0; i--) {
+                    Obstacle curr = obstacles.get(i);
+                    curr.x_coord -= 15;
+                    curr.draw(g);
+                    if(curr.isColliding(player)) {
+                        if(!curr.collided) {
+                            if(curr.name.equals("Cash")) {
+                                health -= 10;
+                                hit++;
+                            } else
+                                score += 10;
+                        }
+                        curr.collided = true;
+                    }
+                    if(!curr.withinFrame()) {
+                        if(!curr.collided) {
+                            if(curr.name.equals("Cash"))
+                                score += 10;
+                            else
+                                score -= 10;
+                        }
+                        obstacles.remove(i);
+                    }
+                }
+                if(!player.jumped) {
+                    // if(!player.activated)
+                    player.cashRunMovement.activate();
+                    if(refresh)
+                        player.stepNo++;
                 } else {
-                    player.jumped = false;
-                    player.speed = 0;
+                    player.cashRunMovement.deactivate();
+                    player.stepNo = 1;
+                    if(player.speed > -48) {
+                        player.speed-=8;
+                        //System.out.println(player.speed);
+                    } else {
+                        player.jumped = false;
+                        player.speed = 0;
+                    }
                 }
+                player.y_coord -= player.speed;
+                player.draw(g);
+                if(spacing < rand && start) {
+                    infoCard.draw(g);
+                    player.cashRunMovement.deactivate();
+                } else {
+                    start = false;
+                    player.cashRunMovement.activate();
+                }
+                if(obstacles.size() == 0 && obstacleCount == 25 || health == 0) {
+                    end = true;
+                    hit = 0;
+                    player.cashRunMovement.deactivate();
+                    player.stepNo = 0;
+                    if(health > 0)
+                        infoCard = new Dialogue("Congratulations on completing Cash Run! You finished with "+health+"% of your health, and a score of "+score+". Now get back to work!", "Coworker_MG");
+                    else
+                        infoCard = new Dialogue("You didn't complete Cash Run. Now get back to work!", "Coworker_MG");
+                }
+                refresh = !refresh;
+                g.drawImage(Utility.loadImage("HealthBar.png", 400, 50), Utility.FRAME_WIDTH/2-200, 25, null);
+                g.setColor(new Color(214, 0, 0));
+                g.fillRect(Utility.FRAME_WIDTH/2-190, 35, 38*health/10, 30);
+                g.setColor(Color.black);
+                g.setFont(Utility.TEXT_FONT);
+                g.drawString("Score: "+String.format("%03d", score), Utility.FRAME_WIDTH/2-Utility.getStringWidth("Score: 000", Utility.TEXT_FONT)/2, 100);
+                if(hit > 0) {
+                    g.setColor(new Color(214, 0, 0, 50));
+                    g.fillRect(0, 0, Utility.FRAME_WIDTH, Utility.FRAME_HEIGHT);
+                }
+            } else {
+                player.draw(g);
+                infoCard.draw(g);
             }
-            player.y_coord -= player.speed;
-            player.draw(g);
-            refresh = !refresh;
-            g.drawString("Score: "+score, 10, 15);
-            g.setColor(Color.blue);
-            //try{Thread.sleep(17);}catch(Exception e){}
-            //repaint();
             refreshScreen();
         }
 
@@ -156,7 +227,7 @@ public class CashRun extends Minigame {
 			timer.setRepeats(false);
 			timer.start();
         }
-        
+
         public boolean isColliding(Player p, Obstacle o) {
             return p.y_coord < o.y_coord+o.height && p.y_coord+p.height > o.y_coord && p.x_coord < o.x_coord+o.width && p.x_coord+p.width-20 > o.x_coord;
         }

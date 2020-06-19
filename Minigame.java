@@ -1,6 +1,6 @@
 /**
   * A minigame
-  * 
+  *
   * Last edit: 6/3/2020
   * @author 	Eric
   * @version 	1.0
@@ -12,13 +12,33 @@ import javax.swing.*;
 
 public abstract class Minigame {
     /**
-	  * The score of the game
-	  */
-    protected double score = 0;
+	    * Contains the minigame graphics / GUI
+	    */
+    protected MinigameDrawing drawing;
+
+    /**
+	    * The score of the game
+	    */
+    protected int score = 0;
+
+    /**
+	    * The score of the game
+	    */
+    protected boolean start = true;
+
+    /**
+	    * The score of the game
+	    */
+    protected boolean end = false;
+
+    /**
+     * Info box
+     */
+    protected Dialogue infoCard;
 
     /**
       * Increase the score by an amount
-      * @param add      
+      * @param add
 	  */
     protected void changeScore(double amount) {
         score += amount;
@@ -26,23 +46,23 @@ public abstract class Minigame {
 
     /**
       * Set the score to an amount
-      * @param set      
+      * @param set
 	  */
-      protected void set(double amount) {
+      protected void set(int amount) {
         score = amount;
     }
 
     /**
-     * Reset the score to zero
-     */
+      * Reset the score to zero
+      */
     protected void clear() {
         score = 0;
     }
 
     /**
-     * Get the current score
-     * @return score
-     */
+      * Get the current score
+      * @return score
+      */
     protected double getScore() {
         return score;
     }
