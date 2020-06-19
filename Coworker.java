@@ -1,8 +1,8 @@
 /**
   * A Coworker character
   *
-  * Last edit: 5/29/2020
-  * @author 	  Eric
+  * Last edit: 6/18/2020
+  * @author 	  Eric, Celeste
   * @version 	  1.0
   * @since 		  1.0
   */
