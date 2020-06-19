@@ -1,10 +1,10 @@
 /**
   * The splash screen 
   * 
-  * Last edit: 6/18/2020
-  * @author 	Celeste
-  * @version 	1.0
-  * @since 		1.1
+  * Last edit: 6/19/2020
+  * @author 	Celeste, Eric
+  * @version 	1.1
+  * @since 		1.0
   */
 
 import java.awt.*;
