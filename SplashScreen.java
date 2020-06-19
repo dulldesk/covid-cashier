@@ -18,6 +18,11 @@ public class SplashScreen {
 	private Image logo;
 
 	/**
+	  * The company name
+	  */
+	private Image company;
+
+	/**
 	  * The drawing to be displayed on the screen
 	  */
 	private SplashDrawing drawing; 
@@ -50,6 +55,7 @@ public class SplashScreen {
 	  * Constructor
 	  */
 	public SplashScreen() {
+		company = Utility.loadImage("Company.png", LOGO_SIZE, LOGO_SIZE);
 		logo = Utility.loadImage("Logo.png", LOGO_SIZE, LOGO_SIZE);
 		logoAlpha = 0;
 		alphaIncrease = true;
@@ -70,7 +76,7 @@ public class SplashScreen {
 			Graphics2D g2d = (Graphics2D) g.create();
             g2d.setComposite(AlphaComposite.SrcOver.derive(Math.min(1,Math.max(0,logoAlpha))));
 
-            g2d.drawImage(logo, (Utility.FRAME_WIDTH-LOGO_SIZE)/2, (Utility.FRAME_HEIGHT-LOGO_SIZE)/2, null);
+            g2d.drawImage(company, (Utility.FRAME_WIDTH-LOGO_SIZE)/2, (Utility.FRAME_HEIGHT-LOGO_SIZE)/2, null);
 
             g2d.dispose();
 

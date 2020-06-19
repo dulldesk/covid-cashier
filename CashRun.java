@@ -110,7 +110,7 @@ public class CashRun extends Minigame {
             player.cashRunMovement.activate();
             obstacles = new ArrayList<Obstacle>();
             spacing = 0;
-            rand = 100;
+            rand = 150;
             refresh = false;
             obstacleCount = 0;
             hit = 0;
@@ -231,7 +231,7 @@ public class CashRun extends Minigame {
         }
 
         public void refreshScreen() {
-			timer = new Timer(20, new ActionListener() {
+			timer = new Timer(26, new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					repaint();

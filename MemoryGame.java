@@ -68,7 +68,7 @@ public class MemoryGame extends Minigame {
             cards = new Card[5][2];
             flipped = new ArrayList<Card>();
             count = 0;
-            delay = 800;
+            delay = 1000;
             spacing = 0;
             int[] id = {0, 0, 1, 1, 2, 2, 3, 3, 4, 4};
             String[] names = {"Burger", "Soda", "Fries", "IceCream", "Salad"};
@@ -147,7 +147,7 @@ public class MemoryGame extends Minigame {
                 }
             } else {
                 start = false;
-                delay = 75;
+                delay = 25;
                 for(int i = 0; i < 2; i++) {
                     for(int j = 0; j < 5; j++) {
                         if (!cards[j][i].found) cards[j][i].activate();
@@ -183,7 +183,7 @@ public class MemoryGame extends Minigame {
         }
 
         public void refreshScreen() {
-			timer = new Timer(10, new ActionListener() {
+			timer = new Timer(17, new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					repaint();
