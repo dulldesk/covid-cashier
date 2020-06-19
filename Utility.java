@@ -1,7 +1,7 @@
 /**
   * Stores stylistic data and methods used throughout the program
   * 
-  * Last edit: 6/1/2020
+  * Last edit: 6/18/2020
   * @author 	Celeste, Eric
   * @version 	1.1
   * @since 		1.0
