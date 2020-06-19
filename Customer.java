@@ -25,6 +25,11 @@ public class Customer extends Character {
       */
 	public static Map<String, Image> femaleSteps;
 
+    /**
+      * Whether the Customer has appeared yet
+      */
+	private boolean isPresent;
+
 	static {
 		maleSteps = new HashMap<String, Image>();
 		femaleSteps = new HashMap<String, Image>();
@@ -37,6 +42,7 @@ public class Customer extends Character {
 	  */
 	public Customer(String name, char gender, String equipment) {
 		super(name,"customer",gender,'C',equipment);
+		isPresent = false;
     }
 
     /**
@@ -81,5 +87,13 @@ public class Customer extends Character {
 	@Override
 	public String getType() {
 		return "Customer" + gender;
+	}
+
+	public boolean isPresent() {
+		return isPresent;
+	}
+
+	public void setPresence(boolean present) {
+		isPresent = present;
 	}
 }
