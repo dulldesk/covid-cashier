@@ -1,6 +1,6 @@
 /**
   * The Restaurant workplace. This is where both the training level and the live level take place
-  * 
+  *
   * Last edit: 6/18/2020
   * @author 	Celeste
   * @version 	1.1
@@ -23,7 +23,7 @@ public class Restaurant {
 	  * The map height
 	  */
 	public final static int MAP_HEIGHT = 1040;
-	
+
 	/**
 	  * Whether the user has selected the training level
 	  */
@@ -68,12 +68,14 @@ public class Restaurant {
 	  * Introductory dialogue to appear on the training level
 	  */
 	private Dialogue intro;
-	
+
 	private TaskList stationList;
 
 	private static final Image LONG_COUNTER;
 
 	private static final Image FRONT_COUNTER;
+
+	private static final Image LEFT_ARROW;
 
 	public static int topY;
 
@@ -87,6 +89,7 @@ public class Restaurant {
 		MAP = Utility.loadImage("Restaurant.png",Utility.FRAME_WIDTH,MAP_HEIGHT);
 		LONG_COUNTER = Utility.loadImage("Counter.png",590,90);
 		FRONT_COUNTER = Utility.loadImage("Front Counter.png",640,97);
+		LEFT_ARROW = Utility.loadImage("LeftArrow.png",72,50);
 
 		TrainingLevel.loadInfoMap();
 	}
@@ -131,7 +134,7 @@ public class Restaurant {
 					stations.add(new Station(stnName, Integer.parseInt(tokens[0]),Integer.parseInt(tokens[1]),Integer.parseInt(tokens[2]),Integer.parseInt(tokens[3]),tokens[4].charAt(0)));
 				}
 			}
-		} 
+		}
 		catch (IOException e) {}
 		catch (NumberFormatException e) {}
 	}
@@ -148,7 +151,7 @@ public class Restaurant {
 				if (nxt.startsWith("#") || tokens.length != 5) continue;
 				boundaries.add(new Boundary(Integer.parseInt(tokens[0]),Integer.parseInt(tokens[1]),Integer.parseInt(tokens[2]),Integer.parseInt(tokens[3]),tokens[4].charAt(0)));
 			}
-		} 
+		}
 		catch (IOException e) {}
 		catch (NumberFormatException e) {}
 	}
@@ -175,7 +178,7 @@ public class Restaurant {
 	/**
 	  * Gets the y coordinate relative to the frame as opposed to the map image
 	  * @param y the coordinate to use
-	  * @return the y coordinate relative to the frame 
+	  * @return the y coordinate relative to the frame
 	  */
 	public static int getYRelativeToFrame(int y) {
 		return y + topY;
@@ -195,6 +198,13 @@ public class Restaurant {
 		completedStations++;
 	}
 
+	/**
+	  * @return whether the list of orders / stations to be visited has been completed
+	  */
+	private boolean listIsCompleted() {
+		return (inTraining ? ((Checklist)stationList) : ((OrderList)stationList)).isFinished();
+	}
+
 	public ArrayList<Boundary> getBoundaries() {
 		return boundaries;
 	}
@@ -208,7 +218,6 @@ public class Restaurant {
 	}
 
 	private class RestaurantDrawing extends JComponent {
-
 		/**
 		  * Constructor
 		  */
@@ -224,17 +233,7 @@ public class Restaurant {
 			activate();
 		}
 
-		/**
-		  * Paint method of JComponent
-		  * @param g 	the Graphics object to draw on
-		  */
-		@Override
-		public void paintComponent(Graphics g) {
-			super.paintComponent(g);			
-
-			// background
-			g.drawImage(MAP,0,topY,null);
-
+		private void drawInLayeringOrder(Graphics g) {
 			final int longCounterY = 335;
 			final int frontCounterY = 542;
 			final int diffBehindCounter = 100;
@@ -256,20 +255,42 @@ public class Restaurant {
 			}
 			g.drawImage(FRONT_COUNTER,0,getYRelativeToFrame(frontCounterY),null);
 
-			if (!userDrawn) 
+			if (!userDrawn)
 				user.draw(g, true);
+		}
 
-			// System.out.println(user.getX() + " " + user.getY() + " ; " + getYRelativeToFrame(user.getY()));
-			// System.out.println(topY);
+		/**
+		  * Paint method of JComponent
+		  * @param g 	the Graphics object to draw on
+		  */
+		@Override
+		public void paintComponent(Graphics g) {
+			super.paintComponent(g);
 
-			// nothing to draw normally
-			// for (Boundary bnd : boundaries) bnd.draw(g);
+			// background
+			g.drawImage(MAP,0,topY,null);
 
-			// check if user has fully trained
-			if (inTraining && ((Checklist)stationList).isFinished()) {
-				User.hasTrained = true;
+
+			if (inTraining && User.hasTrained) {
+				g.drawImage(LEFT_ARROW, 10, getYRelativeToFrame(470), null);
 			}
 
+			// Draw the counters and characters based on the layering order
+			drawInLayeringOrder(g);
+
+			// check if user has fully trained
+			if (inTraining && !User.hasTrained && listIsCompleted()) {
+				User.hasTrained = true;
+				intro = new Dialogue("You've finished the training! Go to the arrow (and face in that direction) to exit the restaurant");
+				repaint();
+			}
+
+			// check whether the live level has been completed
+			if (!inTraining && listIsCompleted()) {
+				halt();
+				new LiveEnd(user.failures);
+				return;
+			}
 
 			if (intro != null) {
 				if (intro.canProceed()) {
@@ -282,17 +303,15 @@ public class Restaurant {
 				}
 			} else {
 				for (Station stn : stations) {
-					if (stn.getName().equals("exit")) {
-						// if (!inTraining) {
-							// for now
-							// new MainMenu();
-							// return;
+					if (stn.getName().equalsIgnoreCase("exit")) {
+						if (!inTraining) {
 
 							// todo : implement order completion checking
 							// continue;
-						// } else {
-
-						// }
+						} else if (!User.hasTrained) {
+							// do not allow exiting
+							continue;
+						} 
 					}
 
 					stn.draw(g);
@@ -310,7 +329,7 @@ public class Restaurant {
 							return;
 						}
 						if (inTraining) {
-							if (!currStn.equals("exit")) user.checkHygiene(currStn);
+							user.checkHygiene(currStn);
 							completeStation(stn.getName());
 							switch (currStn) {
 								case "covid counter":
@@ -319,18 +338,9 @@ public class Restaurant {
 								default:
 									new TrainingLevel(stn.getName());
 									return;
-								// case "fridge":
-								// 	new TrainingLevel("Fridge");
-								// 	return;
-								// case "front counter": 
-								// 	new TrainingLevel("Front Counter");
-								// 	return;
-								// case "pick up counter":
-								// 	new TrainingLevel("Pick Up");
-								//	return;
 							}
 						} else {
-							if (!currStn.equals("exit")) user.checkHygiene(currStn);
+							user.checkHygiene(currStn);
 
 							switch (currStn) {
 								case "fridge":

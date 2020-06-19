@@ -53,8 +53,7 @@ public class Player extends Character {
 	/**
 	  * Keeps track of the player's "failures" to prevent infection from the virus
 	  */
-	public java.util.List<String> failures;
-
+	public Map<String, Integer> failures;
 
 	/**
 	  * The y-coordinate that divides the kitchen floor and the public space floor
@@ -73,7 +72,7 @@ public class Player extends Character {
 		// activated = false;
 
 		hygienicTracker = new HygieneTracker();
-		failures = new ArrayList<String>();
+		failures = new HashMap<String, Integer>();
 
 		restaurantMovement = new RestaurantBindings();
 		fridgeTilesMovement = new FridgeTilesBindings();
@@ -184,16 +183,20 @@ public class Player extends Character {
 	public void checkHygiene(String nextStn) {
 		if (!nextStn.equals("covid counter")) {
 			if (hygienicTracker.getLastTask("masks").equals("")) {
-				failures.add("You did not wear a mask prior to a task");
+				addFailure("You did not wear a mask prior to a task");
 			}
 
 			if (!hygienicTracker.getLastTask().equals(nextStn) && !hygienicTracker.getLastTask("gloves").equals(hygienicTracker.getLastTask()) && !hygienicTracker.getLastTask("gloves").equals("covid counter")) {
-				failures.add("You did not change your gloves in between tasks");
+				addFailure("You did not change your gloves in between tasks");
 			}
 			System.out.println("failures "+ failures.size());
 		}
 
 		hygienicTracker.setLastTask(nextStn);
+	}
+
+	public void addFailure(String failure) {
+		failures.put(failure, failures.getOrDefault(failure, 0) + 1);
 	}
 
 	@Override
@@ -234,7 +237,7 @@ public class Player extends Character {
 
 			if (key.equals("gloves")) {
 				if (!getLastTask("clean hands").equals(lastTask)) {
-					failures.add("You must sanitize your hands in between glove changing (before grabbing a new pair of gloves)");
+					addFailure("You did not sanitize your hands first before changing gloves");
 					System.out.println("failures "+ failures.size());
 				}
 			}
@@ -264,15 +267,6 @@ public class Player extends Character {
 		public void setLastTask(String task) {
 			lastTask = task;
 		}
-
-		/*
-			to-do: 
-			- check if user is wearing ppe before each station [&]
-			- check if user changes gloves in between stations [&]
-			- check if user sanitizes hands when changing gloves 
-
-			[&] method called in between minigames --> checkHygiene()
-		*/
 	}
 
 	public class FridgeTilesBindings extends ScreenMovement {
