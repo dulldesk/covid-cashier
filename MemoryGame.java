@@ -124,7 +124,7 @@ public class MemoryGame extends Minigame {
                     flipped.clear();
                     for(int i = 0; i < 2; i++) {
                         for(int j = 0; j < 5; j++) {
-                            cards[j][i].activate();
+                            if (!cards[j][i].found) cards[j][i].activate();
                         }
                     }
                 }
@@ -150,7 +150,7 @@ public class MemoryGame extends Minigame {
                 delay = 75;
                 for(int i = 0; i < 2; i++) {
                     for(int j = 0; j < 5; j++) {
-                        cards[j][i].activate();
+                        if (!cards[j][i].found) cards[j][i].activate();
                     }
                 }
                 if (!end) infoCard.deactivate();
