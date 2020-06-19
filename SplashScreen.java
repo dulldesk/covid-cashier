@@ -97,7 +97,7 @@ public class SplashScreen {
 			fadeInLogo(g);
 
 			if (logoAlpha < -0.25) {
-				new MainMenu();
+				new PlayerSelect();
 			}
 		}
 
