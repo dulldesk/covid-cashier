@@ -333,7 +333,7 @@ public class Restaurant {
 								case "covid counter":
 									new CovidCounter(inTraining);
 									return;
-								case "front counter":
+								case "front counter": 
 									return;
 							}
 							/*

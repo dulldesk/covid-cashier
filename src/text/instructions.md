@@ -1,6 +1,8 @@
 # instructions
-Hello world! This text document should contain instructions about how to play Covid Cashier. 
+Welcome to COVID Cashier! 
 
-Be sure to add spaces at the end of newlines. 
+In this game, you are a cashier at a fast food restaurant. Quarantine restrictions have been enforced and there are only a few workers in the facility. 
 
-My grandfather picks up quartz and valuable onyx jewels. Send 60 dozen quart jars and 12 black pans. 
+The end goal is to minimize your chances of infection as much as possible. 
+
+Use the arrow keys and your mouse to navigate around the game. 

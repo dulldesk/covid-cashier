@@ -92,6 +92,7 @@ public class MemoryGame extends Minigame {
 		  */
 		@Override
 		public void display(Graphics g) {
+            g.drawImage(Utility.loadImage("FrontCounterBG.png",Utility.FRAME_WIDTH,Utility.FRAME_HEIGHT),0,0,null);
             for(int i = 0; i < 2; i++) {
                 for(int j = 0; j < 5; j++) {
                     if(cards[j][i].flipped && !flipped.contains(cards[j][i])) {
