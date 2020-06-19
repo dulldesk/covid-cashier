@@ -19,6 +19,3 @@ Disinfectant is available here as well. Use it to clean and disinfect high-touch
 
 &Front Counter
 The virus can survive on paper money for up to 4 days and plastic for 3-7 days. Cashiers would have direct contact to a customer's paper cash, but not their credit card. Credit payment is preferred over paper money during this time. 
-
-&end
-You have visited all the stations! Press the enter key to exit the training level. 
