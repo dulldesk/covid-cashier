@@ -183,7 +183,7 @@ public class MemoryGame extends Minigame {
         }
 
         public void refreshScreen() {
-			timer = new Timer(5, new ActionListener() {
+			timer = new Timer(10, new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					repaint();

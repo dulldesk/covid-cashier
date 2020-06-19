@@ -176,7 +176,7 @@ public class Disinfection extends Minigame {
         }
 
         public void refreshScreen() {
-			timer = new Timer(0, new ActionListener() {
+			timer = new Timer(12, new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					repaint();
