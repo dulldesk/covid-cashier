@@ -9,9 +9,7 @@
   * @since 		1.0
   */
 
-import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
 
 public class ReturnButton extends ImageButton {
 	/**
@@ -32,4 +30,4 @@ public class ReturnButton extends ImageButton {
 	public ReturnButton(int x, int y) {
 		this(x, y, 45);
 	}
- }
+}

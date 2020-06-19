@@ -277,7 +277,7 @@ public class Player extends Character {
 
 			if (key.equals("gloves")) {
 				if (!getLastTask("clean hands").equals(lastTask)) {
-					addFailure("You did not sanitize your hands first before changing gloves");
+					addFailure("You did not sanitize your hands before changing gloves");
 					System.out.println("failures "+ failures.size());
 				}
 			}

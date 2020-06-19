@@ -33,6 +33,9 @@ public abstract class Menu {
 	  */
 	public abstract void halt();
 
+	/**
+	 * Background music
+	 */
 	public BGM bgm;
 
 	/**
