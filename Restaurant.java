@@ -250,6 +250,12 @@ public class Restaurant {
 			// nothing to draw normally
 			// for (Boundary bnd : boundaries) bnd.draw(g);
 
+			// check if user has fully trained
+			if (inTraining && ((Checklist)stationList).isFinished()) {
+				User.hasTrained = true;
+			}
+
+
 			if (intro != null) {
 				if (intro.canProceed()) {
 					intro.deactivate();
