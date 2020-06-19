@@ -14,14 +14,11 @@ Due to the shortage of employees, you will need to help your coworker with some 
 At this station, you can pick up and/or change your personal protective equipment (PPE) and wash/sanitize your hands. 
 Wash/sanitize (using an alcohol based hand sanitizer) your hands often. As the virus is surrounded by an oily membrane, it breaks apart the virus and deactivates it.
 Wear a mask to minimize airborne particle transfer. Do not touch your face or mask after putting it on to prevent contamination. 
-wear gloves to prevent transferring the virus from hands to food and vice versa. Remember to change your gloves between tasks to avoid cross contamination, when they are torn or contaminated, and every 4 hours at minimum. In between glove changing, employees should wash their hands.
+Wear gloves to prevent transferring the virus from hands to food and vice versa. Remember to change your gloves between tasks to avoid cross contamination, when they are torn or contaminated, and every 4 hours at minimum. In between glove changing, employees should wash their hands.
 Disinfectant is available here as well. Use it to clean and disinfect high-touch surfaces, as the virus may be on them; the virus can survive on stainless steel for 3-7 days. Avoid expired disinfectants. 
 
 &Front Counter
 The virus can survive on paper money for up to 4 days and plastic for 3-7 days. Cashiers would have direct contact to a customer's paper cash, but not their credit card. Credit payment is preferred over paper money during this time. 
-
-&Pick Up Counter
-Drop off the customer's food here. They will pick it up. 
 
 &end
 You have visited all the stations! Press the enter key to exit the training level. 
