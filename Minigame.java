@@ -1,9 +1,9 @@
 /**
   * A minigame
-  * 
-  * Last edit: 6/17/2020
+  *
+  * Last edit: 6/3/2020
   * @author 	Eric
-  * @version 	1.1
+  * @version 	1.0
   * @since 		1.0
   */
 
@@ -38,7 +38,7 @@ public abstract class Minigame {
 
     /**
       * Increase the score by an amount
-      * @param add      
+      * @param add
 	  */
     protected void changeScore(double amount) {
         score += amount;
@@ -46,7 +46,7 @@ public abstract class Minigame {
 
     /**
       * Set the score to an amount
-      * @param set      
+      * @param set
 	  */
       protected void set(int amount) {
         score = amount;
@@ -75,15 +75,15 @@ public abstract class Minigame {
         public abstract void display(Graphics g);
 
         /**
-         * Paint method of JComponent
-         * @param g 	the Graphics object to draw on
-         */
-        @Override
-        public void paintComponent(Graphics g) {
-            super.paintComponent(g);
-            try {
-                display(g);
-            } catch (Exception e) {}
-        }
+		  * Paint method of JComponent
+		  * @param g 	the Graphics object to draw on
+		  */
+		@Override
+		public void paintComponent(Graphics g) {
+			super.paintComponent(g);
+			try {
+				display(g);
+			} catch (Exception e) {}
+		}
     }
 }

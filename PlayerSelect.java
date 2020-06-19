@@ -35,7 +35,7 @@ public class PlayerSelect extends Menu {
 		int alignY = 180;
 		icons = new ArrayList<ImageButton>(2);
 
-		icons.add(new ImageButton("Male",200,alignY,Utility.LABEL_FONT,Utility.loadImage("PlayerM_Face.png",100,125)));
+		icons.add(new ImageButton("Male",200,alignY + 12,Utility.LABEL_FONT, Utility.loadImage("PlayerM_Face.png",100,100),13));
 		icons.add(new ImageButton("Female",Utility.FRAME_WIDTH-300,alignY,Utility.LABEL_FONT,Utility.loadImage("PlayerF_Face.png",100,125)));
 
 		field = new TextField(Utility.FRAME_WIDTH/5,Utility.FRAME_HEIGHT/2-25,3*Utility.FRAME_WIDTH/5,Utility.LABEL_FONT);

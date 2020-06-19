@@ -91,10 +91,35 @@ public class Dialogue extends GraphicComponent {
 		height = BOX_HEIGHT;
 
 		x_coord = (Utility.FRAME_WIDTH - BOX_WIDTH) / 2;
-		y_coord = Utility.FRAME_HEIGHT - BOX_HEIGHT;
+		y_coord = Utility.FRAME_HEIGHT - BOX_HEIGHT - 20;
 		text_font = Utility.TEXT_FONT_SMALL;
 
 		if (!addFace) face = null;
+
+		fullText = text;
+
+		canProceed = false;
+		isEntered = false;
+		textQueue = loadTextQueue();
+
+		enterKey = new EntryBinding();
+	}
+
+	/**
+	  * Constructs a Dialogue object
+	  * @param text		x-coordinate (top-left corner)
+	  */
+	public Dialogue(String text) {
+		// default values 
+		// from super class
+		width = BOX_WIDTH;
+		height = BOX_HEIGHT;
+
+		x_coord = (Utility.FRAME_WIDTH - BOX_WIDTH) / 2;
+		y_coord = Utility.FRAME_HEIGHT - BOX_HEIGHT - 20;
+		text_font = Utility.TEXT_FONT_SMALL;
+
+		face = null;
 
 		fullText = text;
 
@@ -127,7 +152,7 @@ public class Dialogue extends GraphicComponent {
 
 	@Override
 	public void draw(Graphics g) {
-		if (canProceed) return;
+		if (canProceed || textQueue.size() == 0) return;
 
 		// System.out.println(textQueue.size() + " "+ textQueue.hashCode());
 
@@ -199,6 +224,10 @@ public class Dialogue extends GraphicComponent {
 		}
 
 		return queue;
+	}
+
+	public boolean isEmpty() {
+		return fullText.equals("");
 	}
 
 	@Override

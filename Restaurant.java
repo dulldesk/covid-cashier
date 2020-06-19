@@ -1,7 +1,7 @@
 /**
   * The Restaurant workplace. This is where both the training level and the live level take place
   * 
-  * Last edit: 6/12/2020
+  * Last edit: 6/18/2020
   * @author 	Celeste
   * @version 	1.1
   * @since 		1.0
@@ -37,12 +37,12 @@ public class Restaurant {
 	/**
 	  * The user's player
 	  */
-	public static Player user;
+	private Player user;
 
 	/**
 	  * Number of completed stations
 	  */
-	public static int completedStations;
+	public int completedStations;
 
 	/**
 	  * List of enter-able stations
@@ -54,16 +54,22 @@ public class Restaurant {
 	  */
 	public static ArrayList<Boundary> boundaries;
 
+	/**
+	  * Introductory dialogue to appear on the training level
+	  */
 	private Dialogue intro;
 	
 	private TaskList stationList;
 
-	public static final Image LONG_COUNTER;
+	private static final Image LONG_COUNTER;
 
-	public static final Image FRONT_COUNTER;
+	private static final Image FRONT_COUNTER;
+
+	public static int topY;
+
+	private static java.util.List<String> trainingStationNames;
 
 	static {
-		completedStations = 0;
 		stations = new ArrayList<Station>();
 		boundaries = new ArrayList<Boundary>();
 		loadStations();
@@ -75,10 +81,6 @@ public class Restaurant {
 		TrainingLevel.loadInfoMap();
 	}
 
-	public static int topY;
-
-	private static java.util.List<String> trainingStationNames;
-
 	public Restaurant(boolean training) {
 		inTraining = training;
 
@@ -87,6 +89,7 @@ public class Restaurant {
 		// initial position
 		user = new Player(User.name, User.gender);
 		user.setCoordinates(5,375);
+		System.out.println(user);
 
 		topY = user.getY() - Utility.FRAME_HEIGHT - user.height/2;
 
@@ -136,6 +139,9 @@ public class Restaurant {
 		catch (NumberFormatException e) {}
 	}
 
+	/**
+	  * Halt restaurant component listeners
+	  */
 	public void halt() {
 		if (intro != null) intro.deactivate();
 		if (stationList != null) stationList.deactivate();
@@ -143,22 +149,13 @@ public class Restaurant {
 		for (Station stn : stations) stn.deactivate();
 	}
 
+	/**
+	  * Activate restaurant component listeners
+	  */
 	public void activate() {
 		stationList.activate();
 
 		user.restaurantMovement.activate();
-	}
-
-	public static int getCompletedStationsNo() {
-		return completedStations;
-	}
-
-	public static void increaseCompletedStations() {
-		completedStations++;
-	}
-
-	public ArrayList<Boundary> getBoundaries() {
-		return boundaries;
 	}
 
 	/**
@@ -168,6 +165,28 @@ public class Restaurant {
 	  */
 	public static int getYRelativeToFrame(int y) {
 		return y + topY;
+	}
+
+	public int getCompletedStationsNo() {
+		return completedStations;
+	}
+
+	/**
+	  * Increase the number of completed stations and mark a station as complete
+	  * @param stationName the station that has been completed
+	  */
+	public void completeStation(String stationName) {
+		if (inTraining) ((Checklist)stationList).completeTask(stationName);
+		else ((OrderList)stationList).completeTask(((OrderList)stationList).pageNo, stationName);
+		completedStations++;
+	}
+
+	public ArrayList<Boundary> getBoundaries() {
+		return boundaries;
+	}
+
+	public Player getUser() {
+		return user;
 	}
 
 	public RestaurantDrawing getDrawing() {
@@ -201,10 +220,29 @@ public class Restaurant {
 
 			// background
 			g.drawImage(MAP,0,topY,null);
-			g.drawImage(LONG_COUNTER,210,getYRelativeToFrame(335),null);
-			g.drawImage(FRONT_COUNTER,0,getYRelativeToFrame(542),null);
 
-			user.draw(g, true);
+			final int longCounterY = 335;
+			final int frontCounterY = 542;
+			final int diffBehindCounter = 100;
+
+			boolean userDrawn = false;
+
+			// if statements allow for the user to go behind the counter
+			if (user.getY() < longCounterY && user.getY() > longCounterY - diffBehindCounter) {
+				user.draw(g, true);
+				userDrawn = true;
+			}
+			g.drawImage(LONG_COUNTER,210,getYRelativeToFrame(longCounterY),null);
+
+			if (!userDrawn && user.getY() < frontCounterY && user.getY() > frontCounterY - diffBehindCounter) {
+				user.draw(g, true);
+				userDrawn = true;
+			}
+			g.drawImage(FRONT_COUNTER,0,getYRelativeToFrame(frontCounterY),null);
+
+			if (!userDrawn) 
+				user.draw(g, true);
+
 
 			// System.out.println(user.getX() + " " + user.getY() + " ; " + getYRelativeToFrame(user.getY()));
 			// System.out.println(topY);
@@ -231,31 +269,34 @@ public class Restaurant {
 
 							// todo : implement order completion checking
 							// continue;
+						} else {
+
 						}
 					}
 
 					stn.draw(g);
 					if (stn.isEntered()) {
 						halt();
+
+						// Uses the current restaurant object
 						CovidCashier.setPastRestaurant(Restaurant.this);
 						stn.resetDialogue();
 
+						String currStn = stn.getName().toLowerCase();
+
 						if (inTraining) {
-							((Checklist)(stationList)).completeTask(stn.getName());
-							switch (stn.getName().toLowerCase()) {
+							if (!currStn.equals("exit")) user.checkHygiene(currStn);
+							switch (currStn) {
 								case "drop off counter":
 									return;
-								case "exit":
-									new MainMenu();
+								case "covid counter":
+									new CovidCounter(inTraining);
 									return;
 								default:
 									new TrainingLevel(stn.getName());
 									return;
 								// case "fridge":
 								// 	new TrainingLevel("Fridge");
-								// 	return;
-								// case "covid counter":
-								// 	new TrainingLevel("COVID Counter");
 								// 	return;
 								// case "front counter": 
 								// 	new TrainingLevel("Front Counter");
@@ -265,11 +306,14 @@ public class Restaurant {
 								//	return;
 							}
 						} else {
-							switch (stn.getName().toLowerCase()) {
+							if (!currStn.equals("exit")) user.checkHygiene(currStn);
+
+							switch (currStn) {
 								case "fridge":
 									new FridgeTiles(user);
 									return;
 								case "covid counter":
+									new CovidCounter(inTraining);
 									return;
 								case "front counter": 
 									return;

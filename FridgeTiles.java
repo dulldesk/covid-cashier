@@ -1,9 +1,9 @@
 /**
   * The Fridge minigame
-  * 
-  * Last edit: 6/17/2020
+  *
+  * Last edit: 6/5/2020
   * @author 	Eric
-  * @version 	1.2
+  * @version 	1.1
   * @since 		1.0
   */
 
@@ -15,6 +15,11 @@ import java.util.*;
 import java.io.*;
 
 public class FridgeTiles extends Minigame {
+    /**
+	  * Contains the minigame graphics / GUI
+	  */
+    private MinigameDrawing drawing;
+
     /**
 	  * Contains the gender of the player.
 	  */
@@ -163,7 +168,7 @@ public class FridgeTiles extends Minigame {
                 } else {
                     start = false;
                     player.fridgeTilesMovement.activate();
-                }  
+                }
                 if(obstacles.size() == 0 && obstacleCount == 30 || health == 0) {
                     end = true;
                     hit = 0;
@@ -199,6 +204,10 @@ public class FridgeTiles extends Minigame {
 			});
 			timer.setRepeats(false);
 			timer.start();
+        }
+
+        public boolean isColliding(Player p, Obstacle o) {
+            return p.y_coord < o.y_coord+o.height && p.y_coord+p.height > o.y_coord && p.x_coord < o.x_coord+o.width && p.x_coord+p.width-20 > o.x_coord;
         }
     }
 }
