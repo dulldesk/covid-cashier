@@ -90,9 +90,11 @@ public class MainMenu extends Menu {
 				message.deactivate();
 			}
 
+			boolean toReturn = false;
+
 			for (Button btn : buttons) {
 				btn.draw(g);
-				if (btn.isClicked()) {
+				if (!toReturn && btn.isClicked()) {
 			    	btn.resetClicked();
 
 					if (btn.getName().toUpperCase().equals("PLAY") && !User.hasTrained) {
@@ -119,9 +121,10 @@ public class MainMenu extends Menu {
 							new Quit();
 							break;
 					}
-					return;
+					toReturn = true;
 				} 
 			}
+			if (toReturn) return;
 			refreshScreen();
 		}
 
