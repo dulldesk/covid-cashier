@@ -53,7 +53,7 @@ public final class CovidCashier  {
 
 		// User.gender = 'M';
 		// User.name="edas";
-		// new Restaurant(true);
+		// setPastRestaurant(new Restaurant(true));
 		
 		frame.setVisible(true);
 	}
