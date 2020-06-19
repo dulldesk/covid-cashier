@@ -60,6 +60,21 @@ public class Player extends Character {
 	  */
 	private static int KITCHEN_LINE = 595;
 
+    /**
+      * Static map of a male player's steps. Used to cache loading
+      */
+	public static Map<String, Image> maleSteps;
+
+    /**
+      * Static map of a female player's steps. Used to cache loading
+      */
+	public static Map<String, Image> femaleSteps;
+
+	static {
+		maleSteps = new HashMap<String, Image>();
+		femaleSteps = new HashMap<String, Image>();
+	}
+
 	/**
 	  * Constructs a Character object and loads the appropriate sprites into the steps map
 	  * @param name 	the Character's name, as chosen by the user
@@ -152,6 +167,19 @@ public class Player extends Character {
 	  */
 	@Override
 	protected void loadSprites() {
+		if (gender == 'M' && maleSteps.size() == 0) maleSteps = loadSprites('M');
+		else if (gender == 'F' && femaleSteps.size() == 0) femaleSteps = loadSprites('F');
+		steps = gender == 'M' ? maleSteps : femaleSteps;
+	}
+
+	/**
+	  * Loads the image files into a static steps HashMap
+	  * <p> Intended to be called for preloading
+	  * @param gender the gender to be loaded
+	  */
+	public static Map<String, Image> loadSprites(char gender) {
+		Map<String, Image> steps = new HashMap<String, Image>();
+
 		String[][] keys = {{"S", "E", "N", "W"},
 		{"1", "2", "3", "4"},
 		{"C", "W"},
@@ -161,6 +189,7 @@ public class Player extends Character {
 		{{112, 304}, {112, 352}, {96, 304}, {48, 352}},
 		{{112, 288}, {112, 288}, {112, 288}, {112, 288}},
 		{{112, 288}, {112, 352}, {112, 288}, {48, 352}}};
+
 		for(int s = 0; s < 5; s++) {
 			Image spritesheet = Utility.loadImage("Player"+gender+"_"+imgs[s]+".png",(int)(2048/4.8),(int)(2048/4.8));
 	        BufferedImage buffsheet = Utility.toBufferedImage(spritesheet);
@@ -175,6 +204,7 @@ public class Player extends Character {
 				}
 			}
 		}
+		return steps;
 	}
 
 	/** 

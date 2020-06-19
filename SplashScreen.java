@@ -63,12 +63,9 @@ public class SplashScreen {
 	  */
 	private class SplashDrawing extends JComponent {
 		/**
-		  * Constructor. Activates listeners
+		  * Draw logo fade in and out
+		  * @param g 	the Graphics object to draw on
 		  */
-		public SplashDrawing() {
-			// activate();
-		}
-
 		private void fadeInLogo(Graphics g) {
 			Graphics2D g2d = (Graphics2D) g.create();
             g2d.setComposite(AlphaComposite.SrcOver.derive(Math.min(1,Math.max(0,logoAlpha))));
@@ -79,16 +76,28 @@ public class SplashScreen {
 
 			logoAlpha += 0.1 * (alphaIncrease ? 1 : -1);
 
-				Utility.loadImage("Restaurant.png", Utility.FRAME_WIDTH, Restaurant.MAP_HEIGHT);
-				Utility.loadImage("Dialogue_Box.png", Utility.FRAME_WIDTH, Utility.FRAME_HEIGHT);
-				Utility.loadImage("Dialogue_Box.png", Dialogue.BOX_WIDTH, Dialogue.BOX_HEIGHT);
-				Utility.loadImage("Menu_BG.png", Utility.FRAME_WIDTH, Utility.FRAME_HEIGHT);
-				Utility.loadImage("Cash_Register.png", Utility.FRAME_WIDTH, Utility.FRAME_HEIGHT);
-
 			if (logoAlpha > 1) {
+				loadForCache();
 				alphaIncrease = false;
 			}
 			refreshScreen();
+		}
+
+		/**
+		  * Load images to cache them
+		  */
+		private void loadForCache() {
+			Utility.loadImage("Restaurant.png", Utility.FRAME_WIDTH, Restaurant.MAP_HEIGHT);
+			Utility.loadImage("Dialogue_Box.png", Utility.FRAME_WIDTH, Utility.FRAME_HEIGHT);
+			Utility.loadImage("Dialogue_Box.png", Dialogue.BOX_WIDTH, Dialogue.BOX_HEIGHT);
+			Utility.loadImage("Menu_BG.png", Utility.FRAME_WIDTH, Utility.FRAME_HEIGHT);
+			Utility.loadImage("Cash_Register.png", Utility.FRAME_WIDTH, Utility.FRAME_HEIGHT);
+
+			Player.maleSteps = Player.loadSprites('M');
+			Player.femaleSteps = Player.loadSprites('F');
+			Customer.maleSteps = Customer.loadSprites('M');
+			Customer.femaleSteps = Customer.loadSprites('F');
+			Coworker.staticSteps = Coworker.loadSprites('M');
 		}
 
 		/**
