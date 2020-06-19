@@ -16,6 +16,15 @@ import javax.swing.*;
 
 public class Coworker extends Character {
     /**
+      * Static map of the coworker's steps. Used to cache loading
+      */
+    public static Map<String, Image> staticSteps;
+
+    static {
+      staticSteps = new HashMap<String, Image>();
+    }
+
+    /**
 	    * Constructs a Character object and loads the appropriate sprites into the steps map
 	    * @param name 	the Character's name, as chosen by the user
 	    */
@@ -28,6 +37,17 @@ public class Coworker extends Character {
 	    */
 		@Override
 		protected void loadSprites() {
+      if (staticSteps.size() == 0) staticSteps = loadSprites('s');
+      steps = staticSteps;
+		}
+
+    /**
+      * Loads the image files into a static steps HashMap
+      * <p> Intended to be called for preloading
+      * @param foo throwaway parameter to overload methods
+      */
+    public static Map<String, Image> loadSprites(char foo) {
+      Map<String, Image> steps = new HashMap<String, Image>();
         String[][] keys = {{"S", "E", "N", "W"},
                         {"1", "2", "3", "4"}};
         int[][] coords = {{112, 288}, {112, 352}, {112, 288}, {48, 352}};
@@ -39,9 +59,10 @@ public class Coworker extends Character {
                 String key = keys[0][y]+"-"+keys[1][x]+"-W-MG";
                 BufferedImage sprite = buffsheet.getSubimage((int)(x*512/4.8+coords[y][0]/4.8), (int)(y*512/4.8+16/4.8), (int)(coords[y][1]/4.8), 100);
                 steps.put(key, sprite);
-	          }
-	      }
-		}
+            }
+        }
+      return steps;
+    }
 
 	/**
 	  * @return the type of character (i.e. its image file name)

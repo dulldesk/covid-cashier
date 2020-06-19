@@ -15,6 +15,21 @@ import java.io.*;
 import javax.swing.*;
 
 public class Customer extends Character {
+ /**
+      * Static map of a male player's steps. Used to cache loading
+      */
+	public static Map<String, Image> maleSteps;
+
+    /**
+      * Static map of a female player's steps. Used to cache loading
+      */
+	public static Map<String, Image> femaleSteps;
+
+	static {
+		maleSteps = new HashMap<String, Image>();
+		femaleSteps = new HashMap<String, Image>();
+	}
+
     /**
 	  * Constructs a Character object and loads the appropriate sprites into the steps map
 	  * @param name 	the Character's name, as chosen by the user
@@ -23,11 +38,25 @@ public class Customer extends Character {
 	public Customer(String name, char gender, String equipment) {
 		super(name,"customer",gender,'C',equipment);
     }
+
     /**
 	  * Loads the image files into the steps HashMap for each character subclass
 	  */
 	@Override
 	protected void loadSprites() {
+		if (gender == 'M' && maleSteps.size() == 0) maleSteps = loadSprites('M');
+		else if (gender == 'F' && femaleSteps.size() == 0) femaleSteps = loadSprites('F');
+		steps = gender == 'M' ? maleSteps : femaleSteps;
+	}
+
+    /**
+	  * Loads the image files into a static steps HashMap
+	  * <p> Intended to be called for preloading
+	  * @param gender the gender whose sprites are to be loaded
+	  */
+	public static Map<String, Image> loadSprites(char gender) {
+		Map<String, Image> steps = new HashMap<String, Image>();
+
 		String[][] keys = {{"S", "E", "N", "W"},
 						{"1", "2", "3", "4"}};
 		int[][][] coords = {{{112, 288}, {128, 240}, {112, 288}, {144, 240}},
@@ -42,6 +71,8 @@ public class Customer extends Character {
                 steps.put(key, sprite);
             }
         }
+
+        return steps;
 	}
 
 	/**
