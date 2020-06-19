@@ -164,6 +164,7 @@ public class CovidCounter extends TrainingLevel {
 			} else if (sanitizer.isClicked()) {
 				CovidCashier.getPastRestaurant().getUser().cleanHands();
 				
+				SoundFX.play("sanitizer",300);
 				updatePPE(sanitizer);
 			} else if (returnButton.isClicked()) {
 				halt();
