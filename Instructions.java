@@ -41,6 +41,8 @@ public class Instructions extends Menu {
 			br.readLine();
 
 			for (String nxt = br.readLine(); nxt != null; nxt = br.readLine()) info += nxt+'\n';
+
+			br.close();
 		} catch (Exception e) {System.out.println(e);}
 
 

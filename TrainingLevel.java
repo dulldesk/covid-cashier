@@ -93,6 +93,8 @@ public class TrainingLevel {
 					infoMap.put(name, new TrainingInfo(info.trim(), Utility.loadImage(name.replace(" ","") + "BG.png", Utility.FRAME_WIDTH, Utility.FRAME_HEIGHT)));
 				}
 			}
+
+			br.close();
 		} catch (Exception e) {}
 	}
 

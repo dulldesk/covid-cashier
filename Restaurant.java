@@ -137,6 +137,8 @@ public class Restaurant {
 					stations.add(new Station(stnName, Integer.parseInt(tokens[0]),Integer.parseInt(tokens[1]),Integer.parseInt(tokens[2]),Integer.parseInt(tokens[3]),tokens[4].charAt(0)));
 				}
 			}
+
+			br.close();
 		}
 		catch (IOException e) {}
 		catch (NumberFormatException e) {}
@@ -154,6 +156,8 @@ public class Restaurant {
 				if (nxt.startsWith("#") || tokens.length != 5) continue;
 				boundaries.add(new Boundary(Integer.parseInt(tokens[0]),Integer.parseInt(tokens[1]),Integer.parseInt(tokens[2]),Integer.parseInt(tokens[3]),tokens[4].charAt(0)));
 			}
+			
+			br.close();
 		}
 		catch (IOException e) {}
 		catch (NumberFormatException e) {}
