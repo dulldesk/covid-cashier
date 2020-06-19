@@ -63,7 +63,7 @@ public final class Utility {
 	/**
 	  * The name of the resources folder
 	  */
-	public static final String RES_NAME = "/src";
+	public static final String RES_NAME = "/res";
 
 	/**
 	  * Caches loaded images
