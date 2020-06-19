@@ -33,11 +33,12 @@ public class Customer extends Character {
 		int[][][] coords = {{{112, 288}, {128, 240}, {112, 288}, {144, 240}},
 							{{112, 288}, {128, 256}, {112, 288}, {128, 256}}};
 		Image spritesheet = Utility.loadImage("Customer"+gender+".png",(int)(2048/4.8),(int)(2048/4.8));
+        BufferedImage buffsheet = Utility.toBufferedImage(spritesheet);
+
 		for(int y = 0; y < 4; y++) {
 			for(int x = 0; x < 4; x++) {
 				String key = keys[0][y]+"-"+keys[1][x]+"-C-"+(gender=='M'?"N":"M");
-				BufferedImage sprite = Utility.toBufferedImage(spritesheet)
-						.getSubimage((int)(x*512/4.8+coords[(gender=='M'?0:1)][y][0]/4.8), (int)(y*512/4.8+16/4.8), (int)(coords[(gender=='M'?0:1)][y][1]/4.8), 100);
+				BufferedImage sprite = buffsheet.getSubimage((int)(x*512/4.8+coords[(gender=='M'?0:1)][y][0]/4.8), (int)(y*512/4.8+16/4.8), (int)(coords[(gender=='M'?0:1)][y][1]/4.8), 100);
                 steps.put(key, sprite);
             }
         }

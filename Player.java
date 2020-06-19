@@ -163,10 +163,12 @@ public class Player extends Character {
 		{{112, 288}, {112, 352}, {112, 288}, {48, 352}}};
 		for(int s = 0; s < 5; s++) {
 			Image spritesheet = Utility.loadImage("Player"+gender+"_"+imgs[s]+".png",(int)(2048/4.8),(int)(2048/4.8));
+	        BufferedImage buffsheet = Utility.toBufferedImage(spritesheet);
+
 			for(int y = 0; y < 4; y++) {
 				for(int x = 0; x < 4; x++) {
 					String key = keys[0][y]+"-"+keys[1][x]+"-"+(s==0?keys[2][0]:keys[2][1])+"-"+(s>1?keys[3][s-1]:keys[3][0]);
-					BufferedImage sprite = Utility.toBufferedImage(spritesheet)
+					BufferedImage sprite = buffsheet
 					.getSubimage((int)(x*512/4.8+coords[(gender=='M'?0:2)+(s==0?0:1)][y][0]/4.8), (int)(y*512/4.8+16/4.8),
 						(int)(coords[(gender=='M'?0:2)+(s==0?0:1)][y][1]/4.8), 100);
 					steps.put(key, sprite);
