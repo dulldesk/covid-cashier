@@ -57,7 +57,7 @@ public class Quit extends Menu {
 		public void display(Graphics g) {
 			g.setColor(Color.black);
 			g.setFont(Utility.TITLE_FONT_SMALL);
-			g.drawString("Sure to leave",leftAlign,titleY);
+			g.drawString("Are you sure",leftAlign,titleY);
 
 			for (Button btn : buttons) {
 				btn.draw(g);
