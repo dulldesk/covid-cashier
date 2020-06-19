@@ -36,6 +36,7 @@ public final class CovidCashier  {
 		frame = new JFrame("Covid Cashier");
 		frame.setSize(Utility.FRAME_WIDTH+6, Utility.FRAME_HEIGHT+29);
 		frame.setResizable(false);
+		frame.setLayout(null);
 		frame.setFocusable(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}

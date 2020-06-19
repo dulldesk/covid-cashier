@@ -18,6 +18,12 @@ public class LiveEnd {
 	private final Map<String, Integer> failures; 
 
 	/**
+	  * A list of the keys of the failures
+	  * <p> Used to fetch the ith (currentFailure) failure
+	  */
+	private java.util.List<String> failureKeys;
+
+	/**
 	  * The background
 	  */
 	private Image background;
@@ -47,9 +53,11 @@ public class LiveEnd {
 	  */
 	private int currentFailure; 
 
+	/**
+	  * The y-coordinate of the left and right buttons.
+	  * <p> Also used for the alignment of the "failure" revelations
+	  */
 	private static final int failureYAlign; 
-
-	private java.util.List<String> failureKeys;
 
 	static {
 		failureYAlign = 380;
@@ -103,14 +111,13 @@ public class LiveEnd {
 	}
 
 	/**
-	  * The drawing of a COVID Counter level screen
+	  * The drawing of the simulation level end screen
 	  */
 	private class EndDrawing extends JComponent {
 		/**
 		  * y-coordinate of the title
 		  */
 		private int titleY = 100;
-
 
 		/**
 		  * Constructor. Activates listeners
@@ -119,6 +126,10 @@ public class LiveEnd {
 			activate();
 		}
 
+		/** 
+		  * Lists a failure onto the screen and/or its associated buttons
+		  * @param g 	the Graphics object to draw on
+		  */
 		private void viewFailures(Graphics g) {
 			if (failures.size() > 1) {
 				leftButton.draw(g);
@@ -173,8 +184,8 @@ public class LiveEnd {
 			} else {
 				messages[1] = "but you sometimes failed to maintain preventative";
 
-			}
 				viewFailures(g);
+			}
 
 			g.setFont(Utility.TEXT_FONT);
 
@@ -183,7 +194,6 @@ public class LiveEnd {
 			}
 
 			returnButton.draw(g);
-
 
 			if (returnButton.isClicked()) {
 				halt();

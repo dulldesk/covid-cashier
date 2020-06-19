@@ -27,7 +27,7 @@ public class Button extends GraphicComponent {
 	  * @param lbl 		the Button's label (name)
 	  * @param x 		the Button's x-coordinate
 	  * @param y 		the Button's y-coordinate
-	  * @param fnt 		the Button's font`
+	  * @param fnt 		the Button's font
 	  * @param lbl_c	the Button's label (text) colour
 	  * @param hvr_c	the Button's label (text) colour upon hovering
 	  */
