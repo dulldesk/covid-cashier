@@ -1,10 +1,10 @@
 /**
   * The splash screen 
   * 
-  * Last edit: 6/18/2020
-  * @author 	Celeste
-  * @version 	1.0
-  * @since 		1.1
+  * Last edit: 6/19/2020
+  * @author 	Celeste, Eric
+  * @version 	1.1
+  * @since 		1.0
   */
 
 import java.awt.*;
@@ -16,6 +16,11 @@ public class SplashScreen {
 	  * The logo
 	  */
 	private Image logo;
+
+	/**
+	  * The company name
+	  */
+	private Image company;
 
 	/**
 	  * The drawing to be displayed on the screen
@@ -50,6 +55,7 @@ public class SplashScreen {
 	  * Constructor
 	  */
 	public SplashScreen() {
+		company = Utility.loadImage("Company.png", LOGO_SIZE, LOGO_SIZE);
 		logo = Utility.loadImage("Logo.png", LOGO_SIZE, LOGO_SIZE);
 		logoAlpha = 0;
 		alphaIncrease = true;
@@ -70,7 +76,7 @@ public class SplashScreen {
 			Graphics2D g2d = (Graphics2D) g.create();
             g2d.setComposite(AlphaComposite.SrcOver.derive(Math.min(1,Math.max(0,logoAlpha))));
 
-            g2d.drawImage(logo, (Utility.FRAME_WIDTH-LOGO_SIZE)/2, (Utility.FRAME_HEIGHT-LOGO_SIZE)/2, null);
+            g2d.drawImage(company, (Utility.FRAME_WIDTH-LOGO_SIZE)/2, (Utility.FRAME_HEIGHT-LOGO_SIZE)/2, null);
 
             g2d.dispose();
 

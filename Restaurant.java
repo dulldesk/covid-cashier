@@ -380,7 +380,11 @@ public class Restaurant {
 			javax.swing.Timer timer = new javax.swing.Timer(1000, new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					String customerDialogue = "hello world. here is my order. ";
+					String customerDialogue;
+					if(customer.getType().equals("CustomerM"))
+						customerDialogue = "Oi, I'm "+customer.name+". I want a burger, soda and fries. Step on it.";
+					else
+						customerDialogue = "Hello, I'm "+customer.name+"! Could I have a salad please?";
 					intro = new Dialogue(customerDialogue, customer.getType());
 					((Customer)customer).setCurrentAction("order");
 					openedStations.put("Front Counter", true);

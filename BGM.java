@@ -1,3 +1,12 @@
+/**
+  * The splash screen 
+  * 
+  * Last edit: 6/18/2020
+  * @author 	Eric
+  * @version 	1.1
+  * @since 		1.0
+  */
+
 import java.io.*;
 import javax.sound.sampled.*;
 
@@ -6,6 +15,10 @@ public class BGM {
     private AudioInputStream audioInputStream;
     private Long currentFrame;
     private String name;
+
+    /**
+	  * Constructor
+	  */
     public BGM(String name) {
         this.name = name;
         try {
@@ -15,13 +28,23 @@ public class BGM {
             clip.loop(Clip.LOOP_CONTINUOUSLY);
         } catch(Exception e) {}
     }
+
+    /**
+     * Play method
+     */
     public void play() {
         clip.start();
     }
+    /**
+     * Pause Method
+     */
     public void pause() {
         this.currentFrame = this.clip.getMicrosecondPosition();
         clip.stop();
     }
+    /**
+     * Resume Method
+     */
     public void resume() {
         clip.close();
         try {
@@ -32,6 +55,9 @@ public class BGM {
         clip.setMicrosecondPosition(currentFrame);
         clip.start();
     }
+    /**
+     * Stop method
+     */
     public void stop() {
         clip.stop();
         clip.close();
