@@ -30,7 +30,7 @@ public class OrderList extends TaskList {
 	/**
 	  * Current page viewed on the order list
 	  */
-	private int pageNo;
+	public int pageNo;
 
 	/**
 	  * Image tabs
