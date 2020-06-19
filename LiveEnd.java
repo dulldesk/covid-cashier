@@ -111,7 +111,7 @@ public class LiveEnd {
 	}
 
 	/**
-	  * The drawing of a COVID Counter level screen
+	  * The drawing of the simulation level end screen
 	  */
 	private class EndDrawing extends JComponent {
 		/**
