@@ -66,7 +66,6 @@ public class TrainingLevel {
 
 		// text = infoMap.get(name).getInfo();
 		background = infoMap.get(name).getBkgd();
-
 		infoCard = new Dialogue(infoMap.get(name).getInfo(),"=",false);
 	}
 

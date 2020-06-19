@@ -42,7 +42,7 @@ public class CashRun extends Minigame {
         this.gender = gender;
         this.equipment = equipment;
         health = 100;
-        infoCard = new Dialogue("Cash Run! Germs can survive on paper money for a long time. Jump over all the paper bills with the space bar and collect credit cards by running through them. Good luck!", "Coworker_MG");
+        infoCard = new Dialogue("Cash Run! Germs can survive on paper money for a long time. Jump over all the paper bills with the space bar and collect credit cards by running through them. Good luck!", "Coworker");
         drawing = new CashRunDrawing();
         Utility.changeDrawing(drawing);
         BGM.play("cashrun");
@@ -197,9 +197,9 @@ public class CashRun extends Minigame {
                     //BGM.fadeOut();
                     player.stepNo = 0;
                     if(health > 0)
-                        infoCard = new Dialogue("Congratulations on completing Cash Run! You finished with "+health+"% of your health, and a score of "+score+". Now get back to work!", "Coworker_MG");
+                        infoCard = new Dialogue("Congratulations on completing Cash Run! You finished with "+health+"% of your health, and a score of "+score+". Now get back to work!", "Coworker");
                     else
-                        infoCard = new Dialogue("You didn't complete Cash Run. Now get back to work!", "Coworker_MG");
+                        infoCard = new Dialogue("You didn't complete Cash Run. Now get back to work!", "Coworker");
                 }
                 refresh = !refresh;
                 g.drawImage(Utility.loadImage("HealthBar.png", 400, 50), Utility.FRAME_WIDTH/2-200, 25, null);

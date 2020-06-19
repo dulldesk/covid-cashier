@@ -25,7 +25,7 @@ public class Disinfection extends Minigame {
 	  */
     public Disinfection() {
         health = 100;
-        infoCard = new Dialogue("Disinfection! It is important to regularly disinfect surfaces. Shoot the virus down with disinfectant by clicking your mouse. Good luck!", "Coworker_MG");
+        infoCard = new Dialogue("Disinfection! It is important to regularly disinfect surfaces. Shoot the virus down with disinfectant by clicking your mouse. Good luck!", "Coworker");
         drawing = new DisinfectionDrawing();
         Utility.changeDrawing(drawing);
     }
@@ -98,7 +98,7 @@ public class Disinfection extends Minigame {
                 g2d.rotate(-0.01, Utility.FRAME_WIDTH/2, Utility.FRAME_HEIGHT/2);
                 hit = 0;
             }
-            g.drawImage(Utility.loadImage("Disinfection_BG.png",Utility.FRAME_WIDTH,Utility.FRAME_HEIGHT),0,0,null);
+            g.drawImage(Utility.loadImage("DisinfectionBG.png",Utility.FRAME_WIDTH,Utility.FRAME_HEIGHT),0,0,null);
             if(!end) {
                 if(spacing > 20+rand && obstacleCount < 15) {
                     String name = "Virus";
@@ -142,9 +142,9 @@ public class Disinfection extends Minigame {
                     hit = 0;
                     shooter.deactivate();
                     if(health > 0)
-                        infoCard = new Dialogue("Congratulations on completing Disinfection! You finished with "+health+"% of your health, and a score of "+score+". Now get back to work!", "Coworker_MG");
+                        infoCard = new Dialogue("Congratulations on completing Disinfection! You finished with "+health+"% of your health, and a score of "+score+". Now get back to work!", "Coworker");
                     else
-                        infoCard = new Dialogue("You didn't complete Disinfection. Now get back to work!", "Coworker_MG");
+                        infoCard = new Dialogue("You didn't complete Disinfection. Now get back to work!", "Coworker");
                 }
                 g.drawImage(Utility.loadImage("HealthBar.png", 400, 50), Utility.FRAME_WIDTH/2-200, 25, null);
                 g.setColor(new Color(214, 0, 0));

@@ -31,8 +31,10 @@ public class Station extends Boundary {
 		this.name = name.trim();
 
 		deactivated = false;
-
-		entryCard = new Dialogue(name,"Enter", false);
+		if(name.contains("Don't"))
+			entryCard = new Dialogue(name, "Coworker");
+		else
+			entryCard = new Dialogue(name,"Enter", false);
 	}
 
 	@Override

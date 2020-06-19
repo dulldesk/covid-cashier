@@ -25,7 +25,7 @@ public class OrderList extends TaskList {
 	/**
 	  * All orders to be completed
 	  */
-	private ArrayList<Checklist> orders;
+	public ArrayList<Checklist> orders;
 
 	/**
 	  * Current page viewed on the order list

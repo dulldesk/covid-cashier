@@ -21,7 +21,7 @@ public class Checklist extends TaskList {
 	  * <p>
 	  * The value is whether the task has been completed. 
 	  */
-	private Map<String,Boolean> tasks;
+	public Map<String,Boolean> tasks;
 
 	/**
 	  * Task names, ordered in the order to be displayed in the checklist
@@ -109,9 +109,10 @@ public class Checklist extends TaskList {
 
 				g.setColor(Color.black);
 			}
-
-			g.drawString(name,x,y);
-			y += Utility.TEXT_FONT.getSize()+20;
+			if(!name.contains("Don't")) {
+				g.drawString(name,x,y);
+				y += Utility.TEXT_FONT.getSize()+20;
+			}
 		}
 	}
 

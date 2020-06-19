@@ -41,3 +41,6 @@
 
 # west wall
 -27,0,10,1100,W
+
+# not my station
+330,110,30,260,E

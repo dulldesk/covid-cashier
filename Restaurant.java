@@ -40,6 +40,16 @@ public class Restaurant {
 	private Player user;
 
 	/**
+	  * The coworker
+	  */
+	private Coworker coworker;
+
+	/**
+	  * The customer
+	  */
+	private Customer customer;
+
+	/**
 	  * Number of completed stations
 	  */
 	public int completedStations;
@@ -89,6 +99,10 @@ public class Restaurant {
 		// initial position
 		user = new Player(User.name, User.gender);
 		user.setCoordinates(100,800);
+		coworker = new Coworker("Kym");
+		coworker.setCoordinates(600, 250);
+		int randCustomer = (int)(Math.random()*2);
+		customer = new Customer((randCustomer==0?"Will":"Lauren"), (randCustomer==0?'M':'F'), (randCustomer==0?"N":"M"));
 		System.out.println(user);
 
 		topY = -user.getY() + Utility.FRAME_HEIGHT/2 - user.height/2;
@@ -203,7 +217,7 @@ public class Restaurant {
 
 			// change to coworker if available
 			if (inTraining) 
-				intro = new Dialogue(TrainingLevel.getInfo("intro"), "PlayerM");
+				intro = new Dialogue(TrainingLevel.getInfo("intro"), "Coworker");
 
 			stationList = inTraining ? new Checklist(trainingStationNames.toArray(new String[trainingStationNames.size()])) : new OrderList();
 
@@ -227,6 +241,8 @@ public class Restaurant {
 
 			boolean userDrawn = false;
 
+			coworker.draw(g, true);
+
 			// if statements allow for the user to go behind the counter
 			if (user.getY() < longCounterY && user.getY() > longCounterY - diffBehindCounter) {
 				user.draw(g, true);
@@ -242,7 +258,6 @@ public class Restaurant {
 
 			if (!userDrawn) 
 				user.draw(g, true);
-
 
 			// System.out.println(user.getX() + " " + user.getY() + " ; " + getYRelativeToFrame(user.getY()));
 			// System.out.println(topY);
@@ -325,6 +340,10 @@ public class Restaurant {
 									new CovidCounter(inTraining);
 									return;
 								case "front counter": 
+									if(((OrderList)stationList).orders.get(0).tasks.get("Front Counter"))
+										new CashRun(user);
+									else
+										new MemoryGame();
 									return;
 							}
 							/*

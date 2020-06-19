@@ -42,7 +42,7 @@ public class FridgeTiles extends Minigame {
         this.gender = gender;
         this.equipment = equipment;
         health = 100;
-        infoCard = new Dialogue("Fridge Tiles! It's important to only touch what you need in the fridge, to avoid spreading germs. Avoid all the food by using the left and right arrow keys. Good luck!", "Coworker_MG");
+        infoCard = new Dialogue("Fridge Tiles! It's important to only touch what you need in the fridge, to avoid spreading germs. Avoid all the food by using the left and right arrow keys. Good luck!", "Coworker");
         drawing = new FridgeTilesDrawing();
         Utility.changeDrawing(drawing);
     }
@@ -174,9 +174,9 @@ public class FridgeTiles extends Minigame {
                     hit = 0;
                     player.fridgeTilesMovement.deactivate();
                     if(health > 0)
-                        infoCard = new Dialogue("Congratulations on completing Fridge Tiles! You finished with "+health+"% of your health, and a score of "+score+". Now get back to work!", "Coworker_MG");
+                        infoCard = new Dialogue("Congratulations on completing Fridge Tiles! You finished with "+health+"% of your health, and a score of "+score+". Now get back to work!", "Coworker");
                     else
-                        infoCard = new Dialogue("You didn't complete Fridge Tiles. Now get back to work!", "Coworker_MG");
+                        infoCard = new Dialogue("You didn't complete Fridge Tiles. Now get back to work!", "Coworker");
                 }
                 refresh = !refresh;
                 g.drawImage(Utility.loadImage("HealthBar.png", 400, 50), Utility.FRAME_WIDTH/2-200, 25, null);

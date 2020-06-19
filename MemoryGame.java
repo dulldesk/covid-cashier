@@ -19,7 +19,7 @@ public class MemoryGame extends Minigame {
 	  * Initializes and displays the drawing to the frame
 	  */
     public MemoryGame() {
-        infoCard = new Dialogue("Memory! As a cashier, you must be able to remember customers' orders. Click cards to flip over and match pairs. Good luck!", "Coworker_MG");
+        infoCard = new Dialogue("Memory! As a cashier, you must be able to remember customers' orders. Click cards to flip over and match pairs. Good luck!", "Coworker");
         drawing = new MemoryGameDrawing();
         Utility.changeDrawing(drawing);
     }
@@ -155,7 +155,7 @@ public class MemoryGame extends Minigame {
                         cards[j][i].deactivate();
                     }
                 }
-                infoCard = new Dialogue("Congratulations on completing Memory! It's helpful to have a good memory, no matter what you do. Now get back to work!", "Coworker_MG");
+                infoCard = new Dialogue("Congratulations on completing Memory! It's helpful to have a good memory, no matter what you do. Now get back to work!", "Coworker");
             }
             if(end)
                 infoCard.draw(g);
