@@ -168,7 +168,7 @@ public class MemoryGame extends Minigame {
             if(end) {
                 infoCard.draw(g);
                 if(infoCard.isEntered()) {
-                    // bgm.stop();
+                    bgm.stop();
                     infoCard.deactivate();
                     Utility.backToRestaurant();
                     return;

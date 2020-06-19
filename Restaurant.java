@@ -446,7 +446,7 @@ public class Restaurant {
 						stn.resetDialogue();
 
 						String currStn = stn.getName().toLowerCase();
-						bgm.pause();
+						bgm.stop();
 						if (currStn.equals("exit")) {
 							new MainMenu();
 							return;
