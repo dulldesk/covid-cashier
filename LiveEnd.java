@@ -15,7 +15,7 @@ public class LiveEnd {
 	/**
 	  * List of improper preventative measures employed to be revealed to the user
 	  */
-	private Map<String, Integer> failures; 
+	private final Map<String, Integer> failures; 
 
 	/**
 	  * The background
@@ -27,11 +27,33 @@ public class LiveEnd {
 	  */
 	private Button returnButton;
 
+	/**
+	  * Text left button to flip between "mistakes" / "failures"
+	  */
+	private Button leftButton;
+
+	/**
+	  * Text right button to flip between "mistakes" / "failures"
+	  */
+	private Button rightButton;
 
 	/**
 	  * The drawing to be displayed on the screen
 	  */
 	private EndDrawing drawing; 
+
+	/**
+	  * The current failure being viewed
+	  */
+	private int currentFailure; 
+
+	private static final int failureYAlign; 
+
+	private java.util.List<String> failureKeys;
+
+	static {
+		failureYAlign = 380;
+	}
 
 	/**
 	  * Constructs a station
@@ -45,7 +67,12 @@ public class LiveEnd {
 		String message = "Return to the Main Menu";
 		returnButton = new Button(message, (Utility.FRAME_WIDTH - Utility.getStringWidth(message, Utility.LABEL_FONT))/2, Utility.FRAME_HEIGHT - 60, Utility.LABEL_FONT, Color.white, Utility.RED);
 
+		int xDiff = 30;
+		leftButton = new Button("<", Utility.FRAME_WIDTH/2 - xDiff, failureYAlign, Utility.TEXT_FONT, Color.white, Utility.RED);
+		rightButton = new Button(">", Utility.FRAME_WIDTH/2 + xDiff, failureYAlign, Utility.TEXT_FONT, Color.white, Utility.RED);
 
+		currentFailure = 0;
+		failureKeys = new ArrayList<String>(failures.keySet());
 
 		drawing = new EndDrawing();
 		Utility.changeDrawing(drawing);
@@ -56,6 +83,11 @@ public class LiveEnd {
 	  */
 	public void activate() {
 		returnButton.activate();
+
+		if (failures.size() > 1) {
+			leftButton.activate();
+			rightButton.activate();
+		}
 	}
 
 	/**
@@ -63,6 +95,11 @@ public class LiveEnd {
 	  */
 	public void halt() {
 		returnButton.deactivate();
+
+		if (failures.size() > 1) {
+			leftButton.deactivate();
+			rightButton.deactivate();
+		}
 	}
 
 	/**
@@ -82,6 +119,38 @@ public class LiveEnd {
 			activate();
 		}
 
+		private void viewFailures(Graphics g) {
+			if (true || failures.size() > 1) {
+				leftButton.draw(g);
+				rightButton.draw(g);
+
+				if (leftButton.isClicked()) {
+					currentFailure--;
+
+					leftButton.resetClicked();
+
+					if (currentFailure < 0) currentFailure = failures.size()-1;
+				} else if (rightButton.isClicked()) {
+					currentFailure++;
+
+					rightButton.resetClicked();
+					if (currentFailure >= failures.size()) currentFailure = 0;
+				}
+
+				g.setColor(Color.white);
+				g.setFont(Utility.TEXT_FONT_SMALL);
+
+				String message = "Use the arrows provided to flip between the preventative measures you missed";
+				g.drawString(message, (Utility.FRAME_WIDTH - Utility.getStringWidth(message, g))/2, 280);
+			} 
+
+			g.setFont(Utility.TEXT_FONT);
+
+			String error = failureKeys.get(currentFailure);
+			error += " (" + failures.get(error) + "x)";
+			g.drawString(error, (Utility.FRAME_WIDTH - Utility.getStringWidth(error, g))/2, failureYAlign-50);
+		}
+
 		/**
 		  * Paint method of JComponent
 		  * @param g 	the Graphics object to draw on
@@ -98,13 +167,14 @@ public class LiveEnd {
 			g.setFont(Utility.TITLE_FONT);
 			g.drawString(title,(Utility.FRAME_WIDTH - Utility.getStringWidth(title, g))/2, titleY);
 
-			String [] messages = {"You completed the simulation level, ", null, "to avoid spreading the virus"};
+			String [] messages = {"You completed the simulation level, ", null, "measures to avoid spreading the virus"};
 			if (failures.isEmpty()) {
-				messages[1] = "and you properly maintained preventative measures";
+				messages[1] = "and you properly maintained preventative";
 			} else {
-				messages[1] = "but you sometimes failed to maintain preventative measures";
+				messages[1] = "but you sometimes failed to maintain preventative";
 
 			}
+				viewFailures(g);
 
 			g.setFont(Utility.TEXT_FONT);
 
