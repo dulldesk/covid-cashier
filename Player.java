@@ -209,14 +209,15 @@ public class Player extends Character {
 	  */
 	public void checkHygiene(String nextStn) {
 		if (!nextStn.equals("covid counter")) {
-			if (hygienicTracker.getLastTask("masks").equals("")) {
+			if (getPPE().indexOf("M") == -1) {
 				addFailure("You did not wear a mask prior to a task");
+			System.out.println("failures mask "+ failures.size());
 			}
 
 			if (!hygienicTracker.getLastTask().equals(nextStn) && !hygienicTracker.getLastTask("gloves").equals(hygienicTracker.getLastTask()) && !hygienicTracker.getLastTask("gloves").equals("covid counter")) {
 				addFailure("You did not change your gloves in between tasks");
+			System.out.println("failures gloves "+ failures.size());
 			}
-			System.out.println("failures "+ failures.size());
 		}
 
 		hygienicTracker.setLastTask(nextStn);
@@ -273,7 +274,7 @@ public class Player extends Character {
 			if (key.equals("gloves")) {
 				if (!getLastTask("clean hands").equals(lastTask)) {
 					addFailure("You did not sanitize your hands before changing gloves");
-					System.out.println("failures "+ failures.size());
+					System.out.println("failures clean "+ failures.size());
 				}
 			}
 

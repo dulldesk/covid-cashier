@@ -148,7 +148,7 @@ public class Restaurant {
 
 		topY = -user.getY() + Utility.FRAME_HEIGHT/2 - user.height/2;
 		adjustTopY();
-		
+
 		openedStations = new HashMap<String, Boolean>();
 		openedStations.put("COVID Counter", true);
 		openedStations.put("Front Counter", true);
@@ -170,6 +170,9 @@ public class Restaurant {
 		bgm.play();
 	}
 
+	/**
+	  * Adjusts the window frame of the restaurant when the user is played at the edges
+	  */
 	private void adjustTopY() {
 		if (user.getY() > KITCHEN_LINE) {
 			topY = Math.max(topY, -Restaurant.MAP_HEIGHT + Utility.FRAME_HEIGHT + user.height/2);
@@ -237,6 +240,7 @@ public class Restaurant {
 		if (stationList != null) stationList.deactivate();
 
 		for (Station stn : stations) stn.deactivate();
+		bgm.stop();
 	}
 
 	/**
@@ -339,7 +343,7 @@ public class Restaurant {
 		private void drawCustomer(Graphics g) {
 			Customer castedCustomer = ((Customer)customer);
 			if (!castedCustomer.hasAppeared && castedCustomer.isPresent() && castedCustomer.getCurrentAction().equals("off screen")) {
-				castedCustomer.setXTarget(400);
+				castedCustomer.setXTarget(350);
 				castedCustomer.setCurrentAction("walk right");
 			} else if (castedCustomer.getCurrentAction().equals("walk right")) {
 				if (customer.getX() < castedCustomer.getXTarget()) customer.moveRight();
@@ -399,7 +403,7 @@ public class Restaurant {
 			g.drawImage(MAP,0,topY,null);
 
 
-			if (inTraining && User.hasTrained) {
+			if ((inTraining && User.hasTrained) || (!inTraining && listIsCompleted())) {
 				g.drawImage(LEFT_ARROW, 10, getYRelativeToFrame(470), null);
 			}
 
@@ -409,7 +413,7 @@ public class Restaurant {
 			// check if user has fully trained
 			if (inTraining && !User.hasTrained && listIsCompleted()) {
 				User.hasTrained = true;
-				intro = new Dialogue("You've finished the training! Go to the arrow (and face in that direction) to exit the restaurant");
+				intro = new Dialogue("You've finished the training! Go to the arrow (and face in that direction) to exit the restaurant", "Coworker");
 				repaint();
 			}
 
@@ -421,10 +425,10 @@ public class Restaurant {
 
 			// check whether the live level has been completed
 			if (!inTraining && listIsCompleted()) {
-				halt();
-				bgm.stop();
-				new LiveEnd(user.failures);
-				return;
+				for (String key : openedStations.keySet()) openedStations.put(key, false);
+				openedStations.put("Exit", true);
+				intro = new Dialogue("You've finished your work shift! Go to the arrow (and face in that direction) to exit the restaurant", "Coworker");
+				repaint();
 			}
 
 			if (intro != null) {
@@ -462,11 +466,17 @@ public class Restaurant {
 						String currStn = stn.getName().toLowerCase();
 						bgm.stop();
 						if (currStn.equals("exit")) {
-							new MainMenu();
-							return;
+							if (inTraining) {
+								new MainMenu();
+								return;
+							} else {
+								halt();
+								new LiveEnd(user.failures);
+								return;
+							}
 						}
+						user.checkHygiene(currStn);
 						if (inTraining) {
-							user.checkHygiene(currStn);
 							completeStation(stn.getName());
 
 							switch (currStn) {
@@ -478,12 +488,11 @@ public class Restaurant {
 									break;
 							}
 						} else {
-							user.checkHygiene(currStn);
 							if (!initialLiveTask && !currStn.equals("covid counter")) {
 								completeStation(stn.getName());
 								openedStations.put(stn.getName(), false);
 							} 
-							if (initialLiveTask) {
+							if (initialLiveTask && !currStn.equals("covid counter")) {
 								openedStations.put(stn.getName(), false);
 							}
 
