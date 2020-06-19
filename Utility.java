@@ -119,7 +119,7 @@ public final class Utility {
 		try {
 			CovidCashier.getPastRestaurant().activate();
 			changeDrawing(CovidCashier.getPastRestaurant().getDrawing());
-			CovidCashier.getPastRestaurant().bgm.resume();
+			// CovidCashier.getPastRestaurant().bgm.resume();
 		} catch (NullPointerException e) {}
 	}
 

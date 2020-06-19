@@ -69,6 +69,9 @@ public class Restaurant {
 	  */
 	private Dialogue intro;
 
+	/**
+	  * List of tasks to be completed
+	  */
 	private TaskList stationList;
 
 	private static final Image LONG_COUNTER;
@@ -77,11 +80,30 @@ public class Restaurant {
 
 	private static final Image LEFT_ARROW;
 
+	/**
+	  * y-coordinate of the map image
+	  */
 	public static int topY;
 
+	/**
+	  * Names of the training stations
+	  */
 	private static java.util.List<String> trainingStationNames;
 
+	/**
+	  * Background music
+	  */
 	public BGM bgm;
+
+	/**
+	  * Stations in the live level that are accessible
+	  */
+	private Map<String, Boolean> openedStations;
+
+	/**
+	  * Whether the user is on the initial task of the live station
+	  */
+	private boolean initialLiveTask;
 
 	static {
 		stations = new ArrayList<Station>();
@@ -114,6 +136,21 @@ public class Restaurant {
 		customer = new Customer((randCustomer==0?"Will":"Lauren"), (randCustomer==0?'M':'F'), (randCustomer==0?"N":"M"));
 
 		topY = -user.getY() + Utility.FRAME_HEIGHT/2 - user.height/2;
+
+		openedStations = new HashMap<String, Boolean>();
+		openedStations.put("COVID Counter", true);
+		openedStations.put("Front Counter", true);
+
+
+		initialLiveTask = true;
+
+		if (inTraining) 
+			intro = new Dialogue(TrainingLevel.getInfo("intro"), "Coworker");
+		else 
+			intro = new Dialogue("Start off your shift by fetching PPE and then heading to the front counter", "Coworker");
+
+		stationList = inTraining ? new Checklist(trainingStationNames.toArray(new String[trainingStationNames.size()])) : new OrderList();
+
 
 		workplace = new RestaurantDrawing();
 		Utility.changeDrawing(workplace);
@@ -229,19 +266,19 @@ public class Restaurant {
 		return workplace;
 	}
 
+	public void addGenericOrder() {
+		String [] tasks = new String[]{"Fridge", "Long Counter", "Front Counter"};
+		((OrderList)stationList).addOrder(tasks);
+
+		for (String task : tasks) openedStations.put(task, true);
+	}
+
 	private class RestaurantDrawing extends JComponent {
 		/**
 		  * Constructor
 		  */
 		public RestaurantDrawing() {
 			super();
-
-			// change to coworker if available
-			if (inTraining) 
-				intro = new Dialogue(TrainingLevel.getInfo("intro"), "Coworker");
-
-			stationList = inTraining ? new Checklist(trainingStationNames.toArray(new String[trainingStationNames.size()])) : new OrderList();
-
 			activate();
 		}
 
@@ -301,6 +338,11 @@ public class Restaurant {
 				repaint();
 			}
 
+			if (!customer.isPresent() && !initialLiveTask) {
+				customer.setPresence(true);
+				addGenericOrder();
+			}
+
 			// check whether the live level has been completed
 			if (!inTraining && listIsCompleted()) {
 				halt();
@@ -331,8 +373,10 @@ public class Restaurant {
 						} 
 					}
 
+					if (!inTraining && !openedStations.getOrDefault(stn.getName(), false)) continue;
 					stn.draw(g);
-					if (stn.isEntered() && (stn.canTrain() || stn.getName().equalsIgnoreCase("exit"))) {
+
+					if (stn.isEntered() && ((!inTraining && openedStations.getOrDefault(stn.getName(), false)) || (inTraining && (stn.canTrain() || stn.getName().equalsIgnoreCase("exit"))))) {
 						halt();
 
 						// Uses the current restaurant object
@@ -359,7 +403,7 @@ public class Restaurant {
 							}
 						} else {
 							user.checkHygiene(currStn);
-							completeStation(stn.getName());
+							if (!initialLiveTask && !currStn.equals("covid counter")) completeStation(stn.getName());
 
 							switch (currStn) {
 								case "fridge":
@@ -369,10 +413,12 @@ public class Restaurant {
 									new CovidCounter(inTraining);
 									break;
 								case "front counter": 
-									if(((OrderList)stationList).orders.get(0).tasks.get("Front Counter"))
+									if (!initialLiveTask && ((OrderList)stationList).orders.get(0).tasks.get("Front Counter"))
 										new CashRun(user);
-									else
+									else {
 										new MemoryGame();
+										initialLiveTask = false;
+									}
 									break;
 								case "long counter":
 									new Disinfection();

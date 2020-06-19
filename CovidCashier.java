@@ -46,8 +46,8 @@ public final class CovidCashier  {
 	public CovidCashier() {
 		initializeFrame();
 
-		// new SplashScreen();
-		new PlayerSelect();
+		new SplashScreen();
+		// new PlayerSelect();
 		// new CashRun('M', "MG");
 		//new FridgeTiles('M', "MG");
 		//new Disinfection();

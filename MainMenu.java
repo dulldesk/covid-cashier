@@ -56,13 +56,17 @@ public class MainMenu extends Menu {
 	  */
 	public class MainMenuDrawing extends MenuDrawing {
 		/**
+		  * Whether the message was just deactivated
+		  */
+		private boolean justDeactivated;
+
+		/**
 		  * Object constructor. Uses the superclass's constructor
 		  */
 		public MainMenuDrawing() {
 			super();
 			message.activate();
-
-			for (Button btn : buttons) btn.activate();
+			justDeactivated = false;
 		}
 
 		/**
@@ -78,7 +82,11 @@ public class MainMenu extends Menu {
 			drawReceipt(g);
 
 			if (!message.isEmpty() && !message.canProceed()) message.draw(g);
-			else message.deactivate();
+			else if (!justDeactivated) {
+				justDeactivated = true;
+				for (Button btn : buttons) btn.activate();
+				message.deactivate();
+			}
 
 			for (Button btn : buttons) {
 				btn.draw(g);
@@ -88,6 +96,7 @@ public class MainMenu extends Menu {
 					if (btn.getName().toUpperCase().equals("PLAY") && !User.hasTrained) {
 						message = new Dialogue("You cannot enter the Live Level before undergoing training.");
 						message.activate();
+						justDeactivated = false;
 						repaint();
 						continue;
 					}
