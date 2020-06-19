@@ -2,10 +2,10 @@ import java.io.*;
 import javax.sound.sampled.*;
 
 public class BGM {
-    Clip clip;
-    AudioInputStream audioInputStream;
-    Long currentFrame;
-    String name;
+    private Clip clip;
+    private AudioInputStream audioInputStream;
+    private Long currentFrame;
+    private String name;
     public BGM(String name) {
         this.name = name;
         try {
