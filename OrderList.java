@@ -66,7 +66,7 @@ public class OrderList extends TaskList {
 	@Override
 	protected void drawOpen(Graphics g) {
 		if (orders.size() == 0) {
-			String msg = "No orders to complete!";
+			String msg = "No orders present";
 			g.setFont(Utility.TEXT_FONT);
 			g.drawString(msg, (Utility.FRAME_WIDTH - Utility.getStringWidth(msg,g))/2, 100);
 		} else {
