@@ -326,10 +326,6 @@ public class Restaurant {
 									return;
 								case "front counter": 
 									return;
-								case "pick up counter":
-									return ;
-								case "drop off counter":
-									return;
 							}
 							/*
 								where:
