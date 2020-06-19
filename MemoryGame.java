@@ -178,8 +178,8 @@ public class MemoryGame extends Minigame {
                 g.setColor(Color.black);
                 g.setFont(Utility.LABEL_FONT);
                 g.drawString("Pairs Found: "+score, Utility.FRAME_WIDTH/2-Utility.getStringWidth("Pairs Found: 0", Utility.LABEL_FONT)/2, 50);
+                refreshScreen();
             }
-            refreshScreen();
         }
 
         public void refreshScreen() {

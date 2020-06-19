@@ -218,6 +218,7 @@ public class CashRun extends Minigame {
                     g.setColor(new Color(214, 0, 0, 50));
                     g.fillRect(0, 0, Utility.FRAME_WIDTH, Utility.FRAME_HEIGHT);
                 }
+                refreshScreen();
             } else {
                 player.draw(g);
                 infoCard.draw(g);
@@ -227,7 +228,6 @@ public class CashRun extends Minigame {
                     return;
                 }
             }
-            refreshScreen();
         }
 
         public void refreshScreen() {

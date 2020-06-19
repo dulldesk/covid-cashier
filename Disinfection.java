@@ -164,6 +164,7 @@ public class Disinfection extends Minigame {
                     g.setColor(new Color(214, 0, 0, 50));
                     g.fillRect(0, 0, Utility.FRAME_WIDTH, Utility.FRAME_HEIGHT);
                 }
+                refreshScreen();
             } else {
                 infoCard.draw(g);
                 if(infoCard.canProceed) {
@@ -172,7 +173,6 @@ public class Disinfection extends Minigame {
                     return;
                 }
             }
-            refreshScreen();
         }
 
         public void refreshScreen() {
