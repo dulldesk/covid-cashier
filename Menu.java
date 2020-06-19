@@ -36,6 +36,11 @@ public abstract class Menu {
 	public BGM bgm;
 
 	/**
+	 * Timer for the receipt refresh 
+	 */
+	public javax.swing.Timer timer;
+
+	/**
 	  * Loads buttons aligned to the screen of the cash register
 	  * @param options	the options to be displayed
 	  */
@@ -51,11 +56,6 @@ public abstract class Menu {
 	  * GUI of a menu
 	  */
 	public abstract class MenuDrawing extends JComponent {
-		/**
-		 * Timer for the receipt refresh 
-		 */
-		protected javax.swing.Timer timer;
-
 		/**
 		 * Temporary order number
 		 */

@@ -49,6 +49,8 @@ public class MainMenu extends Menu {
 		for (Button btn : buttons) btn.deactivate();
 		message.deactivate();
 		User.firstMainMenu = false;
+
+		timer.stop();
 	}
 
 	/**

@@ -35,6 +35,8 @@ public class Quit extends Menu {
 	public void halt() {
 		CovidCashier.frame.remove(drawing);
 		for (Button btn : buttons) btn.deactivate();
+
+		timer.stop();
 	}
 
 	/**
