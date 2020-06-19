@@ -12,7 +12,6 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.Timer;
 import java.util.*;
-import java.util.List;
 import java.io.*;
 
 public class MemoryGame extends Minigame {
@@ -42,12 +41,22 @@ public class MemoryGame extends Minigame {
         /**
          * Flipped Cards
          */
-        private boolean[][] flipped;
+        private ArrayList<Card> flipped;
 
         /**
-         * Contains Checked Cards
+         * Number of Flipped Cards
          */
-        LinkedList<Card> checked;
+        private int count;
+
+        /**
+         * ---
+         */
+        private int delay;
+
+        /**
+         * ---
+         */
+        private int spacing;
         
         /**
 		 * Object constructor. Uses the superclass's constructor
@@ -55,8 +64,10 @@ public class MemoryGame extends Minigame {
         public MemoryGameDrawing() {
             super();
             cards = new Card[5][2];
-            flipped = new boolean[5][2];
-            checked = new LinkedList<Card>();
+            flipped = new ArrayList<Card>();
+            count = 0;
+            delay = 800;
+            spacing = 0;
             int[] id = {0, 0, 1, 1, 2, 2, 3, 3, 4, 4};
             String[] names = {"Burger", "Soda", "Fries", "IceCream", "Salad"};
             for(int i = 0; i < id.length; i++) {
@@ -68,7 +79,8 @@ public class MemoryGame extends Minigame {
             for(int i = 0; i < 2; i++) {
                 for(int j = 0; j < 5; j++) {
                     System.out.print(id[i*5+j]+ " ");
-                    cards[j][i] = new Card(names[id[i*5+j]], 60+j*140, 100+i*180, 120, 160);
+                    cards[j][i] = new Card(names[id[i*5+j]], i*5+j, 60+j*140, 100+i*180, 120, 160);
+                    cards[j][i].activate();
                 }
                 System.out.println();
             }
@@ -82,24 +94,80 @@ public class MemoryGame extends Minigame {
 		public void display(Graphics g) {
             for(int i = 0; i < 2; i++) {
                 for(int j = 0; j < 5; j++) {
-                    if(cards[j][i].flipped)
-                        checked.add(cards[j][i]);
+                    if(cards[j][i].flipped && !flipped.contains(cards[j][i])) {
+                        flipped.add(cards[j][i]);
+                        count++;
+                    }
+                }
+            }
+            if(count >= 2) {
+                for(int i = 0; i < 2; i++) {
+                    for(int j = 0; j < 5; j++) {
+                        cards[j][i].deactivate();
+                    }
+                }
+                spacing++;
+                if(spacing > delay) {
+                    if(flipped.get(0).name.equals(flipped.get(1).name)) {
+                        flipped.get(0).found = true;
+                        flipped.get(1).found = true;
+                        score++;
+                    }
+                    flipped.get(0).flipped = false;
+                    flipped.get(1).flipped = false;
+                    spacing = 0;
+                    count = 0;
+                    flipped.clear();
+                    for(int i = 0; i < 2; i++) {
+                        for(int j = 0; j < 5; j++) {
+                            cards[j][i].activate();
+                        }
+                    }
+                }
+            }
+            for(int i = 0; i < 2; i++) {
+                for(int j = 0; j < 5; j++) {
                     cards[j][i].draw(g);
                 }
             }
-            if(checked.size() == 2) {
-                if(checked.getFirst().name.equals(checked.getLast().name)) {
-                    checked.getFirst().found = true;
-                    checked.getLast().found = true;
+            if(spacing < delay && start) {
+                spacing++;
+                infoCard.draw(g);
+                for(int i = 0; i < 2; i++) {
+                    for(int j = 0; j < 5; j++) {
+                        cards[j][i].deactivate();
+                    }
                 }
-                checked.getFirst().flipped = false;
-                checked.getLast().flipped = false;
-                checked.clear();
+            } else {
+                start = false;
+                delay = 75;
+                for(int i = 0; i < 2; i++) {
+                    for(int j = 0; j < 5; j++) {
+                        cards[j][i].activate();
+                    }
+                }
+            }
+            if(score == 5) {
+                end = true;
+                for(int i = 0; i < 2; i++) {
+                    for(int j = 0; j < 5; j++) {
+                        cards[j][i].deactivate();
+                    }
+                }
+                infoCard = new Dialogue("Congratulations on completing Memory! It's helpful to have a good memory, no matter what you do. Now get back to work!", "Coworker_MG");
+            }
+            if(end)
+                infoCard.draw(g);
+            else {
+                g.setColor(Color.black);
+                g.setFont(Utility.LABEL_FONT);
+                g.drawString("Pairs Found: "+score, Utility.FRAME_WIDTH/2-Utility.getStringWidth("Pairs Found: 0", Utility.LABEL_FONT)/2, 50);
             }
             refreshScreen();
         }
+
         public void refreshScreen() {
-			timer = new Timer(0, new ActionListener() {
+			timer = new Timer(5, new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					repaint();
@@ -116,6 +184,11 @@ class Card implements MouseListener {
      * The card's name
      */
     protected String name;
+
+    /**
+     * The card's name
+     */
+    protected final int ID;
 
     /**
      * The card's x-coordinate (top center)
@@ -157,15 +230,23 @@ class Card implements MouseListener {
      */
     protected Image content;
 
-    public Card(String n, int x, int y, int w, int h) {
+    /**
+     * ---
+     */
+    private boolean canClick;
+
+    public Card(String n, int i, int x, int y, int w, int h) {
         name = n;
+        ID = i;
         x_coord = x;
         y_coord = y;
         width = w;
         height = h;
         flipped = false;
         found = false;
+        canClick = false;
         card = Utility.loadImage("Checklist.png", width, height);
+        content = Utility.loadImage(name+".png", height/2, height/2);
         CovidCashier.frame.addMouseListener(this);
     }
 
@@ -176,14 +257,14 @@ class Card implements MouseListener {
     public void draw(Graphics g) {
         g.drawImage(card, x_coord, y_coord, null);
         if(flipped || found)
-            g.drawString(name, x_coord+20, y_coord+50);
+            g.drawImage(content, x_coord+width/2-height/4, y_coord+height/4, null);
     }
 
     public void mouseEntered(MouseEvent e) {}
     public void mouseExited(MouseEvent e) {}
     public void mousePressed(MouseEvent e) {}
     public void mouseClicked(MouseEvent e) {
-        if(withinCoordinates())
+        if(withinCoordinates() && canClick && !found)
             flipped = true;
     }
     public void mouseReleased(MouseEvent e) {}
@@ -191,5 +272,11 @@ class Card implements MouseListener {
     private boolean withinCoordinates() {
 		Point pnt = CovidCashier.frame.getMousePosition();
 		return pnt.x > x_coord && pnt.y > y_coord && pnt.x < x_coord+width && pnt.y < y_coord+height;
-	}
+    }
+    public void activate() {
+        canClick = true;
+    }
+    public void deactivate() {
+        canClick = false;
+    }
 }

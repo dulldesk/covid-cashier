@@ -132,12 +132,15 @@ public class Disinfection extends Minigame {
                 shooter.draw(g);
                 if(spacing < rand && start) {
                     infoCard.draw(g);
+                    shooter.deactivate();
                 } else {
                     start = false;
+                    shooter.activate();
                 }
                 if(obstacles.size() == 0 && obstacleCount == 15 || health == 0) {
                     end = true;
                     hit = 0;
+                    shooter.deactivate();
                     if(health > 0)
                         infoCard = new Dialogue("Congratulations on completing Disinfection! You finished with "+health+"% of your health, and a score of "+score+". Now get back to work!", "Coworker_MG");
                     else
@@ -204,6 +207,11 @@ class Shooter implements MouseListener, MouseMotionListener {
     protected Image shooter;
 
     /**
+     * ---
+     */
+    private boolean canClick;
+
+    /**
      * List of Obstacles
      */
     protected ArrayList<Projectile> projectiles;
@@ -223,6 +231,7 @@ class Shooter implements MouseListener, MouseMotionListener {
         width = w/4;
         height = h/4;
         angle = a;
+        canClick = false;
         shooter = Utility.loadImage("SprayBottle.png", width, height);
         projectiles = new ArrayList<Projectile>();
         CovidCashier.frame.addMouseListener(this);
@@ -265,9 +274,8 @@ class Shooter implements MouseListener, MouseMotionListener {
 
     public void mouseDragged(MouseEvent e) {}
     public void mouseMoved(MouseEvent e) {
-        Point pnt = CovidCashier.frame.getMousePosition();
-        double x = x_coord-pnt.x;
-        double y = y_coord-height+36/4-pnt.y;
+        double x = x_coord-e.getXOnScreen();
+        double y = y_coord-height+36/4-e.getYOnScreen();
         angle = Math.toDegrees(Math.atan(x/y));
         if(y < 0) angle -= 180;
     }
@@ -275,11 +283,20 @@ class Shooter implements MouseListener, MouseMotionListener {
     public void mouseExited(MouseEvent e) {}
     public void mousePressed(MouseEvent e) {}
     public void mouseClicked(MouseEvent e) {
-        int x = (int)(20*Math.sin(Math.toRadians(angle)));
-        int y = (int)(20*Math.cos(Math.toRadians(angle)));
-        projectiles.add(new Projectile(x_coord-width/2+90/4-30/8, y_coord-height+36/4-30/8, 40, 40, x, y));
+        if(canClick) {
+            int x = (int)(20*Math.sin(Math.toRadians(angle)));
+            int y = (int)(20*Math.cos(Math.toRadians(angle)));
+            projectiles.add(new Projectile(x_coord-width/2+90/4-30/8, y_coord-height+36/4-30/8, 40, 40, x, y));
+        }
     }
     public void mouseReleased(MouseEvent e) {}
+
+    public void activate() {
+        canClick = true;
+    }
+    public void deactivate() {
+        canClick = false;
+    }
 }
 
 class Projectile {

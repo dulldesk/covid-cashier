@@ -103,7 +103,6 @@ public class FridgeTiles extends Minigame {
             player.setClothing('W');
             player.setEquipment(equipment);
             player.setCoordinates(287, 370);
-            player.fridgeTilesMovement.activate();
             obstacles = new ArrayList<Obstacle>();
             spacing = 0;
             rand = 100;
@@ -160,12 +159,15 @@ public class FridgeTiles extends Minigame {
                 player.draw(g);
                 if(spacing < rand && start) {
                     infoCard.draw(g);
+                    player.fridgeTilesMovement.deactivate();
                 } else {
                     start = false;
+                    player.fridgeTilesMovement.activate();
                 }  
                 if(obstacles.size() == 0 && obstacleCount == 30 || health == 0) {
                     end = true;
                     hit = 0;
+                    player.fridgeTilesMovement.deactivate();
                     if(health > 0)
                         infoCard = new Dialogue("Congratulations on completing Fridge Tiles! You finished with "+health+"% of your health, and a score of "+score+". Now get back to work!", "Coworker_MG");
                     else
