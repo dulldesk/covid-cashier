@@ -31,12 +31,20 @@ public class LastTrigger {
 	  */
 	private final long REFRESH_RATE = (long)6.5e7; 
 
+	/**
+	  * Constructor
+	  * @param t 	the last trigger time to be set
+	  * @param d 	the direction of the last trigger to be set
+	  */
 	public LastTrigger (long t, char d) {
 		time = t;
 		direction = d;
 	}
 
-	public LastTrigger () {
+	/**
+	  * Constructor with default values
+	  */
+	public LastTrigger() {
 		time = System.nanoTime();
 	}
 

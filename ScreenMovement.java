@@ -11,16 +11,30 @@ import java.util.*;
 import javax.swing.*;
 
 public abstract class ScreenMovement {
+	/** 
+	  * Maps keys to Movements (bindings) for a certain screen
+	  */
 	protected Map<String, Movement> movementMap;
 
+	/** 
+	  * Prefix of the key for the binding maps
+	  * <p> Distinguishes keys for one screen movement from those for another
+	  */
 	protected String prefix;
 
+	/**
+	  * Constructor
+	  * @param pre the prefix to be used
+	  */
 	public ScreenMovement(String pre) {
 		prefix = pre;
 		movementMap = new HashMap<String, Movement>();
 		loadKeyBindings();
 	}
 
+	/**
+	  * Activates the key bindings
+	  */
 	public void activate() {
 		loadInputMap();
 		for (String key : movementMap.keySet()) {
@@ -28,6 +42,9 @@ public abstract class ScreenMovement {
 		}
 	}
 
+	/**
+	  * Deactivates the key bindings
+	  */
 	public void deactivate() {
 		unloadInputMap();
 		for (String key : movementMap.keySet()) {
@@ -35,15 +52,24 @@ public abstract class ScreenMovement {
 		}
 	}
 
+	/**
+	  * Loads the key bindings for a particular screen
+	  * <p> This process includes setting the action of what will occur upon a key binding being triggered
+	  */
 	protected abstract void loadKeyBindings();
 
-	// Loads all bindings into the main frame's input map
+	/**
+	  * Loads all bindings into the main frame's input map
+	  */
 	protected void loadInputMap() {
 		for (String key : movementMap.keySet()) {
 			CovidCashier.frame.getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(movementMap.get(key).getKeyStroke(),movementMap.get(key).getName());
 		}
 	}
 
+	/**
+	  * Removes bindings into the main frame's input map
+	  */
 	protected void unloadInputMap() {
 		for (String key : movementMap.keySet()) {
 			CovidCashier.frame.getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(movementMap.get(key).getKeyStroke(),"none");
@@ -77,6 +103,7 @@ public abstract class ScreenMovement {
 			key = k;
 			action = a;
 		}
+		
 		/**
 		  * Constructs a Movement object
 		  */

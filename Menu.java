@@ -113,7 +113,8 @@ public abstract class Menu {
 		  * Draw the title / main heading
 		  * @param g 			the Graphics object to draw on
 		  * @param title		the phrase to be drawn
-		  * @param centerAlign	whether to center align the text
+		  * @param x 			the x-coordinate of the string
+		  * @param y 			the y-coordinate of the string
 		  */
 		public void drawTitle(Graphics g, String title, int x, int y) {
 			g.setFont(Utility.TITLE_FONT);
@@ -130,7 +131,6 @@ public abstract class Menu {
 			g.drawString(phrase,Utility.FRAME_WIDTH/2-Utility.getStringWidth(phrase,g)/2,getTitleY() + (int)((row*1.55+0.5)*g.getFontMetrics().getHeight()));
 		}
 		
-
 		/**
 		  * Draws a centre aligned String onto the given Graphics object
 		  * @param g 			the Graphics object for the drawing
@@ -167,6 +167,9 @@ public abstract class Menu {
 			g.drawString("TOTAL", 100, 260);
 		}
 
+		/**
+		  * Regularly refreshes the screen to update the receipt
+		  */
 		public void refreshScreen() {
 			timer = new javax.swing.Timer(0, new ActionListener() {
 				@Override
