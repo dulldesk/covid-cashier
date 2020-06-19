@@ -72,6 +72,15 @@ public abstract class Menu {
 		public abstract int getTitleY();
 
 		/**
+		  * The background 
+		  */
+		private Image background;
+
+		public MenuDrawing() {
+			background = Utility.loadImage("Cash_Register.png", Utility.FRAME_WIDTH, Utility.FRAME_HEIGHT);
+		}
+
+		/**
 		  * Paint method of JComponent
 		  * @param g 	the Graphics object to draw on
 		  */
@@ -81,7 +90,7 @@ public abstract class Menu {
 			// System.out.println("a "+CovidCashier.frame.getContentPane());
 			try { 
 		   		// Background monitor
-				Monitor.draw(g);
+				g.drawImage(background, 0, 0, null);
 
 				// Draw the display
 				display(g);
