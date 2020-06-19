@@ -237,7 +237,7 @@ public class Player extends Character {
 
 			if (key.equals("gloves")) {
 				if (!getLastTask("clean hands").equals(lastTask)) {
-					addFailure("You must sanitize your hands first before changing gloves");
+					addFailure("You did not sanitize your hands first before changing gloves");
 					System.out.println("failures "+ failures.size());
 				}
 			}
@@ -267,15 +267,6 @@ public class Player extends Character {
 		public void setLastTask(String task) {
 			lastTask = task;
 		}
-
-		/*
-			to-do: 
-			- check if user is wearing ppe before each station [&]
-			- check if user changes gloves in between stations [&]
-			- check if user sanitizes hands when changing gloves 
-
-			[&] method called in between minigames --> checkHygiene()
-		*/
 	}
 
 	public class FridgeTilesBindings extends ScreenMovement {
