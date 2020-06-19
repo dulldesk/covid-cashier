@@ -32,7 +32,7 @@ public class SoundFX extends Thread {
 	private SoundFX(String name, int duration) {
 		this.duration = duration; 
 		try {
-			audioInput = AudioSystem.getAudioInputStream(this.getClass().getResource("/src/sfx/"+name+".wav"));
+			audioInput = AudioSystem.getAudioInputStream(this.getClass().getResource(Utility.RES_NAME + "/sfx/"+name+".wav"));
 		} 
 		catch (UnsupportedAudioFileException e) {}
 		catch (IOException e) {}
