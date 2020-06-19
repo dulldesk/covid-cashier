@@ -19,6 +19,11 @@ public class MainMenu extends Menu {
 	private MenuDrawing drawing;
 
 	/**
+	  * Dialogue message
+	  */
+	private Dialogue message;
+
+	/**
 	  * Holds the available options on the main menu
 	  */
 	private final String [] OPTIONS = {"Instructions", "Train", "Play", "Quit"};
@@ -28,6 +33,7 @@ public class MainMenu extends Menu {
 	  */
 	public MainMenu() {
 		loadButtons(OPTIONS);
+		message = new Dialogue(User.firstMainMenu ? "Click on any of the menu options to enter its screen. Press enter to close this dialogue box. " : "");
 
 		drawing = new MainMenuDrawing();
 		Utility.changeDrawing(drawing);
@@ -39,6 +45,8 @@ public class MainMenu extends Menu {
 	public void halt() {
 		CovidCashier.frame.remove(drawing);
 		for (Button btn : buttons) btn.deactivate();
+		message.deactivate();
+		User.firstMainMenu = false;
 	}
 
 	/**
@@ -50,6 +58,7 @@ public class MainMenu extends Menu {
 		  */
 		public MainMenuDrawing() {
 			super();
+			message.activate();
 
 			for (Button btn : buttons) btn.activate();
 		}
@@ -60,16 +69,27 @@ public class MainMenu extends Menu {
 		  */
 		@Override
 		public void display(Graphics g) {
-			// System.out.println("main menu");
 			g.setFont(Utility.TITLE_FONT_SMALL);
 			g.setColor(Color.black);
 			g.drawString("COVID Cashier", leftAlign, titleY);
 
 			drawReceipt(g);
 
+			if (!message.isEmpty() && !message.canProceed()) message.draw(g);
+			else message.deactivate();
+
 			for (Button btn : buttons) {
 				btn.draw(g);
 				if (btn.isClicked()) {
+			    	btn.resetClicked();
+
+					if (btn.getName().toUpperCase().equals("PLAY") && !User.hasTrained) {
+						message = new Dialogue("You cannot enter the Live Level before undergoing training.");
+						message.activate();
+						repaint();
+						continue;
+					}
+
 					halt();
 					switch (btn.getName().toUpperCase()) {
 						case "INSTRUCTIONS": 
