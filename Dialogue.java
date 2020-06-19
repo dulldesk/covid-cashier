@@ -36,12 +36,12 @@ public class Dialogue extends GraphicComponent {
 	/**
 	  * The width of the box
 	  */
-	private static final int BOX_WIDTH = Utility.FRAME_WIDTH - 240;
+	public static final int BOX_WIDTH = Utility.FRAME_WIDTH - 240;
 
 	/**
 	  * The height of the box
 	  */
-	private static final int BOX_HEIGHT = 150;
+	public static final int BOX_HEIGHT = 150;
 
 	/**
 	  * The text padding of the box
