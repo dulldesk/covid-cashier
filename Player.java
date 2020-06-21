@@ -38,11 +38,6 @@ public class Player extends Character {
 	/**
 	 * ---
 	 */
-	// public boolean activated;
-
-	/**
-	 * ---
-	 */
 	public int speed;
 
 	/**
@@ -79,7 +74,6 @@ public class Player extends Character {
 		super(name,"player",gender);
 		speed = 0;
 		jumped = false;
-		// activated = false;
 
 		hygienicTracker = new HygieneTracker();
 		failures = new HashMap<String, Integer>();

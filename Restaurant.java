@@ -363,7 +363,7 @@ public class Restaurant {
 				addGenericOrder();
 				castedCustomer.setXTarget(-50);
 				castedCustomer.setCurrentAction("walk left");
-			} else if (castedCustomer.getCurrentAction().equals("order") || castedCustomer.getCurrentAction().equals("standing")) { // cannot procesd
+			} else if (castedCustomer.getCurrentAction().equals("order") || castedCustomer.getCurrentAction().equals("standing")) { // cannot proceed
 				; 
 				// left here for clarity
 			} else {
@@ -446,15 +446,9 @@ public class Restaurant {
 				}
 			} else {
 				for (Station stn : stations) {
-					if (stn.getName().equalsIgnoreCase("exit")) {
-						if (!inTraining) {
-
-							// todo : implement order completion checking
-							// continue;
-						} else if (!User.hasTrained) {
-							// do not allow exiting
-							continue;
-						} 
+					if (stn.getName().equalsIgnoreCase("exit") && !User.hasTrained) {
+						// do not allow exiting
+						continue;
 					}
 
 					if (!inTraining && !openedStations.getOrDefault(stn.getName(), false)) continue;

@@ -168,7 +168,6 @@ public class CashRun extends Minigame {
                     }
                 }
                 if(!player.jumped) {
-                    // if(!player.activated)
                     player.cashRunMovement.activate();
                     if(refresh)
                         player.stepNo++;
@@ -177,7 +176,6 @@ public class CashRun extends Minigame {
                     player.stepNo = 1;
                     if(player.speed > -48) {
                         player.speed-=8;
-                        //System.out.println(player.speed);
                     } else {
                         player.jumped = false;
                         player.speed = 0;

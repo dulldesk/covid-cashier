@@ -92,7 +92,6 @@ public abstract class Menu {
 		@Override
 		public void paintComponent(Graphics g) {
 			super.paintComponent(g);
-			// System.out.println("a "+CovidCashier.frame.getContentPane());
 			try { 
 		   		// Background monitor
 				g.drawImage(background, 0, 0, null);

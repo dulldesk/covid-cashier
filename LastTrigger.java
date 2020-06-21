@@ -63,7 +63,6 @@ public class LastTrigger {
 	public boolean compareNow(char currDir) {
 		boolean shouldRefresh = direction != currDir || System.nanoTime() - time > REFRESH_RATE;
 		if (shouldRefresh) {
-			// admittedly the values will be different but this is okay
 			time = System.nanoTime();
 			direction = currDir;
 		}

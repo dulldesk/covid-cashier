@@ -43,7 +43,6 @@ public class Station extends Boundary {
 
 	@Override
 	public void draw(Graphics g) {
-		// g.drawRect(x_coord,Restaurant.getYRelativeToFrame(y_coord),width,height);
 		if (isColliding(CovidCashier.getPastRestaurant().getUser())) {
 			entryCard.draw(g);
 			if (deactivated) activate();

@@ -96,8 +96,6 @@ public class PlayerSelect extends Menu {
 
 			if (stage.equals("name")) nameInput(g);
 			else if (stage.equals("character")) charInput(g);
-
-			// (new Dialogue("covid counter","PlayerM")).draw(g);
 		}
 
 		/**
@@ -139,9 +137,6 @@ public class PlayerSelect extends Menu {
 				for (Button btn : icons) btn.activate();
 				field.deactivate();
 			}
-
-			// force refresh
-			// repaint();
 		}
 
 		/**

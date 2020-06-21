@@ -29,11 +29,6 @@ public class TrainingLevel {
 	private String name;
 
 	/**
-	  * The dialogue text to be displayed at this station
-	  */
-	// private String text;
-
-	/**
 	  * The background image of this station
 	  */
 	protected Image background;
@@ -67,8 +62,6 @@ public class TrainingLevel {
 		this.name = name.trim();
 
 		if (infoMap.size() == 0) loadInfoMap();
-
-		// text = infoMap.get(name).getInfo();
 		background = infoMap.get(name).getBkgd();
 		infoCard = new Dialogue(infoMap.get(name).getInfo(),"=",false);
 	}
@@ -91,9 +84,6 @@ public class TrainingLevel {
 					for (; nxt != null && !nxt.trim().equals(""); nxt = br.readLine()) {
 						info += nxt+"\n";
 					}
-
-					// require: background images
-					// infoMap.put(name, new TrainingInfo(info.trim(), null));
 					infoMap.put(name, new TrainingInfo(info.trim(), Utility.loadImage(name.replace(" ","") + "BG.png", Utility.FRAME_WIDTH, Utility.FRAME_HEIGHT)));
 				}
 			}

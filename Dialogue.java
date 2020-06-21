@@ -156,8 +156,6 @@ public class Dialogue extends GraphicComponent {
 	public void draw(Graphics g) {
 		if (canProceed || textQueue.size() == 0) return;
 
-		// System.out.println(textQueue.size() + " "+ textQueue.hashCode());
-
 		g.drawImage(BOX,x_coord,y_coord,null);
 		if (face != null) g.drawImage(face,x_coord + PADDING-5,y_coord + PADDING+15,null);
 

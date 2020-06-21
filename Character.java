@@ -142,7 +142,6 @@ public abstract class Character {
 	  */
 	protected Image getSprite(int step) {
 		String key = direction+"-"+(step+1)+"-"+clothingType+"-"+protectiveEquipment;
-		// System.out.println(key);
 		width = steps.get(key).getWidth(null);
 		return steps.get(key);
 	}

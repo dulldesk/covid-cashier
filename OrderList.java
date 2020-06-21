@@ -55,8 +55,6 @@ public class OrderList extends TaskList {
 		orders = new ArrayList<Checklist>();
 		headerBtns = new ArrayList<Button>();
 
-		// addOrder(null);
-		// addOrder(null);
 	}
 
 	/** 
@@ -87,7 +85,6 @@ public class OrderList extends TaskList {
 			
 			Button btn = headerBtns.get(ind);
 			btn.draw(g);
-			// to-do: fix button hovering/clicking
 
 			if (btn.isClicked()) {
 				int btnPage = Integer.parseInt(btn.getName().substring(6))-1;
