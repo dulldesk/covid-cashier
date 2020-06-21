@@ -352,6 +352,7 @@ public class Restaurant {
 					castedCustomer.setCurrentAction("standing");
 					castedCustomer.setDirection('N');
 					takeOrder();
+					initialLiveTask = false;
 				}
 			} else if (castedCustomer.getCurrentAction().equals("walk left")) {
 				if (customer.getX() > castedCustomer.getXTarget()) customer.moveLeft();
@@ -429,9 +430,10 @@ public class Restaurant {
 			drawCustomer(g);
 
 			// check whether the live level has been completed
-			if (!inTraining && listIsCompleted()) {
+			if (!inTraining && listIsCompleted() && !initialLiveTask) {
 				for (String key : openedStations.keySet()) openedStations.put(key, false);
 				openedStations.put("Exit", true);
+				initialLiveTask = true;
 				intro = new Dialogue("You've finished your work shift! Go to the arrow (and face in that direction) to exit the restaurant", "Coworker");
 				repaint();
 			}
