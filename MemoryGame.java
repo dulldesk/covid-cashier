@@ -80,11 +80,9 @@ public class MemoryGame extends Minigame {
             }
             for(int i = 0; i < 2; i++) {
                 for(int j = 0; j < 5; j++) {
-                    System.out.print(id[i*5+j]+ " ");
                     cards[j][i] = new Card(names[id[i*5+j]], i*5+j, 60+j*140, 100+i*180, 120, 160);
                     cards[j][i].activate();
                 }
-                System.out.println();
             }
             infoCard.activate();
         }

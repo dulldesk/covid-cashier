@@ -132,7 +132,6 @@ public class SplashScreen {
 			timer = new javax.swing.Timer(17, new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					System.out.println(logoAlpha);
 					repaint();
 				}
 			});
