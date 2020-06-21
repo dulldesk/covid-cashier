@@ -152,6 +152,7 @@ public class Restaurant {
 		openedStations = new HashMap<String, Boolean>();
 		openedStations.put("COVID Counter", true);
 		openedStations.put("Front Counter", true);
+		openedStations.put("Don't worry, this is my station! Go back to work!", true);
 
 
 		initialLiveTask = true;
@@ -446,7 +447,7 @@ public class Restaurant {
 				}
 			} else {
 				for (Station stn : stations) {
-					if (stn.getName().equalsIgnoreCase("exit") && !User.hasTrained) {
+					if (inTraining && stn.getName().equalsIgnoreCase("exit") && !User.hasTrained) {
 						// do not allow exiting
 						continue;
 					}
