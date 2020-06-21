@@ -151,16 +151,20 @@ public abstract class Menu {
 		  */
 		protected void drawReceipt(Graphics g) {
 			Calendar date = Calendar.getInstance();
-			String[] days = {"Sat", "Sun", "Mon", "Tues", "Wed", "Thurs", "Fri"};
+			String[] days = {"Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"};
 			g.setColor(new Color(50, 50, 50));
 			g.setFont(Utility.LABEL_FONT.deriveFont(18F));
 			centerAlignStr(g, "Wandi's", 200, 82);
 			g.setFont(Utility.LABEL_FONT.deriveFont(14F));
 			centerAlignStr(g, "222 Corona St.", 190, 98);
-			centerAlignStr(g, days[date.get(Calendar.DAY_OF_WEEK)]+" "+
-			String.format("%02d",date.get(Calendar.MONTH)+1)+"/"+String.format("%02d",date.get(Calendar.DATE))+"/"+date.get(Calendar.YEAR)+" "+
-			String.format("%02d",date.get(Calendar.HOUR))+":"+String.format("%02d",date.get(Calendar.MINUTE))+" "+
-			(date.get(Calendar.AM_PM)==0?"AM":"PM"), 180, 116);
+			String s = days[date.get(Calendar.DAY_OF_WEEK)-1]+" "+
+			String.format("%02d",date.get(Calendar.MONTH)+1)+"/"+
+			String.format("%02d",date.get(Calendar.DATE))+"/"+
+			date.get(Calendar.YEAR)+" "+
+			String.format("%02d",date.get(Calendar.HOUR))+":"+
+			String.format("%02d",date.get(Calendar.MINUTE))+" "+
+			(date.get(Calendar.AM_PM)==0?"AM":"PM");
+			centerAlignStr(g, s, 180, 116);
 			centerAlignStr(g, "========================", 170, 132);
 			centerAlignStr(g, "** ORDER#: "+String.format("%06d",orderNumber)+" **", 170, 148);
 			g.drawString("1   PANDEMIC", 100, 180);
