@@ -156,6 +156,7 @@ public abstract class Menu {
 			centerAlignStr(g, "Wandi's", 200, 82);
 			g.setFont(Utility.LABEL_FONT.deriveFont(14F));
 			centerAlignStr(g, "222 Corona St.", 190, 98);
+			System.out.println(date.get(Calendar.DAY_OF_WEEK));
 			String s = days[date.get(Calendar.DAY_OF_WEEK)-1]+" "+
 			String.format("%02d",date.get(Calendar.MONTH)+1)+"/"+
 			String.format("%02d",date.get(Calendar.DATE))+"/"+
