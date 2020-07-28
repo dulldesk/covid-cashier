@@ -33,33 +33,39 @@ public class BGM {
      * Play method
      */
     public void play() {
-        clip.start();
+        try {
+          clip.start();
+        } catch (Exception e) {}
     }
     /**
      * Pause Method
      */
     public void pause() {
-        this.currentFrame = this.clip.getMicrosecondPosition();
-        clip.stop();
+        try {
+          this.currentFrame = this.clip.getMicrosecondPosition();
+          clip.stop();
+        } catch (Exception e) {}
     }
     /**
      * Resume Method
      */
     public void resume() {
-        clip.close();
         try {
-            audioInputStream = AudioSystem.getAudioInputStream(this.getClass().getResource(Utility.RES_NAME + "/bgm/"+name+".wav"));
-            clip.open(audioInputStream); 
-            clip.loop(Clip.LOOP_CONTINUOUSLY);
-        } catch(Exception e) {System.out.println("Resume");}
-        clip.setMicrosecondPosition(currentFrame);
-        clip.start();
+          clip.close();
+          audioInputStream = AudioSystem.getAudioInputStream(this.getClass().getResource(Utility.RES_NAME + "/bgm/"+name+".wav"));
+          clip.open(audioInputStream); 
+          clip.loop(Clip.LOOP_CONTINUOUSLY);
+          clip.setMicrosecondPosition(currentFrame);
+          clip.start();
+        } catch(Exception e) {}
     }
     /**
      * Stop method
      */
     public void stop() {
-        clip.stop();
-        clip.close();
+        try {
+          clip.stop();
+          clip.close();
+        } catch(Exception e) {}
     }
 }

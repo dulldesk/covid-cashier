@@ -34,8 +34,7 @@ public class SoundFX extends Thread {
 		try {
 			audioInput = AudioSystem.getAudioInputStream(this.getClass().getResource(Utility.RES_NAME + "/sfx/"+name+".wav"));
 		} 
-		catch (UnsupportedAudioFileException e) {}
-		catch (IOException e) {}
+		catch (Exception e) {}
 	}
 
 	/**
@@ -56,8 +55,6 @@ public class SoundFX extends Thread {
 			Thread.sleep(duration);
 			sfx.close();
 		} 
-		catch (LineUnavailableException e) {}
-		catch (InterruptedException e) {}
-		catch (IOException e) {}
+		catch (Exception e) {}
 	}
 }

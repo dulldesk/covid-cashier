@@ -259,8 +259,6 @@ public class Dialogue extends GraphicComponent {
 					if (!canProceed) textQueue.poll();
 					canProceed = textQueue.size() == 0;
 
-					if (canProceed) System.out.println("can proceed");
-
 					CovidCashier.frame.repaint();
 				}
 			}));

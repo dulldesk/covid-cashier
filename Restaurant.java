@@ -152,6 +152,7 @@ public class Restaurant {
 		openedStations = new HashMap<String, Boolean>();
 		openedStations.put("COVID Counter", true);
 		openedStations.put("Front Counter", true);
+		openedStations.put("Don't worry, this is my station! Go back to work!", true);
 
 
 		initialLiveTask = true;
@@ -351,6 +352,7 @@ public class Restaurant {
 					castedCustomer.setCurrentAction("standing");
 					castedCustomer.setDirection('N');
 					takeOrder();
+					initialLiveTask = false;
 				}
 			} else if (castedCustomer.getCurrentAction().equals("walk left")) {
 				if (customer.getX() > castedCustomer.getXTarget()) customer.moveLeft();
@@ -428,9 +430,10 @@ public class Restaurant {
 			drawCustomer(g);
 
 			// check whether the live level has been completed
-			if (!inTraining && listIsCompleted()) {
+			if (!inTraining && listIsCompleted() && !initialLiveTask) {
 				for (String key : openedStations.keySet()) openedStations.put(key, false);
 				openedStations.put("Exit", true);
+				initialLiveTask = true;
 				intro = new Dialogue("You've finished your work shift! Go to the arrow (and face in that direction) to exit the restaurant", "Coworker");
 				repaint();
 			}
@@ -446,7 +449,7 @@ public class Restaurant {
 				}
 			} else {
 				for (Station stn : stations) {
-					if (stn.getName().equalsIgnoreCase("exit") && !User.hasTrained) {
+					if (inTraining && stn.getName().equalsIgnoreCase("exit") && !User.hasTrained) {
 						// do not allow exiting
 						continue;
 					}

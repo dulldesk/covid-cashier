@@ -205,12 +205,10 @@ public class Player extends Character {
 		if (!nextStn.equals("covid counter")) {
 			if (getPPE().indexOf("M") == -1) {
 				addFailure("You did not wear a mask prior to a task");
-			System.out.println("failures mask "+ failures.size());
 			}
 
 			if (!hygienicTracker.getLastTask().equals(nextStn) && !hygienicTracker.getLastTask("gloves").equals(hygienicTracker.getLastTask()) && !hygienicTracker.getLastTask("gloves").equals("covid counter")) {
 				addFailure("You did not change your gloves in between tasks");
-			System.out.println("failures gloves "+ failures.size());
 			}
 		}
 
@@ -263,12 +261,10 @@ public class Player extends Character {
 		  * @param key the key to be updated
 		  */
 		public void update(String key) {
-			System.out.println("update "+key);
 
 			if (key.equals("gloves")) {
 				if (!getLastTask("clean hands").equals(lastTask)) {
 					addFailure("You did not sanitize your hands before changing gloves");
-					System.out.println("failures clean "+ failures.size());
 				}
 			}
 
@@ -311,14 +307,12 @@ public class Player extends Character {
 		protected void loadKeyBindings() {
 			movementMap.put("left", new Movement("left", KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0), new AbstractAction() {
 				public void actionPerformed(ActionEvent e) {
-					System.out.println("left");
 					if(x_coord-80 > 280)
 						x_coord -= 80;
 				}
 			}));
 			movementMap.put("right", new Movement("right", KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0), new AbstractAction() {
 				public void actionPerformed(ActionEvent e) {
-					System.out.println("right");
 					if(x_coord+80 < 520)
 						x_coord += 80;
 				}
